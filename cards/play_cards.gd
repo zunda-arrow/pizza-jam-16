@@ -1,0 +1,45 @@
+extends Node2D
+
+signal card_used(card: CardResource, position: Vector2)
+
+@onready var hand = %Hand
+@onready var target_arrow = %TargetArrow
+
+# Playing cards works in two steps. The player drags the card and picks a target.
+# If cards do not have a target, you still drag them to the play area like slay the spire.
+
+var _targetting_card_index = -1
+
+func _ready() -> void:
+	pass
+
+func _on_hand_card_clicked(i: int) -> void:
+	_targetting_card_index = i
+	var stat_pos = hand.position_card(i)
+	target_arrow.set_start_position(stat_pos)
+	target_arrow.show()
+
+func _process(delta: float) -> void:
+	target_arrow.set_end_position(target_arrow.get_local_mouse_position())
+	
+	hand.selected_card_index = -1
+	
+	if _targetting_card_index == -1:
+		for i in range(len(hand.card_scenes)):
+			if hand.card_scenes[i].hovered:
+				hand.selected_card_index = i
+	else:
+		hand.selected_card_index = _targetting_card_index
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.is_released():
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			try_to_play_card(_targetting_card_index)
+			_targetting_card_index = -1
+			target_arrow.hide()
+
+func try_to_play_card(i: int):
+	# This function should be expanded to properly check targets
+	var resource = hand.card_scenes[i].resource
+	var pos = get_global_mouse_position() / 32
+	card_used.emit(resource, pos)

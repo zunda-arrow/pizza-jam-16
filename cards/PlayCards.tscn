@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b6lf5vwv0thx3"]
+
+[ext_resource type="Script" uid="uid://dftd7vyar68b7" path="res://cards/play_cards.gd" id="1_psm3s"]
+[ext_resource type="PackedScene" uid="uid://cctlo3fcf1cqd" path="res://cards/Hand.tscn" id="2_g8evs"]
+[ext_resource type="PackedScene" uid="uid://c3tbo64q8cd1l" path="res://arrow/arrow.tscn" id="3_cmaul"]
+
+[node name="PlayCards" type="Node2D" unique_id=1516163044]
+script = ExtResource("1_psm3s")
+
+[node name="Hand" parent="." unique_id=451922452 instance=ExtResource("2_g8evs")]
+unique_name_in_owner = true
+position = Vector2(203, 516)
+
+[node name="TargetArrow" parent="Hand" unique_id=8504322 instance=ExtResource("3_cmaul")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="card_clicked" from="Hand" to="." method="_on_hand_card_clicked"]

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dg8j4w3ofdo56"]
+
+[ext_resource type="Script" uid="uid://cjp3b48vi7hj2" path="res://ants/army.gd" id="1_btchu"]
+
+[node name="Army" type="Node2D" unique_id=1221516024]
+script = ExtResource("1_btchu")
