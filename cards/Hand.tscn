@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cctlo3fcf1cqd"]
+
+[ext_resource type="Script" uid="uid://d2lrxtemw8q6d" path="res://cards/hand.gd" id="1_gbyht"]
+
+[node name="Hand" type="Node2D" unique_id=451922452]
+script = ExtResource("1_gbyht")
+radius = 3000
+distance_between_cards = 190
+
+[node name="Cards" type="Node2D" parent="." unique_id=1203698339]
+unique_name_in_owner = true
