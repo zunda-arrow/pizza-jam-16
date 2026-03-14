@@ -4,7 +4,7 @@
 
 [node name="Hand" type="Node2D" unique_id=451922452]
 script = ExtResource("1_gbyht")
-position_along_circle_of_radius = 3000
+radius = 3000
 distance_between_cards = 190
 
 [node name="Cards" type="Node2D" parent="." unique_id=1203698339]

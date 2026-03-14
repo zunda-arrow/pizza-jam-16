@@ -9,7 +9,7 @@ var card_scenes = []
 
 signal card_clicked(i: int)
 
-@export var position_along_circle_of_radius = 2000
+@export var radius = 2000
 @export var distance_between_cards = 200
 @export var animation_speed = 30
 
@@ -29,8 +29,6 @@ func _process(delta: float) -> void:
 	positon_cards(delta)
 
 func positon_cards(delta):
-	var size_of_circle = position_along_circle_of_radius
-
 	var selected_card_index = -1
 	
 	for i in range(len(card_scenes)):
@@ -45,7 +43,7 @@ func positon_cards(delta):
 		# x^2 + y^2 = r^2
 		# y^2 = r^2 - x^2
 		# y = sqrt(r^2 - x^2)
-		var y_position = size_of_circle - sqrt(size_of_circle ** 2 - x_positon ** 2)
+		var y_position = radius - sqrt(radius ** 2 - x_positon ** 2)
 		var target_rotation = 0.
 		if x_positon != 0:
 			target_rotation = tan(y_position / x_positon)
