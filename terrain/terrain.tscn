@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cvgqygm3pnmmn"]
 
 [ext_resource type="Texture2D" uid="uid://c8o38o30vq1wj" path="res://icon.svg" id="1_0rasl"]
-[ext_resource type="Script" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
+[ext_resource type="Script" uid="uid://588pj46a768y" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://bnjsjs1hu7a3a" path="res://assets/terrain/mid_dirt.png" id="3_7nt5j"]
 

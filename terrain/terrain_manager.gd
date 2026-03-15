@@ -39,12 +39,18 @@ func get_cell(x: int, y: int) -> bool: # Check if there is a cell here
 # Radius is a square radius
 func destroy(cell_coordinate_center: Vector2i, diameter: int):
 	var radius = diameter / 2.
-	
-	for x in range(ceil(cell_coordinate_center.x-radius),ceil(cell_coordinate_center.x+radius)):
-		for y in range(ceil(cell_coordinate_center.y-radius),ceil(cell_coordinate_center.y+radius)):
+	var cells_to_remove: Array[Vector2i] = []
+	var cells_to_update: Array[Vector2i] = []
+	for x in range(ceil(cell_coordinate_center.x-radius-1),ceil(cell_coordinate_center.x+radius+1)):
+		for y in range(ceil(cell_coordinate_center.y-radius-1),ceil(cell_coordinate_center.y+radius+1)):
 			if tilemap.get_cell_source_id(Vector2(x,y)) >= 0:
-				tilemap.erase_cell(Vector2(x,y))
-
+				if (x < cell_coordinate_center.x-radius or x > cell_coordinate_center.x+radius or y < cell_coordinate_center.y-radius or y > cell_coordinate_center.y+radius):
+					cells_to_update.append(Vector2(x,y))
+				else:
+					cells_to_remove.append(Vector2(x,y))
+	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
+	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
+				
 func show_selector(cell_coordinate_center: Vector2i, size: Array[Rect2i]):
 	$Selection.clear()
 	$Selection.show()
@@ -56,7 +62,7 @@ func show_selector(cell_coordinate_center: Vector2i, size: Array[Rect2i]):
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
 				else:
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(0,0), 0)
-
+					
 func hide_selector():
 	$Selection.hide()
 
