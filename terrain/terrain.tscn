@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cvgqygm3pnmmn"]
 
 [ext_resource type="Texture2D" uid="uid://c8o38o30vq1wj" path="res://icon.svg" id="1_0rasl"]
-[ext_resource type="Script" uid="uid://588pj46a768y" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
+[ext_resource type="Script" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://bnjsjs1hu7a3a" path="res://assets/terrain/mid_dirt.png" id="3_7nt5j"]
 
@@ -78,8 +78,9 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mk5yb"]
 texture = ExtResource("3_7nt5j")
-margins = Vector2i(2, 2)
-separation = Vector2i(3, 3)
+margins = Vector2i(4, 4)
+separation = Vector2i(6, 6)
+texture_region_size = Vector2i(32, 32)
 1:0/0 = 0
 1:0/0/terrain_set = 0
 1:0/0/terrain = 0
@@ -411,6 +412,7 @@ separation = Vector2i(3, 3)
 5:6/0/terrains_peering_bit/top_side = 0
 
 [sub_resource type="TileSet" id="TileSet_2ilfp"]
+tile_size = Vector2i(32, 32)
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Mid_Dirt"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
