@@ -7,6 +7,7 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
 noise_type = 2
+[ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l7s0s"]
 texture = ExtResource("1_0rasl")
@@ -417,6 +418,27 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_l7s0s")
 sources/1 = SubResource("TileSetAtlasSource_mk5yb")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nigp7"]
+texture = ExtResource("3_2ilfp")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_l7s0s"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_nigp7")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l7s0s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ilfp"]
+size = Vector2(233, 231)
+
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
 initial_seed = 1
@@ -426,3 +448,17 @@ noise = SubResource("FastNoiseLite_nigp7")
 unique_name_in_owner = true
 tile_set = SubResource("TileSet_2ilfp")
 script = ExtResource("2_l7s0s")
+placing_build = null
+
+[node name="Selection" type="TileMapLayer" parent="." unique_id=1551127036]
+tile_set = SubResource("TileSet_l7s0s")
+
+[node name="Building" type="RigidBody2D" parent="." unique_id=2137802564]
+visible = false
+position = Vector2(952, 176)
+physics_material_override = SubResource("PhysicsMaterial_l7s0s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Building" unique_id=1123913191]
+visible = false
+position = Vector2(106.5, 105.5)
+shape = SubResource("RectangleShape2D_2ilfp")
