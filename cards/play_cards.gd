@@ -51,7 +51,9 @@ func try_to_play_card(i: int):
 	# This function should be expanded to properly check targets
 	var resource = hand.card_scenes[i].instantiated_card_resource
 	var pos = get_global_mouse_position() / 32
+
 	card_used.emit(resource, Vector2i(int(pos.x), int(pos.y)))
+	hand.remove_card_from_hand(i)
 
 func draw_card(card: CardResource.Card):
 	hand.add_card_to_hand(card)
