@@ -4,8 +4,9 @@ extends Node2D
 signal on_mouse_entered
 signal on_mouse_exited
 signal on_clicked
+signal on_right_clicked
 
-@export var resource: CardResource
+@export var card_resource: CardResource
 
 var hovered = false
 
@@ -21,3 +22,5 @@ func _on_panel_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 			on_clicked.emit()
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
+			on_right_clicked.emit()

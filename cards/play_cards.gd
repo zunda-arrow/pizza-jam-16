@@ -1,7 +1,10 @@
 extends Node2D
 
-signal card_used(card: CardResource, position: Vector2)
+signal card_used(card: CardResource, index: int, position: Vector2)
 signal aiming_card(card: CardResource, position: Vector2)
+signal card_discarded(index: int)
+
+@export var cards_in_hand: Array[CardResource]
 
 @onready var hand = %Hand
 @onready var target_arrow = %TargetArrow
@@ -11,7 +14,6 @@ signal aiming_card(card: CardResource, position: Vector2)
 
 var _targetting_card_index = -1
 
-
 func _on_hand_card_clicked(i: int) -> void:
 	_targetting_card_index = i
 	var stat_pos = hand.position_card(i)
@@ -20,7 +22,7 @@ func _on_hand_card_clicked(i: int) -> void:
 
 func _process(delta: float) -> void:
 	target_arrow.set_end_position(target_arrow.get_local_mouse_position())
-	
+
 	hand.selected_card_index = -1
 	
 	if _targetting_card_index == -1:
@@ -31,7 +33,7 @@ func _process(delta: float) -> void:
 		hand.selected_card_index = _targetting_card_index
 
 	if _targetting_card_index != -1:
-		var resource = hand.card_scenes[_targetting_card_index].resource
+		var resource = hand.card_scenes[_targetting_card_index].card_resource
 		var pos = get_global_mouse_position() / 32
 		aiming_card.emit(resource, Vector2i(int(pos.x), int(pos.y)))
 
@@ -47,6 +49,13 @@ func _input(event: InputEvent) -> void:
 
 func try_to_play_card(i: int):
 	# This function should be expanded to properly check targets
-	var resource = hand.card_scenes[i].resource
+	var resource = hand.card_scenes[i].card_resource
 	var pos = get_global_mouse_position() / 32
 	card_used.emit(resource, Vector2i(int(pos.x), int(pos.y)))
+
+func draw_card(card: CardResource):
+	print(card)
+	hand.add_card_to_hand(card)
+
+func _on_hand_card_discarded(i: int) -> void:
+	card_discarded.emit(i)

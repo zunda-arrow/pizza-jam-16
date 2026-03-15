@@ -13,4 +13,5 @@ unique_name_in_owner = true
 [node name="PlayCards" parent="." unique_id=1516163044 instance=ExtResource("1_ncbvw")]
 unique_name_in_owner = true
 
+[connection signal="card_discarded" from="PlayCards" to="." method="_on_play_cards_card_discarded"]
 [connection signal="card_used" from="PlayCards" to="." method="_on_play_cards_card_used"]
