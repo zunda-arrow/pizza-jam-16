@@ -1,6 +1,7 @@
 extends Node2D
 
 signal card_used(card: CardResource, position: Vector2)
+signal aiming_card(card: CardResource, position: Vector2)
 
 @onready var hand = %Hand
 @onready var target_arrow = %TargetArrow
@@ -10,8 +11,6 @@ signal card_used(card: CardResource, position: Vector2)
 
 var _targetting_card_index = -1
 
-func _ready() -> void:
-	pass
 
 func _on_hand_card_clicked(i: int) -> void:
 	_targetting_card_index = i
@@ -31,9 +30,17 @@ func _process(delta: float) -> void:
 	else:
 		hand.selected_card_index = _targetting_card_index
 
+	if _targetting_card_index != -1:
+		var resource = hand.card_scenes[_targetting_card_index].resource
+		var pos = get_global_mouse_position() / 32
+		aiming_card.emit(resource, Vector2i(int(pos.x), int(pos.y)))
+
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_released():
 		if event.button_index == MOUSE_BUTTON_LEFT:
+			if _targetting_card_index == -1:
+				return
 			try_to_play_card(_targetting_card_index)
 			_targetting_card_index = -1
 			target_arrow.hide()
@@ -42,4 +49,4 @@ func try_to_play_card(i: int):
 	# This function should be expanded to properly check targets
 	var resource = hand.card_scenes[i].resource
 	var pos = get_global_mouse_position() / 32
-	card_used.emit(resource, pos)
+	card_used.emit(resource, Vector2i(int(pos.x), int(pos.y)))

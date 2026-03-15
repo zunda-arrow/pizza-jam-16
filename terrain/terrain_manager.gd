@@ -37,18 +37,17 @@ func get_cell(x: int, y: int) -> bool: # Check if there is a cell here
 	return absf(noise.get_noise_2d(x, y)) > block_threshold
 
 # Radius is a square radius
-func destroy(pos: Vector2i, diameter: int):
+func destroy(cell_coordinate_center: Vector2i, diameter: int):
 	var radius = diameter / 2.
-	var cell_coordinate_center = tilemap.local_to_map(Vector2i(pos.x, pos.y+40))
 	
 	for x in range(ceil(cell_coordinate_center.x-radius),ceil(cell_coordinate_center.x+radius)):
 		for y in range(ceil(cell_coordinate_center.y-radius),ceil(cell_coordinate_center.y+radius)):
 			if tilemap.get_cell_source_id(Vector2(x,y)) >= 0:
 				tilemap.erase_cell(Vector2(x,y))
 
-func show_selector(pos: Vector2i, size: Array[Rect2i]):
+func show_selector(cell_coordinate_center: Vector2i, size: Array[Rect2i]):
 	$Selection.clear()
-	var cell_coordinate_center = $Selection.local_to_map(Vector2i(pos.x, pos.y+40))
+	$Selection.show()
 	
 	for rect in size:
 		for x in range(ceil(cell_coordinate_center.x+rect.position.x-rect.size.x),ceil(cell_coordinate_center.x+rect.position.x++1+rect.size.x)):
@@ -58,8 +57,10 @@ func show_selector(pos: Vector2i, size: Array[Rect2i]):
 				else:
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(0,0), 0)
 
-func place_build(pos: Vector2i, structure: StructureResource):
-	var cell_coordinate_center = $Selection.local_to_map(Vector2i(pos.x,pos.y+40))
+func hide_selector():
+	$Selection.hide()
+
+func place_build(cell_coordinate_center: Vector2i, structure: StructureResource):
 	var can_place = true
 	
 	for rect in structure.size:
@@ -74,11 +75,11 @@ func place_build(pos: Vector2i, structure: StructureResource):
 		struc_scene.global_position = $Selection.map_to_local(cell_coordinate_center)
 		add_child(struc_scene)
 
-func _input(event):
-	if event is InputEventMouse:
-		show_selector(event.position, example_resource.size)
-	if event is InputEventMouseButton:
-		if event.button_mask == 1:
-			destroy(to_local(event.position),3)
-		if event.button_index == 2:
-			place_build(event.position, example_resource)
+#func _input(event):
+	#if event is InputEventMouse:
+		#show_selector(event.position, example_resource.size)
+	#if event is InputEventMouseButton:
+		#if event.button_mask == 1:
+			#destroy(to_local(event.position),3)
+		#if event.button_index == 2:
+			#place_build(event.position, example_resource)
