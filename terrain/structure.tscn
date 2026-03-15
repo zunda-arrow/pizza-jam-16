@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://33gt1q36wm86"]
+
+[ext_resource type="Script" uid="uid://c50nu3iepwkqn" path="res://terrain/structure.gd" id="1_vu45u"]
+[ext_resource type="Resource" uid="uid://bted2loskmxed" path="res://resources/structures/example.tres" id="2_ssdcl"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pugin"]
+size = Vector2(96, 96)
+
+[node name="Structure" type="Node2D" unique_id=650128113]
+script = ExtResource("1_vu45u")
+structure = ExtResource("2_ssdcl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=322916052]
+texture = SubResource("PlaceholderTexture2D_pugin")
