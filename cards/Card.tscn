@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://frlfqei1qb02"]
+
+[ext_resource type="Script" uid="uid://d0qhgc8jth425" path="res://cards/card.gd" id="1_v80w6"]
+[ext_resource type="Resource" uid="uid://d1ay340mx5p6j" path="res://resources/cards/dig.tres" id="2_ws7c5"]
+
+[node name="Card" type="Node2D" unique_id=434157083]
+script = ExtResource("1_v80w6")
+resource = ExtResource("2_ws7c5")
+
+[node name="Panel" type="Panel" parent="." unique_id=1628897435]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -100.0
+offset_right = 140.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel" unique_id=685846850]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -11.5
+offset_right = 50.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "This is a card"
+
+[connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]
+[connection signal="mouse_entered" from="Panel" to="." method="_on_panel_mouse_entered"]
+[connection signal="mouse_exited" from="Panel" to="." method="_on_panel_mouse_exited"]
