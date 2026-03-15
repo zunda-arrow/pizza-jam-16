@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bbp80q5uf7j17"]
+
+[ext_resource type="Texture2D" uid="uid://7tsmljtpxire" path="res://assets/arrow_circle.png" id="1_hx51t"]
+
+[node name="CursorBall" type="PathFollow2D" unique_id=1052898082]
+scale = Vector2(4, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2074745199]
+rotation = -2.75141
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_hx51t")

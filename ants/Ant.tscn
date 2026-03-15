@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cryd0fyrv42sl"]
+
+[ext_resource type="Texture2D" uid="uid://c8o38o30vq1wj" path="res://icon.svg" id="1_mn68x"]
+[ext_resource type="Script" uid="uid://b5ird8lbwe1j6" path="res://ants/ant.gd" id="2_jvk2r"]
+
+[node name="Ant" type="Sprite2D" unique_id=333733007]
+texture = ExtResource("1_mn68x")
+script = ExtResource("2_jvk2r")

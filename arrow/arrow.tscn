@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://c3tbo64q8cd1l"]
+
+[ext_resource type="Script" uid="uid://uopvs0pmebr" path="res://arrow/arrow.gd" id="1_jtvf3"]
+[ext_resource type="PackedScene" uid="uid://bbp80q5uf7j17" path="res://arrow/arrow_ball.tscn" id="2_jtvf3"]
+[ext_resource type="Texture2D" uid="uid://bc2vno3h6hdbl" path="res://assets/arrow_head.png" id="4_h46sk"]
+
+[sub_resource type="Curve2D" id="Curve2D_4upu2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100)
+}
+point_count = 2
+
+[node name="CardCursor" type="Node2D" unique_id=2102875355]
+script = ExtResource("1_jtvf3")
+
+[node name="Path2D" type="Path2D" parent="." unique_id=203529364]
+curve = SubResource("Curve2D_4upu2")
+
+[node name="CursorBall" parent="Path2D" unique_id=947323664 instance=ExtResource("2_jtvf3")]
+rotation = 0.7853982
+
+[node name="Head" type="PathFollow2D" parent="Path2D" unique_id=1122523806]
+z_index = 1
+position = Vector2(100, 100)
+rotation = 0.7853982
+progress = 141.42134
+
+[node name="Head" type="Sprite2D" parent="Path2D/Head" unique_id=2109074164]
+rotation = 1.5708
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("4_h46sk")

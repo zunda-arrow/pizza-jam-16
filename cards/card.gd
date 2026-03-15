@@ -5,6 +5,8 @@ signal on_mouse_entered
 signal on_mouse_exited
 signal on_clicked
 
+@export var resource: CardResource
+
 var hovered = false
 
 func _on_panel_mouse_entered() -> void:
