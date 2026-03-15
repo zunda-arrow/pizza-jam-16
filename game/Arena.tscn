@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ixy7ke2uuxf1"]
+
+[ext_resource type="PackedScene" uid="uid://b6lf5vwv0thx3" path="res://cards/PlayCards.tscn" id="1_ncbvw"]
+[ext_resource type="Script" uid="uid://blovuluvc6xh4" path="res://game/arena.gd" id="1_tb7ye"]
+[ext_resource type="PackedScene" uid="uid://cvgqygm3pnmmn" path="res://terrain/terrain.tscn" id="2_npdor"]
+
+[node name="Arena" type="Node2D" unique_id=728631546]
+script = ExtResource("1_tb7ye")
+
+[node name="Terrain" parent="." unique_id=333081327 instance=ExtResource("2_npdor")]
+unique_name_in_owner = true
+
+[node name="PlayCards" parent="." unique_id=1516163044 instance=ExtResource("1_ncbvw")]
+unique_name_in_owner = true
+
+[connection signal="card_used" from="PlayCards" to="." method="_on_play_cards_card_used"]
