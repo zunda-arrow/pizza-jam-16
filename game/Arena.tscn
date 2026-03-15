@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b6lf5vwv0thx3" path="res://cards/PlayCards.tscn" id="1_ncbvw"]
 [ext_resource type="Script" uid="uid://blovuluvc6xh4" path="res://game/arena.gd" id="1_tb7ye"]
 [ext_resource type="PackedScene" uid="uid://cvgqygm3pnmmn" path="res://terrain/terrain.tscn" id="2_npdor"]
+[ext_resource type="Texture2D" uid="uid://7tsmljtpxire" path="res://assets/arrow_circle.png" id="4_2wy63"]
 
 [node name="Arena" type="Node2D" unique_id=728631546]
 script = ExtResource("1_tb7ye")
@@ -12,6 +13,10 @@ unique_name_in_owner = true
 
 [node name="PlayCards" parent="." unique_id=1516163044 instance=ExtResource("1_ncbvw")]
 unique_name_in_owner = true
+
+[node name="Player" type="Sprite2D" parent="." unique_id=1643749877]
+unique_name_in_owner = true
+texture = ExtResource("4_2wy63")
 
 [connection signal="aiming_card" from="PlayCards" to="." method="_on_play_cards_aiming_card"]
 [connection signal="card_discarded" from="PlayCards" to="." method="_on_play_cards_card_discarded"]

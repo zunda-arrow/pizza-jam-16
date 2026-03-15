@@ -54,9 +54,11 @@ func try_to_play_card(i: int):
 
 	card_used.emit(resource, Vector2i(int(pos.x), int(pos.y)))
 	hand.remove_card_from_hand(i)
+	_targetting_card_index = -1
 
 func draw_card(card: CardResource.Card):
 	hand.add_card_to_hand(card)
 
 func _on_hand_card_discarded(i: int) -> void:
+	_targetting_card_index = -1
 	card_discarded.emit(i)
