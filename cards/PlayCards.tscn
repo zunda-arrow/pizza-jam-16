@@ -16,3 +16,4 @@ unique_name_in_owner = true
 visible = false
 
 [connection signal="card_clicked" from="Hand" to="." method="_on_hand_card_clicked"]
+[connection signal="card_discarded" from="Hand" to="." method="_on_hand_card_discarded"]

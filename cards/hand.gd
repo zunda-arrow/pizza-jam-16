@@ -4,10 +4,11 @@ extends Node2D
 
 var _card_scene = preload("res://cards/Card.tscn")
 
-var cards = []
+var cards: Array[CardResource]
 var card_scenes = []
 
 signal card_clicked(i: int)
+signal card_discarded(i: int)
 
 @export var radius = 2000
 @export var distance_between_cards = 200
@@ -16,21 +17,28 @@ signal card_clicked(i: int)
 var selected_card_index = -1
 
 func _ready():
-	for i in range(6):
-		var next_card = _card_scene.instantiate()
-		card_scenes.push_back(next_card)
-		%Cards.add_child(next_card)
-		
-		next_card.on_clicked.connect(func ():
-			card_clicked.emit(i)
-		)
+	position_cards(-1)
 
-	positon_cards(-1)
+func add_card_to_hand(card_resource: CardResource):
+	var next_card = _card_scene.instantiate()
+	next_card.card_resource = card_resource
+	card_scenes.push_back(next_card)
+	%Cards.add_child(next_card)
+	next_card.on_clicked.connect(func ():
+		var my_index = card_scenes.find(next_card)
+		card_clicked.emit(my_index)
+	)
+	next_card.on_right_clicked.connect(func ():
+		var my_index = card_scenes.find(next_card)
+		card_scenes.pop_at(my_index)
+		card_discarded.emit(my_index)
+		next_card.queue_free()
+	)
 
 func _process(delta: float) -> void:
-	positon_cards(delta)
+	position_cards(delta)
 
-func positon_cards(delta):
+func position_cards(delta):
 	for i in range(len(card_scenes)):
 		var card = card_scenes[i]
 
