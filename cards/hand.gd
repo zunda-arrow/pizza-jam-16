@@ -19,9 +19,9 @@ var selected_card_index = -1
 func _ready():
 	position_cards(-1)
 
-func add_card_to_hand(card_resource: CardResource):
+func add_card_to_hand(card_resource: CardResource.Card):
 	var next_card = _card_scene.instantiate()
-	next_card.card_resource = card_resource
+	next_card.instantiated_card_resource = card_resource
 	card_scenes.push_back(next_card)
 	%Cards.add_child(next_card)
 	next_card.on_clicked.connect(func ():
@@ -30,10 +30,14 @@ func add_card_to_hand(card_resource: CardResource):
 	)
 	next_card.on_right_clicked.connect(func ():
 		var my_index = card_scenes.find(next_card)
-		card_scenes.pop_at(my_index)
 		card_discarded.emit(my_index)
-		next_card.queue_free()
+		remove_card_from_hand(my_index)
 	)
+
+func remove_card_from_hand(index: int):
+	var card = card_scenes[index]
+	card_scenes.pop_at(index)
+	card.queue_free()
 
 func _process(delta: float) -> void:
 	position_cards(delta)

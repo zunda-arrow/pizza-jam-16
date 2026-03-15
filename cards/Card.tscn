@@ -18,20 +18,27 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Panel" unique_id=685846850]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=841004212]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -11.5
-offset_right = 50.0
-offset_bottom = 11.5
+anchors_preset = -1
+anchor_left = 0.20892857
+anchor_top = 0.3275
+anchor_right = 0.7910714
+anchor_bottom = 0.6725
 grow_horizontal = 2
 grow_vertical = 2
-text = "This is a card"
+metadata/_edit_use_anchors_ = true
+
+[node name="CardName" type="Label" parent="Panel/VBoxContainer" unique_id=685846850]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Card Name"
+
+[node name="CardDescription" type="Label" parent="Panel/VBoxContainer" unique_id=1747712364]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Example description"
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]
 [connection signal="mouse_entered" from="Panel" to="." method="_on_panel_mouse_entered"]
