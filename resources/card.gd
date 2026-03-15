@@ -2,30 +2,45 @@ class_name CardResource
 extends Resource
 
 @export var card_name: String
-@export var behavior: Behavior
+@export_multiline var description: String
+@export var card_impl: Cards
 
-enum Behavior {
+enum CardType {
+	Unset,
+	Dig,
+	Build,
+	Power,
+}
+
+enum Cards {
 	Default,
 	Dig,
 }
 
 class Card extends Node:
 	var card_name: String
-	var behavior: DefaultCard
+	var description: String
 
-class DefaultCard:
-	pass
+	func get_type() -> CardType:
+		return CardType.Unset
 
-class Dig extends DefaultCard:
-	pass
+	func get_area() -> Array[Rect2i]:
+		return []
 
-var all_behaviors = {
-	Behavior.Default: DefaultCard,
-	Behavior.Dig: Dig,
+class Dig extends Card:
+	func get_type() -> CardType:
+		return CardType.Dig
+
+	func get_area() -> Array[Rect2i]:
+		return [Rect2(-2, -2, 5, 5)]
+
+var all_cards = {
+	Cards.Default: Card,
+	Cards.Dig: Dig,
 }
 
 func new() -> Card:
-	var card = Card.new()
+	var card = all_cards[card_impl].new()
 	card.card_name = card_name
-	card.behavior = all_behaviors[behavior].new()
+	card.description = description
 	return card

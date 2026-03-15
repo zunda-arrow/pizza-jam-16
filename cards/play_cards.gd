@@ -33,7 +33,7 @@ func _process(delta: float) -> void:
 		hand.selected_card_index = _targetting_card_index
 
 	if _targetting_card_index != -1:
-		var resource = hand.card_scenes[_targetting_card_index].card_resource
+		var resource = hand.card_scenes[_targetting_card_index].instantiated_card_resource
 		var pos = get_global_mouse_position() / 32
 		aiming_card.emit(resource, Vector2i(int(pos.x), int(pos.y)))
 
@@ -49,12 +49,11 @@ func _input(event: InputEvent) -> void:
 
 func try_to_play_card(i: int):
 	# This function should be expanded to properly check targets
-	var resource = hand.card_scenes[i].card_resource
+	var resource = hand.card_scenes[i].instantiated_card_resource
 	var pos = get_global_mouse_position() / 32
 	card_used.emit(resource, Vector2i(int(pos.x), int(pos.y)))
 
-func draw_card(card: CardResource):
-	print(card)
+func draw_card(card: CardResource.Card):
 	hand.add_card_to_hand(card)
 
 func _on_hand_card_discarded(i: int) -> void:

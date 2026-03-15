@@ -19,9 +19,9 @@ var selected_card_index = -1
 func _ready():
 	position_cards(-1)
 
-func add_card_to_hand(card_resource: CardResource):
+func add_card_to_hand(card_resource: CardResource.Card):
 	var next_card = _card_scene.instantiate()
-	next_card.card_resource = card_resource
+	next_card.instantiated_card_resource = card_resource
 	card_scenes.push_back(next_card)
 	%Cards.add_child(next_card)
 	next_card.on_clicked.connect(func ():

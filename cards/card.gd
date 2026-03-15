@@ -7,8 +7,21 @@ signal on_clicked
 signal on_right_clicked
 
 @export var card_resource: CardResource
+# The card object that should be displayed with this card resource.
+var _instantiated_card_resource
+var instantiated_card_resource: CardResource.Card:
+	set(card):
+		_instantiated_card_resource = card
+		%CardName.text = card.card_name
+		%CardDescription.text = card.description
+	get():
+		return _instantiated_card_resource
 
 var hovered = false
+
+func _ready() -> void:
+	if card_resource != null:
+		instantiated_card_resource = card_resource.new()
 
 func _on_panel_mouse_entered() -> void:
 	hovered = true
