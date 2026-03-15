@@ -14,12 +14,10 @@ class Card extends Node:
 	var behavior: DefaultCard
 
 class DefaultCard:
-	func get_sound():
-		return "Not defined"
+	pass
 
 class Dig extends DefaultCard:
 	pass
-
 
 var all_behaviors = {
 	Behavior.Default: DefaultCard,
