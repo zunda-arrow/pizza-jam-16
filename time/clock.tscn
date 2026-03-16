@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://1g0vb5628bj1"]
+
+[ext_resource type="Script" uid="uid://h2rulg6y8eq7" path="res://time/clock.gd" id="1_8xr6g"]
+[ext_resource type="Texture2D" uid="uid://bc2vno3h6hdbl" path="res://assets/arrow_head.png" id="2_6ktf0"]
+
+[node name="Clock" type="Node2D" unique_id=1104602323]
+script = ExtResource("1_8xr6g")
+
+[node name="ClockSprite" type="Sprite2D" parent="." unique_id=1240834444]
+unique_name_in_owner = true
+position = Vector2(86, 77)
+texture = ExtResource("2_6ktf0")
