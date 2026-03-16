@@ -6,6 +6,8 @@
 script = ExtResource("1_llxoq")
 card_name = "Quarry"
 description = "Dig out a 5×5 area."
+energy_cost = 5
+ant_cost = 5
 card_impl = 1
-digArea = Array[Rect2i]([Rect2i(-2, -2, 5, 5)])
+digArea = Array[Rect2i]([Rect2i(-3, -2, 5, 5)])
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

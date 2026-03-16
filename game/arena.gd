@@ -8,7 +8,7 @@ var draw_pile: Array[CardResource.Card] = []
 var discard_pile: Array[CardResource.Card] = []
 
 var _energy: int
-var enegry: int:
+var energy: int:
 	set(val):
 		_energy = val
 		%EnergyLabel.text = "Energy: " + str(_energy)
@@ -43,8 +43,7 @@ func _ready():
 		load("res://resources/cards/dig.tres").new(),
 		load("res://resources/cards/quarry.tres").new(),
 		load("res://resources/cards/excavate.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/bulldoze.tres").new(),
 		]
 
 	deck.append_array(cards)
@@ -121,6 +120,6 @@ func _on_end_turn_button_button_down() -> void:
 	draw()
 
 	# Reset energy to maximum
-	enegry = 9
+	energy = 9
 
 	%EndTurnButton.disabled = false

@@ -6,6 +6,8 @@
 script = ExtResource("1_ngoxn")
 card_name = "Dig"
 description = "Dig out a 3×3 area."
+energy_cost = 2
+ant_cost = 2
 card_impl = 1
-digArea = Array[Rect2i]([Rect2i(-1, -1, 3, 3)])
+digArea = Array[Rect2i]([Rect2i(-2, -2, 3, 3)])
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
