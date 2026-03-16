@@ -14,14 +14,6 @@ class DefaultTerrainArea:
 var structure_scene = preload("res://terrain/structure.tscn")
 var example_resource: StructureResource = preload("res://resources/structures/example.tres")
 
-var current_rotation: int = 0:
-	get:
-		return current_rotation
-	set(new):
-		if new == -1:
-			current_rotation = 3
-			return
-		current_rotation = (new % 4)
 var structures: Array = []
 
 var placing_build = true
@@ -85,14 +77,9 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i]):
 					
 func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int):
 	$Selection.clear()
-	$Selection.show()
-	var new_cells: Array[Rect2i] = []
-	
-	for rect in cells:
-		rect.size = Vector2i(abs(Vector2(rect.size).rotated(current_rotation * PI / 2)))
-		new_cells.append(rect)
+	$Selection.show()	
 		
-	for rect in new_cells:
+	for rect in cells:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
@@ -130,7 +117,3 @@ func place_build(cell_coordinate_center: Vector2i, structure: StructureResource)
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
 		generate()
-	if Input.is_action_just_pressed("rotate_left"):
-		current_rotation -= 1
-	if Input.is_action_just_pressed("rotate_right"):
-		current_rotation += 1
