@@ -2,25 +2,28 @@
 
 [ext_resource type="Texture2D" uid="uid://beu2s3v842mog" path="res://assets/ants.png" id="1_kvta6"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvta6"]
+atlas = ExtResource("1_kvta6")
+region = Rect2(0, 0, 38, 40)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_djuic"]
 atlas = ExtResource("1_kvta6")
-region = Rect2(0, 0, 19, 20)
+region = Rect2(38, 0, 38, 40)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wpfuc"]
 atlas = ExtResource("1_kvta6")
-region = Rect2(19, 0, 19, 20)
+region = Rect2(76, 0, 38, 40)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_svujj"]
 atlas = ExtResource("1_kvta6")
-region = Rect2(38, 0, 19, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6qjg8"]
-atlas = ExtResource("1_kvta6")
-region = Rect2(57, 0, 19, 20)
+region = Rect2(114, 0, 38, 40)
 
 [resource]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvta6")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_djuic")
 }, {
@@ -29,11 +32,8 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_svujj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6qjg8")
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 20.0
 }]

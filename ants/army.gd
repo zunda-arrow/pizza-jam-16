@@ -1,32 +1,33 @@
 extends Node2D
 
-var ant = preload("res://ants/Ant.tscn")
+var ant_scene = preload("res://ants/Ant.tscn")
 
 @export var is_grid_cell_filled: Callable
+@export var spawn_position: Vector2i
+@export var spawn_ground_direction: Vector2i
 
 var ants: Array[Ant] = []
 
+var _main_loop: Array = []
+
+var _check_for_ant_not_on_loop_timer = 0.
+
 func _ready() -> void:
 	is_grid_cell_filled = default_is_grid_cell_filled
-
-	var loop = get_loop(Vector2i(2, 2), Vector2(0, 1))
-
-	for i in range(len(loop)):
-		var m = $Marker.duplicate()
-		add_child(m)
-		m.show()
-		m.position = loop[i][0] * 32 + Vector2i(16, 16)
+	
+	# We only care about the ants that are connected to spawn
+	# This position should be a spawn position in the future
+	_main_loop = get_loop(spawn_position, spawn_ground_direction)
 
 	spawn_ant()
 
 func spawn_ant():
-	var loop = get_loop(Vector2i(2, 3), Vector2(0, 1))
-	var random_test_ant: Ant = ant.instantiate()
-	%Ants.add_child(random_test_ant)
-	var cell = loop.pick_random()
-	random_test_ant.grid_position = cell[0]
-	random_test_ant.ground_direction = cell[1]
-	ants.push_back(random_test_ant)
+	for i in range(500):
+		var random_test_ant: Ant = ant_scene.instantiate()
+		%Ants.add_child(random_test_ant)
+		random_test_ant.grid_position = spawn_position
+		random_test_ant.ground_direction = spawn_ground_direction
+		ants.push_back(random_test_ant)
 
 func get_loop(pos: Vector2i, ground: Vector2i):
 	var walkable_cells: Array = []
@@ -53,12 +54,17 @@ func get_loop(pos: Vector2i, ground: Vector2i):
 
 	return walkable_cells
 
-func get_path_to_cell(loop: Array, from: Vector2i, to: Vector2i) -> Array:
+func get_path_to_cell(loop: Array, from: Vector2i, to: Vector2i):
 	var index_of_from = loop.find_custom(func(x): return x[0] == from)
 	var index_of_to = loop.find_custom(func(x): return x[0] == to)
-	
+
+	if index_of_to == -1 or index_of_from == -1:
+		return []
+
 	var path: Array
 	
+	var direction = "right"
+
 	if abs(index_of_to - index_of_from) < len(loop) - index_of_to - index_of_from:
 		var i = index_of_from
 		while i != index_of_to:
@@ -67,6 +73,7 @@ func get_path_to_cell(loop: Array, from: Vector2i, to: Vector2i) -> Array:
 			if i >= len(loop):
 				i = 0
 	else:
+		direction = "left"
 		var i = index_of_from
 		while i != index_of_to:
 			path.push_back(loop[i])
@@ -76,20 +83,29 @@ func get_path_to_cell(loop: Array, from: Vector2i, to: Vector2i) -> Array:
 
 	path.push_back(loop[index_of_to])
 
-	return path
+	return [path, direction]
 
 func default_is_grid_cell_filled(cell: Vector2) -> bool:
 	return $TileMap.get_cell_tile_data(0, cell) != null
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+func is_cell_on_loop(cell: Vector2i, ground = null):
+	if _main_loop.find_custom(func(x): return x[0] == cell and (ground == null or x[1] == ground)) != -1:
+		return true
 
-		var mouse_cell = floor(get_global_mouse_position() / 32)
-		var ant = ants[0]
-		
-		var ant_loop = get_loop(ant.grid_position, ant.ground_direction)
-		if ant_loop.find_custom(func(x): return x[0] == Vector2i(mouse_cell)) == -1:
-			print("failed")
-			return
+func _process(delta: float) -> void:
+	_check_for_ant_not_on_loop_timer += delta
 
-		ant.move_to_tile(get_path_to_cell(ant_loop, ant.grid_position, mouse_cell))
+	# We only check if the ants ants are not on the loop every .5 seconds to prevent lag
+	if _check_for_ant_not_on_loop_timer > .5:
+		_check_for_ant_not_on_loop_timer = 0
+		for ant in ants:
+			if not is_cell_on_loop(ant.grid_position, ant.ground_direction):
+				# If the ants get removed from the main loop, put them back at spawn.
+				ant.grid_position = spawn_position
+				ant.ground_direction = spawn_ground_direction
+
+	for ant in ants:
+		if len(ant.following_path) == 0:
+			var cell = _main_loop.pick_random()
+			var d = get_path_to_cell(_main_loop, ant.grid_position, cell[0])
+			ant.move_to_tile(d[0], d[1])
