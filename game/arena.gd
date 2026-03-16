@@ -16,19 +16,20 @@ func _ready():
 	%Terrain.region = %Camera
 
 	var cards: Array[CardResource.Card] = [
+		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
 		load("res://resources/cards/dig.tres").new(),
 		load("res://resources/cards/dig.tres").new(),
 		load("res://resources/cards/dig.tres").new(),
 		load("res://resources/cards/dig.tres").new(),
 		load("res://resources/cards/dig.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
 		]
 	deck.append_array(cards)
 	draw_pile.append_array(cards)
+	draw_pile.shuffle()
 	draw(5)
 		
 func draw(n: int): # TODO: Handle empty draw pile.
@@ -44,6 +45,8 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2) -> void:
 		%Terrain.destroy(at, card.get_area())
 	if card.get_type() == CardResource.CardType.Move:
 		player_position = at
+	if card.get_type() == CardResource.CardType.Build:
+		%Terrain.place_build(at, card.structure)
 
 	%Terrain.hide_selector()
 
