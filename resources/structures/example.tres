@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://bted2loskmxed"]
 
-[ext_resource type="Script" path="res://resources/structures.gd" id="1_pugin"]
+[ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_pugin"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pugin"]
 size = Vector2(96, 96)
@@ -8,5 +8,5 @@ size = Vector2(96, 96)
 [resource]
 script = ExtResource("1_pugin")
 structure_name = "Example"
-size = Array[Rect2i]([Rect2i(0, 0, 1, 1)])
+size = Array[Rect2i]([Rect2i(-1, -1, 3, 3)])
 texture = SubResource("PlaceholderTexture2D_pugin")
