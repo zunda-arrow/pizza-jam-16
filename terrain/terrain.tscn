@@ -39,6 +39,7 @@ unique_name_in_owner = true
 tile_set = ExtResource("2_2ilfp")
 
 [node name="Selection" type="TileMapLayer" parent="." unique_id=1551127036]
+z_index = 4096
 tile_set = SubResource("TileSet_l7s0s")
 
 [node name="Building" type="RigidBody2D" parent="." unique_id=2137802564]

@@ -33,11 +33,6 @@ var player_position: Vector2i:
 func _ready():
 	%Terrain.region = %Camera
 	_on_terrain_update()
-	
-	# Set the starting number of ants
-	ants = 50
-	# Set the starting number of energy
-	enegry = 9
 
 	var cards: Array[CardResource.Card] = [
 		load("res://resources/cards/fungus_bar.tres").new(),
@@ -55,14 +50,12 @@ func _ready():
 	deck.append_array(cards)
 	draw_pile.append_array(cards)
 	draw_pile.shuffle()
-	
-	draw(HAND_SIZE)
+	draw(5)
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
 	%Army.spawn_position = Vector2(3, -1)
 	%Army.spawn_ground_direction = Vector2(0, 1)
-	%Army.number_of_ants = ants
 	%Army.generate_loop()
 	%Army.spawn_ants()
 
@@ -93,12 +86,6 @@ func _is_cell_filled(pos: Vector2i):
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
 
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2) -> void:
-	if card.ant_cost > ants or card.energy_cost > enegry:
-		return
-
-	ants -= card.ant_cost
-	enegry -= card.energy_cost
-	
 	print("Using card: ", card, at)
 
 	if card.get_type() == CardResource.CardType.Dig:
@@ -112,9 +99,10 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2) -> void:
 	_on_terrain_update()
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2) -> void:
-	if card.ant_cost > ants or card.energy_cost > enegry:
-		return
-	%Terrain.show_selector(at, card.get_area())
+	if card.get_type() == CardResource.CardType.Dig:
+		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig)
+	if card.get_type() == CardResource.CardType.Build:
+		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build)
 
 func _on_play_cards_card_discarded(index: int) -> void:
 	discard_pile.append(hand[index])

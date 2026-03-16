@@ -14,13 +14,13 @@ func set_connected_to_loop(is_connected_: bool):
 	else:
 		$Label.hide()
 
-func get_tiles():
-	var rect = $Sprite2D.get_rect()
-
-	var out = []
-
-	for x in range(rect.position.x / 32, rect.end.x / 32):
-		for y in range(rect.position.x / 32, rect.end.y / 32):
-			out += [Vector2i(Vector2(x, y) + position / 32)]
-
+func get_tiles() -> Array[Vector2i]:
+	var rects: Array[Rect2i] = structure.size
+	var pos = Vector2i(position / 32)
+	var out: Array[Vector2i]
+	for r in rects:
+		for x in r.size.x:
+			for y in r.size.y:
+				out += [pos + Vector2i(x,y) - Vector2i(1,2)]
 	return out
+				
