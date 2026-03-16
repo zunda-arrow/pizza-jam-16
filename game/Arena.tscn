@@ -3,16 +3,22 @@
 [ext_resource type="PackedScene" uid="uid://rymwewttx11s" path="res://cards/PlayCards.tscn" id="1_ncbvw"]
 [ext_resource type="Script" uid="uid://blovuluvc6xh4" path="res://game/arena.gd" id="1_tb7ye"]
 [ext_resource type="PackedScene" uid="uid://cvgqygm3pnmmn" path="res://terrain/terrain.tscn" id="2_npdor"]
+[ext_resource type="PackedScene" uid="uid://cragqvxbavsjj" path="res://camera/Camera.tscn" id="3_2wy63"]
 
 [node name="Arena" type="Node2D" unique_id=728631546]
 script = ExtResource("1_tb7ye")
 
 [node name="Terrain" parent="." unique_id=333081327 instance=ExtResource("2_npdor")]
 unique_name_in_owner = true
+block_threshold = 0.2
 
-[node name="PlayCards" parent="." unique_id=1516163044 instance=ExtResource("1_ncbvw")]
+[node name="Camera" parent="." unique_id=2140926887 instance=ExtResource("3_2wy63")]
 unique_name_in_owner = true
 
-[connection signal="aiming_card" from="PlayCards" to="." method="_on_play_cards_aiming_card"]
-[connection signal="card_discarded" from="PlayCards" to="." method="_on_play_cards_card_discarded"]
-[connection signal="card_used" from="PlayCards" to="." method="_on_play_cards_card_used"]
+[node name="PlayCards" parent="Camera" unique_id=1516163044 instance=ExtResource("1_ncbvw")]
+unique_name_in_owner = true
+position = Vector2(-960, -540)
+
+[connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
+[connection signal="card_discarded" from="Camera/PlayCards" to="." method="_on_play_cards_card_discarded"]
+[connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]

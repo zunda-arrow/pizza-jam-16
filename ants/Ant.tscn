@@ -1,8 +1,14 @@
 [gd_scene format=3 uid="uid://cryd0fyrv42sl"]
 
-[ext_resource type="Texture2D" uid="uid://c8o38o30vq1wj" path="res://icon.svg" id="1_mn68x"]
+[ext_resource type="Texture2D" uid="uid://bc2vno3h6hdbl" path="res://assets/arrow_head.png" id="1_jvk2r"]
 [ext_resource type="Script" uid="uid://b5ird8lbwe1j6" path="res://ants/ant.gd" id="2_jvk2r"]
+[ext_resource type="Texture2D" uid="uid://c8o38o30vq1wj" path="res://icon.svg" id="3_2168k"]
 
-[node name="Ant" type="Sprite2D" unique_id=333733007]
-texture = ExtResource("1_mn68x")
+[node name="Node2D" type="Sprite2D" unique_id=439682378]
+texture = ExtResource("1_jvk2r")
 script = ExtResource("2_jvk2r")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1636363216]
+position = Vector2(-1.0000038, 27.999992)
+scale = Vector2(0.2578125, 0.2578125)
+texture = ExtResource("3_2168k")

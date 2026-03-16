@@ -5,7 +5,16 @@ var deck: Array[CardResource.Card] = []
 var draw_pile: Array[CardResource.Card] = []
 var discard_pile: Array[CardResource.Card] = []
 
+var player_position: Vector2i:
+	set(pos):
+		%Player.position = pos * 32
+	get():
+		return %Player.position / 32
+
+
 func _ready():
+	%Terrain.region = %Camera
+
 	var cards: Array[CardResource.Card] = [
 		load("res://resources/cards/dig.tres").new(),
 		load("res://resources/cards/dig.tres").new(),
@@ -30,7 +39,12 @@ func draw(n: int): # TODO: Handle empty draw pile.
 
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2) -> void:
 	print("Using card: ", card, at)
-	%Terrain.destroy(at, card.get_area())
+	
+	if card.get_type() == CardResource.CardType.Dig:
+		%Terrain.destroy(at, card.get_area())
+	if card.get_type() == CardResource.CardType.Move:
+		player_position = at
+
 	%Terrain.hide_selector()
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2) -> void:
