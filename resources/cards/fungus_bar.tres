@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://bd0qliuk3eis2"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://clac6wa648ql3"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_ngoxn"]
 [ext_resource type="Resource" uid="uid://bted2loskmxed" path="res://resources/structures/example.tres" id="2_amev7"]
@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("1_ngoxn")
 card_name = "Fungus Bar"
-description = "All nearby cards cost -1 energy."
+description = "All nearby cards cost."
+enegry_cost = 1
 card_impl = 3
 structureResource = ExtResource("2_amev7")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
