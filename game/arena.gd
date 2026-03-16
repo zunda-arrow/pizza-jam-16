@@ -1,5 +1,7 @@
 extends Node2D
 
+var HAND_SIZE = 6
+
 var hand: Array[CardResource.Card] = []
 var deck: Array[CardResource.Card] = []
 var draw_pile: Array[CardResource.Card] = []
@@ -54,7 +56,7 @@ func _ready():
 	draw_pile.append_array(cards)
 	draw_pile.shuffle()
 	
-	draw(5)
+	draw(HAND_SIZE)
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
@@ -78,7 +80,12 @@ func _on_terrain_update():
 
 func draw(n: int): # TODO: Handle empty draw pile.
 	for i in range(n):
-		var card = draw_pile.pop_back()
+		if len(draw_pile) == 0:
+			# When the draw pile is empty, we put the discard pile back
+			# into the draw pile.
+			draw_pile = discard_pile
+			discard_pile = []
+		var card = draw_pile.pick_random()
 		hand.append(card)
 		%PlayCards.draw_card(card)
 
@@ -110,7 +117,23 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2) -> void:
 	%Terrain.show_selector(at, card.get_area())
 
 func _on_play_cards_card_discarded(index: int) -> void:
-	print(hand)
 	discard_pile.append(hand[index])
-	print("discarded", index)
-	print(discard_pile)
+	hand.pop_at(index)
+
+func _on_end_turn_button_button_down() -> void:
+	# At the end of the turn, we want to draw cards
+
+	%EndTurnButton.disabled = true
+
+	while len(hand) > 0:
+		%PlayCards.discard_card(0)
+		# Give a litte animation
+		await get_tree().create_timer(.05).timeout
+
+	var number_of_cards_to_draw = HAND_SIZE
+	draw(number_of_cards_to_draw)
+
+	# Reset energy to maximum
+	enegry = 9
+
+	%EndTurnButton.disabled = false
