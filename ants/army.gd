@@ -9,59 +9,55 @@ var ants: Array[Ant] = []
 func _ready() -> void:
 	is_grid_cell_filled = default_is_grid_cell_filled
 
-	var loop = get_loop(Vector2i(0, 3))
+	var loop = get_loop(Vector2i(2, 2), Vector2(0, 1))
 
 	for i in range(len(loop)):
 		var m = $Marker.duplicate()
 		add_child(m)
 		m.show()
-		m.text = str(i)
-		m.position = loop[i] * 32 + Vector2i(16, 16)
+		m.position = loop[i][0] * 32 + Vector2i(16, 16)
 
 	spawn_ant()
 
 func spawn_ant():
-	var loop = get_loop(Vector2i(0, 3))
+	var loop = get_loop(Vector2i(2, 3), Vector2(0, 1))
 	var random_test_ant: Ant = ant.instantiate()
 	%Ants.add_child(random_test_ant)
-	random_test_ant.grid_position = loop.pick_random()
+	var cell = loop.pick_random()
+	random_test_ant.grid_position = cell[0]
+	random_test_ant.ground_direction = cell[1]
 	ants.push_back(random_test_ant)
 
-func get_loop(pos: Vector2i) -> Array[Vector2i]:
-	var forward = Vector2(1, 0)
-	if is_grid_cell_filled.call(pos + Vector2i(1, 0)):
-		forward = Vector2(0, -1)
-	if is_grid_cell_filled.call(pos + Vector2i(0, -1)):
-		forward = Vector2(-1, 0)
-	if is_grid_cell_filled.call(pos + Vector2i(-1, 0)):
-		forward = Vector2(0, 1)
+func get_loop(pos: Vector2i, ground: Vector2i):
+	var walkable_cells: Array = []
 
-	var walkable_cells: Array[Vector2i] = []
-	
-	while pos not in walkable_cells:
-		var under = Vector2i(Vector2(forward).rotated(PI / 2))
+	while [pos, ground] not in walkable_cells:
+		var forward = Vector2i(Vector2(ground).rotated(-PI / 2))
 
-		if is_grid_cell_filled.call(pos + under) == false:
-			forward = under
-			pos = pos + under
+		if is_grid_cell_filled.call(pos + forward) == true:
+			# Rotate left
+			walkable_cells.push_back([pos, ground])
+			ground = forward
 			continue
 
-		if is_grid_cell_filled.call(pos + Vector2i(forward)) == true:
-			forward = Vector2i(Vector2(forward).rotated(-PI / 2))
-			walkable_cells.push_back(pos)
-			pos += Vector2i(forward)
+		if is_grid_cell_filled.call(pos + forward) == false and is_grid_cell_filled.call(pos + forward + ground) == false:
+			# Rotate left
+			walkable_cells.push_back([pos, ground])
+			pos = pos + forward + ground
+			ground = Vector2i(Vector2(ground).rotated(PI / 2))
+			continue
 
-		if is_grid_cell_filled.call(pos + under) == true:
-			walkable_cells.push_back(pos)
-			pos += Vector2i(forward)
+		if is_grid_cell_filled.call(pos + ground) == true:
+			walkable_cells.push_back([pos, ground])
+			pos += forward
 
 	return walkable_cells
 
-func get_path_to_cell(loop: Array[Vector2i], from: Vector2i, to: Vector2i) -> Array[Vector2i]:
-	var index_of_from = loop.find(from)
-	var index_of_to = loop.find(to)
+func get_path_to_cell(loop: Array, from: Vector2i, to: Vector2i) -> Array:
+	var index_of_from = loop.find_custom(func(x): return x[0] == from)
+	var index_of_to = loop.find_custom(func(x): return x[0] == to)
 	
-	var path: Array[Vector2i]
+	var path: Array
 	
 	if abs(index_of_to - index_of_from) < len(loop) - index_of_to - index_of_from:
 		var i = index_of_from
@@ -79,23 +75,21 @@ func get_path_to_cell(loop: Array[Vector2i], from: Vector2i, to: Vector2i) -> Ar
 				i = len(loop) - 1
 
 	path.push_back(loop[index_of_to])
-	
+
 	return path
 
 func default_is_grid_cell_filled(cell: Vector2) -> bool:
 	return $TileMap.get_cell_tile_data(0, cell) != null
 
-
-
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-
 
 		var mouse_cell = floor(get_global_mouse_position() / 32)
 		var ant = ants[0]
 		
-		var ant_loop = get_loop(ant.grid_position)
-		if mouse_cell not in ant_loop:
+		var ant_loop = get_loop(ant.grid_position, ant.ground_direction)
+		if ant_loop.find_custom(func(x): return x[0] == Vector2i(mouse_cell)) == -1:
+			print("failed")
 			return
-		
+
 		ant.move_to_tile(get_path_to_cell(ant_loop, ant.grid_position, mouse_cell))
