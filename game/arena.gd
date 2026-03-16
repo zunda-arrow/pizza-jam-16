@@ -50,7 +50,7 @@ func _ready():
 	deck.append_array(cards)
 	draw_pile.append_array(cards)
 	draw_pile.shuffle()
-	draw(5)
+	draw()
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
@@ -71,14 +71,14 @@ func _on_terrain_update():
 				break
 
 
-func draw(n: int): # TODO: Handle empty draw pile.
-	for i in range(n):
+func draw():
+	for i in range(HAND_SIZE):
 		if len(draw_pile) == 0:
 			# When the draw pile is empty, we put the discard pile back
 			# into the draw pile.
 			draw_pile = discard_pile
 			discard_pile = []
-		var card = draw_pile.pick_random()
+		var card = draw_pile.pop_at(randi() % len(draw_pile))
 		hand.append(card)
 		%PlayCards.draw_card(card)
 
@@ -118,8 +118,7 @@ func _on_end_turn_button_button_down() -> void:
 		# Give a litte animation
 		await get_tree().create_timer(.05).timeout
 
-	var number_of_cards_to_draw = HAND_SIZE
-	draw(number_of_cards_to_draw)
+	draw()
 
 	# Reset energy to maximum
 	enegry = 9
