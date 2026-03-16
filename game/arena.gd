@@ -12,6 +12,8 @@ var player_position: Vector2i:
 
 
 func _ready():
+	%Terrain.region = %Camera
+
 	var cards: Array[CardResource.Card] = [
 		load("res://resources/cards/dig.tres").new(),
 		load("res://resources/cards/dig.tres").new(),

@@ -8,7 +8,6 @@ script = ExtResource("1_qpltt")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=107190833]
 limit_enabled = false
-position_smoothing_enabled = true
 
 [node name="_Sprite2D" type="Sprite2D" parent="." unique_id=1069561661]
 position = Vector2(-431, -231)
