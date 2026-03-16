@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://cbqklgsls05ul"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_wm1p5"]
+
+[resource]
+script = ExtResource("1_wm1p5")
+card_name = "Bulldoze"
+description = "Dig out a 5×2 area."
+energy_cost = 3
+ant_cost = 1
+card_impl = 1
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
