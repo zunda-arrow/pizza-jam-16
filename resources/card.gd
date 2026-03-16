@@ -4,8 +4,9 @@ extends Resource
 @export var card_name: String
 @export_multiline var description: String
 @export var card_impl: Cards
+@export var cost: int
 @export var	structureResource: StructureResource
-
+@export var digArea: Array[Rect2i]
 enum CardType {
 	Unset,
 	Dig,
@@ -24,7 +25,9 @@ enum Cards {
 class Card extends Node:
 	var card_name: String
 	var description: String
+	var cost: int
 	var structure: StructureResource
+	var digArea: Array[Rect2i]
 	
 	func get_type() -> CardType:
 		return CardType.Unset
@@ -37,7 +40,7 @@ class Dig extends Card:
 		return CardType.Dig
 
 	func get_area() -> Array[Rect2i]:
-		return [Rect2(-1, -1, 3, 3)]
+		return digArea
 
 class Move extends Card:
 	func get_type() -> CardType:
@@ -61,5 +64,7 @@ func new() -> Card:
 	var card = all_cards[card_impl].new()
 	card.card_name = card_name
 	card.description = description
+	card.cost = cost
 	card.structure = structureResource
+	card.digArea = digArea
 	return card

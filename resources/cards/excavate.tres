@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://d148lxvipod8g"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_vi1n0"]
+
+[resource]
+script = ExtResource("1_vi1n0")
+card_name = "Excavate"
+description = "Dig out a 4×4 area."
+card_impl = 1
+digArea = Array[Rect2i]([Rect2i(-2, -2, 4, 4)])
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

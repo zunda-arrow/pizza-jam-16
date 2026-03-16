@@ -1,12 +1,11 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://d1rt7y0rri2o4"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://cpmkqxu5gj8h4"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_ngoxn"]
-[ext_resource type="Resource" uid="uid://bted2loskmxed" path="res://resources/structures/example.tres" id="2_amev7"]
 
 [resource]
 script = ExtResource("1_ngoxn")
 card_name = "Dig"
-description = "Remove a 5x5 "
+description = "Dig out a 3×3 area."
 card_impl = 1
-strucure = ExtResource("2_amev7")
+digArea = Array[Rect2i]([Rect2i(-1, -1, 3, 3)])
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

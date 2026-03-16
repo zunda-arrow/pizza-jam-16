@@ -21,10 +21,10 @@ func _ready():
 		load("res://resources/cards/fungus_bar.tres").new(),
 		load("res://resources/cards/fungus_bar.tres").new(),
 		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/scoop.tres").new(),
 		load("res://resources/cards/dig.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
+		load("res://resources/cards/quarry.tres").new(),
+		load("res://resources/cards/excavate.tres").new(),
 		load("res://resources/cards/dig.tres").new(),
 		load("res://resources/cards/fungus_bar.tres").new(),
 		]
