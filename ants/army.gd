@@ -2,32 +2,31 @@ extends Node2D
 
 var ant_scene = preload("res://ants/Ant.tscn")
 
-@export var is_grid_cell_filled: Callable
+@export var is_grid_cell_filled = null
 @export var spawn_position: Vector2i
 @export var spawn_ground_direction: Vector2i
+@export var number_of_ants: int
 
 var ants: Array[Ant] = []
-
 var _main_loop: Array = []
-
 var _check_for_ant_not_on_loop_timer = 0.
 
-func _ready() -> void:
-	is_grid_cell_filled = default_is_grid_cell_filled
-	
+func generate_loop() -> void:
+	if is_grid_cell_filled == null:
+		is_grid_cell_filled = default_is_grid_cell_filled
+
 	# We only care about the ants that are connected to spawn
 	# This position should be a spawn position in the future
 	_main_loop = get_loop(spawn_position, spawn_ground_direction)
 
-	spawn_ant()
-
-func spawn_ant():
-	for i in range(500):
+func spawn_ants():
+	for i in range(number_of_ants):
 		var random_test_ant: Ant = ant_scene.instantiate()
 		%Ants.add_child(random_test_ant)
 		random_test_ant.grid_position = spawn_position
 		random_test_ant.ground_direction = spawn_ground_direction
 		ants.push_back(random_test_ant)
+		await get_tree().create_timer(.1).timeout
 
 func get_loop(pos: Vector2i, ground: Vector2i):
 	var walkable_cells: Array = []
@@ -108,4 +107,8 @@ func _process(delta: float) -> void:
 		if len(ant.following_path) == 0:
 			var cell = _main_loop.pick_random()
 			var d = get_path_to_cell(_main_loop, ant.grid_position, cell[0])
+
+			if len(d) == 0:
+				continue
+
 			ant.move_to_tile(d[0], d[1])
