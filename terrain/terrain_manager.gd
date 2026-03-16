@@ -5,11 +5,21 @@ class DefaultTerrainArea:
 	func get_bounding_area() -> Rect2:
 		return Rect2(Vector2.ZERO, Vector2(1920, 1080))
 
+enum TerrainType{
+	Air,
+	Dirt,
+	Rock
+}
+
 @export var initial_seed = 0 # The noise seed on ready. If set to 0, random seed.
 
 @export var noise: FastNoiseLite # The noise we will use to generate the terrain
 @export var block_threshold: float = 0.5 # Threshold to place a block (less than)
-@export var unbreakable_threshold: float = 0.0 # Threshold to place an unbreakable block #TODO: Implement
+@export var rock_threshold: float = 1.0 # Threshold to place an unbreakable block #TODO: Implement
+
+@export var spawn_radius: float = 10.0
+
+@export var chunk_size: int = 16
 
 var structure_scene = preload("res://terrain/structure.tscn")
 var example_resource: StructureResource = preload("res://resources/structures/example.tres")
@@ -19,6 +29,7 @@ var structures: Array = []
 var placing_build = true
 
 var region = DefaultTerrainArea.new()
+var generated_chunks = {}
 
 @onready var tilemap: TileMapLayer = %GroundMap
 
@@ -39,22 +50,43 @@ func reset_map(new_seed) -> void:
 
 func generate() -> void:
 	var rect = region.get_bounding_area()
-	var set_cells = []
-	for y in rect.size.y / tilemap.tile_set.tile_size.y:
-		for x in rect.size.x / tilemap.tile_set.tile_size.x:
-			#TODO: Can probably do this better.
-			var potential_pos = Vector2(
-				x + tilemap.local_to_map(rect.position).x,
-				y + tilemap.local_to_map(rect.position).y,
+	var start_pos = floor(Vector2(tilemap.local_to_map(rect.position)) / chunk_size)
+	var size_chunks = ceil(rect.size / tilemap.tile_set.tile_size.x / chunk_size)
+	for y in size_chunks.y:
+		for x in size_chunks.x:
+			generate_chunk(start_pos.x + x, start_pos.y + y)
+
+func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chunk of terrain
+	if generated_chunks.get(Vector2i(chunk_x, chunk_y), false):
+		return
+	generated_chunks[Vector2i(chunk_x, chunk_y)] = true
+	var dirt_cells = []
+	var rock_cells = []
+	for y in chunk_size:
+		for x in chunk_size:
+			var potential_pos = Vector2i(
+				chunk_x * chunk_size + x,
+				chunk_y * chunk_size + y
 			)
-			if get_cellv(potential_pos):
-				set_cells.append(potential_pos)
-	tilemap.set_cells_terrain_connect(set_cells, 0, 0)
+			match get_cellv(potential_pos):
+				TerrainType.Dirt:
+					dirt_cells.append(potential_pos)
+				TerrainType.Rock:
+					rock_cells.append(potential_pos)
+	tilemap.set_cells_terrain_connect(dirt_cells, 0, 0)
+	tilemap.set_cells_terrain_connect(rock_cells, 0, 1)
 
-func get_cell(x: int, y: int) -> bool: # Check if there is a cell here
-	return noise.get_noise_2d(x, y) < block_threshold
+func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
+	if sqrt(x**2 + y**2) <= spawn_radius:
+		return TerrainType.Air
+	var point = noise.get_noise_2d(x, y)
+	if point < rock_threshold:
+		return TerrainType.Rock
+	elif point < block_threshold:
+		return TerrainType.Dirt
+	return TerrainType.Air
 
-func get_cellv(vec: Vector2) -> bool:
+func get_cellv(vec: Vector2) -> TerrainType:
 	return get_cell(vec.x, vec.y)
 
 # Radius is a square radius
@@ -126,5 +158,4 @@ func place_build(cell_coordinate_center: Vector2i, structure: StructureResource)
 		structures.push_back(struc_scene)
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		generate()
+	generate()
