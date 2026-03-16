@@ -11,6 +11,8 @@ class DefaultTerrainArea:
 @export var block_threshold: float = 0.5 # Threshold to place a block (less than)
 @export var unbreakable_threshold: float = 0.0 # Threshold to place an unbreakable block #TODO: Implement
 
+@export var spawn_radius: float = 10.0
+
 var structure_scene = preload("res://terrain/structure.tscn")
 var example_resource: StructureResource = preload("res://resources/structures/example.tres")
 
@@ -45,7 +47,7 @@ func generate() -> void:
 	tilemap.set_cells_terrain_connect(set_cells, 0, 0)
 
 func get_cell(x: int, y: int) -> bool: # Check if there is a cell here
-	return noise.get_noise_2d(x, y) < block_threshold
+	return noise.get_noise_2d(x, y) < block_threshold and sqrt(x**2 + y**2) > spawn_radius
 
 func get_cellv(vec: Vector2) -> bool:
 	return get_cell(vec.x, vec.y)
