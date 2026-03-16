@@ -24,7 +24,6 @@ func add_card_to_hand(card_resource: CardResource.Card):
 	next_card.instantiated_card_resource = card_resource
 	card_scenes.push_back(next_card)
 	%Cards.add_child(next_card)
-	%Arena.hand.append(next_card)
 	next_card.on_clicked.connect(func ():
 		var my_index = card_scenes.find(next_card)
 		card_clicked.emit(my_index)

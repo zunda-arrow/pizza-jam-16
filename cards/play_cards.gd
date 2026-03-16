@@ -53,6 +53,7 @@ func try_to_play_card(i: int):
 	var pos = get_global_mouse_position() / 32
 
 	card_used.emit(resource, Vector2i(int(pos.x), int(pos.y)))
+	card_discarded.emit(i)
 	hand.remove_card_from_hand(i)
 
 func draw_card(card: CardResource.Card):
@@ -60,3 +61,4 @@ func draw_card(card: CardResource.Card):
 
 func _on_hand_card_discarded(i: int) -> void:
 	card_discarded.emit(i)
+	
