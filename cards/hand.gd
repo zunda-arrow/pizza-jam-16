@@ -2,6 +2,8 @@
 
 extends Node2D
 
+# Display what cards are in the users hand.
+
 var _card_scene = preload("res://cards/Card.tscn")
 
 var cards: Array[CardResource]
