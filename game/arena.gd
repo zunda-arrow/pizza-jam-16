@@ -75,7 +75,10 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2) -> void:
 	_on_terrain_update()
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2) -> void:
-	%Terrain.show_selector(at, card.get_area())
+	if card.get_type() == CardResource.CardType.Dig:
+		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig)
+	if card.get_type() == CardResource.CardType.Build:
+		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build)
 
 func _on_play_cards_card_discarded(index: int) -> void:
 	print(hand)
