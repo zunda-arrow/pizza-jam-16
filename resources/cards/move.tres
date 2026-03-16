@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://cp07m2bqkensu"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_ik6ef"]
+
+[resource]
+script = ExtResource("1_ik6ef")
+card_name = "Move"
+description = "Move the ants"
+card_impl = 2
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

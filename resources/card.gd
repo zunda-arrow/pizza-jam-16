@@ -8,6 +8,7 @@ extends Resource
 enum CardType {
 	Unset,
 	Dig,
+	Move,
 	Build,
 	Power,
 }
@@ -15,6 +16,7 @@ enum CardType {
 enum Cards {
 	Default,
 	Dig,
+	Move,
 }
 
 class Card extends Node:
@@ -34,9 +36,14 @@ class Dig extends Card:
 	func get_area() -> Array[Rect2i]:
 		return [Rect2(-2, -2, 5, 5)]
 
+class Move extends Card:
+	func get_type() -> CardType:
+		return CardType.Move
+
 var all_cards = {
 	Cards.Default: Card,
 	Cards.Dig: Dig,
+	Cards.Move: Move,
 }
 
 func new() -> Card:
