@@ -13,6 +13,7 @@ script = ExtResource("1_tb7ye")
 [node name="Terrain" parent="." unique_id=333081327 instance=ExtResource("2_npdor")]
 unique_name_in_owner = true
 block_threshold = 0.2
+rock_threshold = -0.4
 
 [node name="Army" parent="." unique_id=1221516024 instance=ExtResource("3_q8ykg")]
 unique_name_in_owner = true
