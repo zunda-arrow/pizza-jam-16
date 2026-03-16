@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cctsj533oycho"]
+
+[ext_resource type="Script" uid="uid://dobpt2xb38ef2" path="res://structures/manager.gd" id="1_qacg1"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qacg1"]
+
+[node name="Manager" type="Node2D" unique_id=464444204]
+script = ExtResource("1_qacg1")
+
+[node name="StructureHolder" type="StaticBody2D" parent="." unique_id=115021237]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StructureHolder" unique_id=1642036598]
+shape = SubResource("WorldBoundaryShape2D_qacg1")
+
+[node name="Camera2D" type="Camera2D" parent="StructureHolder" unique_id=845915441]
