@@ -25,6 +25,33 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 position = Vector2(-960, -540)
 
+[node name="EnergyLabel" type="Label" parent="Camera" unique_id=1812955512]
+unique_name_in_owner = true
+offset_left = 596.0
+offset_top = -503.0
+offset_right = 934.0
+offset_bottom = -407.0
+theme_override_font_sizes/font_size = 40
+text = "Energy:"
+
+[node name="AntsLabel" type="Label" parent="Camera" unique_id=463997152]
+unique_name_in_owner = true
+offset_left = 597.0
+offset_top = -428.0
+offset_right = 935.0
+offset_bottom = -332.0
+theme_override_font_sizes/font_size = 40
+text = "Ants:"
+
+[node name="EndTurnButton" type="Button" parent="Camera" unique_id=1964738272]
+unique_name_in_owner = true
+offset_left = -378.0
+offset_top = 411.0
+offset_right = -83.0
+offset_bottom = 486.0
+theme_override_font_sizes/font_size = 30
+text = "End Turn"
+
 [node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("5_ynix6")]
 offset_left = 80.0
 offset_top = 97.0
@@ -39,3 +66,4 @@ Unknowns: Should the day system be programmed here?"
 [connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
 [connection signal="card_discarded" from="Camera/PlayCards" to="." method="_on_play_cards_card_discarded"]
 [connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]
+[connection signal="button_down" from="Camera/EndTurnButton" to="." method="_on_end_turn_button_button_down"]

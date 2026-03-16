@@ -3,8 +3,10 @@ extends Resource
 
 @export var card_name: String
 @export_multiline var description: String
+@export_range(0, 100) var enegry_cost: int
+@export_range(0, 100) var ant_cost: int
 @export var card_impl: Cards
-@export var	structureResource: StructureResource
+@export var structureResource: StructureResource
 
 enum CardType {
 	Unset,
@@ -23,6 +25,8 @@ enum Cards {
 
 class Card extends Node:
 	var card_name: String
+	var energy_cost: int
+	var ant_cost: int
 	var description: String
 	var structure: StructureResource
 	
@@ -61,5 +65,7 @@ func new() -> Card:
 	var card = all_cards[card_impl].new()
 	card.card_name = card_name
 	card.description = description
+	card.energy_cost = enegry_cost
+	card.ant_cost = ant_cost
 	card.structure = structureResource
 	return card

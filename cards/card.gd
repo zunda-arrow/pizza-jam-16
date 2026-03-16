@@ -14,6 +14,8 @@ var instantiated_card_resource: CardResource.Card:
 		_instantiated_card_resource = card
 		%CardName.text = card.card_name
 		%CardDescription.text = card.description
+		%Enegry.text = "Energy: " + str(card.energy_cost)
+		%Ants.text = "Ants: " + str(card.ant_cost)
 	get():
 		return _instantiated_card_resource
 
