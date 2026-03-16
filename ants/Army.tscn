@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cjp3b48vi7hj2" path="res://ants/army.gd" id="1_btchu"]
 [ext_resource type="TileSet" uid="uid://d1i72b5d5ywyg" path="res://terrain/dirt_tileset.tres" id="2_e47tu"]
 [ext_resource type="Texture2D" uid="uid://7tsmljtpxire" path="res://assets/arrow_circle.png" id="3_vhcc1"]
+[ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="4_7e6m4"]
 
 [node name="Army" type="Node2D" unique_id=1221516024]
 script = ExtResource("1_btchu")
@@ -19,3 +20,21 @@ texture = ExtResource("3_vhcc1")
 
 [node name="Ants" type="Node2D" parent="." unique_id=1221974931]
 unique_name_in_owner = true
+
+[node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("4_7e6m4")]
+offset_left = 60.0
+offset_top = -295.0
+offset_right = 784.0
+offset_bottom = -57.0
+text = "This scene controls the hoard of ants visuals. I'm finding its very hard to proerly keep track of every ants location, so I will just cheese it."
+
+[node name="Comment2" parent="." unique_id=1845539562 instance=ExtResource("4_7e6m4")]
+offset_left = 1601.0
+offset_top = -223.0
+offset_right = 2411.0
+offset_bottom = 680.0
+text = "In the future this scene will probably remove ants from loops that dont connect to the center for example. It might feel bad if you actually lose an ant, which I dont want.
+
+The second reason, is that buildings will be easier to understand and program if they dont actually need to wait for an ant. This will also make the game more snappy because there will be less waiting.
+
+Right now, I think the end goal will be to have an appropriate amount of ants walking from active buildings to the center. I think this will feel more than anty enough."
