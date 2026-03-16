@@ -74,16 +74,27 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i]):
 
 	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
 	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
+		
+func get_occupied_cells() -> Array[Vector2i]:
+	var occupied_cells: Array[Vector2i] = []
+	for s in structures:
+		occupied_cells += s.get_tiles()
+	return occupied_cells
 					
 func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int):
 	$Selection.clear()
 	$Selection.show()	
+	
+	var occupied_cells: Array[Vector2i] = get_occupied_cells()
+	print(occupied_cells)
 		
 	for rect in cells:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
 				if placing_method == PlacingMethod.Build and y == rect_center.y+rect.size.y-1 and tilemap.get_cell_source_id(Vector2(x,y+1)) == -1:
+					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
+				elif Vector2i(x,y) in occupied_cells:
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
 				elif tilemap.get_cell_source_id(Vector2(x,y)) >= 0:
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
