@@ -32,6 +32,9 @@ var player_position: Vector2i:
 
 func _ready():
 	%Terrain.region = %Camera
+	%Terrain.occupation_checks.append(%Structure.building_occupation)
+	%Structure.occupation_checker = %Terrain.get_occupied_cells
+	%Structure.has_terrain = _is_cell_filled
 	_on_terrain_update()
 
 	var cards: Array[CardResource.Card] = [
@@ -58,7 +61,7 @@ func _on_terrain_update():
 	%Army.generate_loop()
 	%Army.spawn_ants()
 
-	for structure in %Terrain.structures:
+	for structure in %Structure.structures:
 		var cells = structure.get_tiles()
 
 		for c in cells:
@@ -92,7 +95,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2) -> void:
 	if card.get_type() == CardResource.CardType.Move:
 		player_position = at
 	if card.get_type() == CardResource.CardType.Build:
-		%Terrain.place_build(at, card.structure)
+		%Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure)
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
