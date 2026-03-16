@@ -9,4 +9,5 @@ description = "Dig out a 4×4 area."
 energy_cost = 3
 ant_cost = 3
 card_impl = 1
+dig_area = Array[Rect2i]([Rect2i(-2, -2, 4, 4)])
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
