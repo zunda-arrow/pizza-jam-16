@@ -22,6 +22,9 @@ var current_rotation: int = 0:
 			current_rotation = 3
 			return
 		current_rotation = (new % 4)
+var structures: Array = []
+
+var placing_build = true
 
 var region = DefaultTerrainArea.new()
 
@@ -105,13 +108,8 @@ func hide_selector():
 
 func place_build(cell_coordinate_center: Vector2i, structure: StructureResource):
 	var can_place = true
-	
-	var new_rects = structure.size
-	for rect in new_rects:
-		rect.size.x = rect.size.x * sin(current_rotation * PI) + rect.size.y * cos(current_rotation * PI)
-		rect.size.y = rect.size.y * cos(current_rotation * PI) + rect.size.y * -sin(current_rotation * PI)
-	
-	for rect in new_rects:
+
+	for rect in structure.size:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
@@ -121,12 +119,13 @@ func place_build(cell_coordinate_center: Vector2i, structure: StructureResource)
 					can_place = false
 				if tilemap.get_cell_source_id(Vector2(x,y)) >= 0:
 					can_place = false
-						
+
 	if (can_place):
 		var struc_scene = structure_scene.instantiate()
 		struc_scene.structure = structure
 		struc_scene.global_position = $Selection.map_to_local(cell_coordinate_center)
 		add_child(struc_scene)
+		structures.push_back(struc_scene)
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
