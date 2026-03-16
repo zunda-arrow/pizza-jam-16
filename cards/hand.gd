@@ -37,7 +37,7 @@ func add_card_to_hand(card_resource: CardResource.Card):
 func remove_card_from_hand(index: int):
 	var card = card_scenes[index]
 	card_scenes.pop_at(index)
-	card.hide()
+	card.queue_free()
 
 func _process(delta: float) -> void:
 	position_cards(delta)
