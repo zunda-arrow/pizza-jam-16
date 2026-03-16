@@ -7,7 +7,6 @@
 
 [node name="Army" type="Node2D" unique_id=1221516024]
 script = ExtResource("1_btchu")
-is_grid_cell_filled = null
 spawn_position = Vector2i(2, 2)
 spawn_ground_direction = Vector2i(0, 1)
 

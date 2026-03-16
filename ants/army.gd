@@ -22,7 +22,7 @@ func _ready() -> void:
 	spawn_ant()
 
 func spawn_ant():
-	for i in range(50):
+	for i in range(500):
 		var random_test_ant: Ant = ant_scene.instantiate()
 		%Ants.add_child(random_test_ant)
 		random_test_ant.grid_position = spawn_position
