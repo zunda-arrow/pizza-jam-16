@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://588pj46a768y" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
 [ext_resource type="TileSet" uid="uid://c48cjwnpo03m1" path="res://terrain/dirt_tileset.tres" id="2_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
-[ext_resource type="Shader" uid="uid://8jamf66jtelx" path="res://terrain/selection.gdshader" id="3_nigp7"]
-[ext_resource type="Shader" uid="uid://dhqaxoav82mct" path="res://terrain/visibility.gdshader" id="5_7nt5j"]
+[ext_resource type="Shader" path="res://terrain/selection.gdshader" id="3_nigp7"]
+[ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
+[ext_resource type="Shader" path="res://terrain/visibility.gdshader" id="5_7nt5j"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
 noise_type = 3
@@ -25,6 +26,24 @@ texture_region_size = Vector2i(32, 32)
 [sub_resource type="TileSet" id="TileSet_l7s0s"]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_nigp7")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nc45s"]
+texture = ExtResource("4_mk5yb")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_fpiom"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_nc45s")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l7s0s"]
 
@@ -57,6 +76,10 @@ shader_parameter/blending = 0.30800001463
 script = ExtResource("1_nigp7")
 initial_seed = 1
 noise = SubResource("FastNoiseLite_nigp7")
+block_threshold = null
+rock_threshold = null
+spawn_radius = null
+chunk_size = null
 
 [node name="GroundMap" type="TileMapLayer" parent="." unique_id=999621117]
 unique_name_in_owner = true
@@ -65,6 +88,10 @@ tile_set = ExtResource("2_2ilfp")
 [node name="Selection" type="TileMapLayer" parent="." unique_id=1551127036]
 z_index = 3999
 tile_set = SubResource("TileSet_l7s0s")
+
+[node name="HealthMap" type="TileMapLayer" parent="." unique_id=1068031049]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_fpiom")
 
 [node name="Building" type="RigidBody2D" parent="." unique_id=2137802564]
 visible = false
@@ -84,6 +111,7 @@ offset_bottom = 1080.0
 texture = SubResource("PlaceholderTexture2D_nigp7")
 
 [node name="Visibility" type="TextureRect" parent="." unique_id=2147283416]
+visible = false
 z_index = 4000
 material = SubResource("ShaderMaterial_mk5yb")
 offset_right = 1920.0
