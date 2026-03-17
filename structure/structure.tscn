@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://33gt1q36wm86"]
 
-[ext_resource type="Script" uid="uid://c50nu3iepwkqn" path="res://terrain/structure.gd" id="1_vu45u"]
+[ext_resource type="Script" uid="uid://c50nu3iepwkqn" path="res://structure/structure.gd" id="1_vu45u"]
 [ext_resource type="Resource" uid="uid://bted2loskmxed" path="res://resources/structures/example.tres" id="2_ssdcl"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pugin"]

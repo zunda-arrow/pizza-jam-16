@@ -32,6 +32,9 @@ var player_position: Vector2i:
 
 func _ready():
 	%Terrain.region = %Camera
+	%Terrain.occupation_checks.append(%Structure.building_occupation)
+	%Structure.occupation_checker = %Terrain.get_occupied_cells
+	%Structure.has_terrain = _is_cell_filled
 	_on_terrain_update()
 
 	var cards: Array[CardResource.Card] = [
