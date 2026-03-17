@@ -21,6 +21,6 @@ func get_tiles() -> Array[Vector2i]:
 	for r in rects:
 		for x in r.size.x:
 			for y in r.size.y:
-				out += [pos + Vector2i(x,y) - Vector2i(1,2)]
+				out += [pos + Vector2i(x,y) - Vector2i(1,1)]
 	return out
 				
