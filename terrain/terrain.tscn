@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cvgqygm3pnmmn"]
 
 [ext_resource type="Script" uid="uid://588pj46a768y" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
-[ext_resource type="TileSet" uid="uid://d1i72b5d5ywyg" path="res://terrain/dirt_tileset.tres" id="2_2ilfp"]
+[ext_resource type="TileSet" uid="uid://c48cjwnpo03m1" path="res://terrain/dirt_tileset.tres" id="2_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
@@ -29,6 +29,8 @@ sources/0 = SubResource("TileSetAtlasSource_nigp7")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ilfp"]
 size = Vector2(233, 231)
 
+[sub_resource type="Curve2D" id="Curve2D_2ilfp"]
+
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
 initial_seed = 1
@@ -51,3 +53,6 @@ physics_material_override = SubResource("PhysicsMaterial_l7s0s")
 visible = false
 position = Vector2(106.5, 105.5)
 shape = SubResource("RectangleShape2D_2ilfp")
+
+[node name="Path2D" type="Path2D" parent="." unique_id=1211853192]
+curve = SubResource("Curve2D_2ilfp")

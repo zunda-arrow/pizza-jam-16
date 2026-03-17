@@ -4,12 +4,33 @@ extends Node2D
 var structure_scene = preload("res://structure/structure.tscn")
 var example_resource: StructureResource = preload("res://resources/structures/example.tres")
 
+class StructureEdge:
+	var a: Node2D
+	var b: Node2D
+	
+	func _init(a_: Node2D, b_: Node2D) -> void:
+		a = a_
+		b = b_
+
 var structures: Array = []
 
 var placing_build = true
 
 var has_terrain = func(_pos: Vector2): return true # This is specifically to check if there is terrain under a structure
 var occupation_checker = func(): return building_occupation() # This can be overriden (eg. to use the terrain_manager occupation checker)
+
+# Draws a path from one tile to another tile
+func debug_path(a: Vector2i, b: Vector2i) -> void:
+	var p = Path2D.new()
+	add_child(p)
+	p.curve = Curve2D.new()
+	p.curve.add_point(a * 32)
+	p.curve.add_point(b * 32)
+	for n in range(0,10):
+		var x = $PathFollower.duplicate()
+		x.visible = true
+		x.progress = n * (a+b).length() * 32. / 10.
+		p.add_child(x)
 
 func building_occupation() -> Array[Vector2i]:
 	var occupied_cells: Array[Vector2i] = []
@@ -43,5 +64,7 @@ func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: Stru
 		struct_scene.global_position = pos
 		add_child(struct_scene)
 		structures.push_back(struct_scene)
+		debug_path(Vector2i(0,0), Vector2i(5,5))
+		
 	
 	return can_place

@@ -1,6 +1,16 @@
 [gd_scene format=3 uid="uid://cro8mxb3kbban"]
 
 [ext_resource type="Script" uid="uid://h5wxdbtmqati" path="res://structure/structure_manager.gd" id="1_ql0gi"]
+[ext_resource type="Texture2D" uid="uid://7tsmljtpxire" path="res://assets/arrow_circle.png" id="2_5geu7"]
 
 [node name="StructureManager" type="Node2D" unique_id=11068490]
 script = ExtResource("1_ql0gi")
+
+[node name="PathFollower" type="PathFollow2D" parent="." unique_id=241275339]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="PathFollower" unique_id=1980834003]
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_5geu7")
