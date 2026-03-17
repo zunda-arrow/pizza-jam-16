@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://bted2loskmxed"]
 
-[ext_resource type="Script" path="res://resources/structures.gd" id="1_pugin"]
+[ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_pugin"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pugin"]
 size = Vector2(96, 96)

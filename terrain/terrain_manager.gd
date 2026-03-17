@@ -105,13 +105,13 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i]) -> bool:
 				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0:
 					if (x < rect_center.x-rect.size.x or x > rect_center.x+rect.size.x or y < rect_center.y-rect.size.y or y > rect_center.y+rect.size.y):
 						cells_to_update.append(Vector2i(x,y))
+					elif Vector2i(x,y-1) in building_cells:
+						can_dig = false
+						break
 					else:
 						cells_to_remove.append(Vector2i(x,y))
-
-	for cell in cells_to_remove:
-		if cell + Vector2i(0,-1) in building_cells and !(cell in building_cells):
-			can_dig = false
-			break
+			if !can_dig:
+				break
 		
 	if (can_dig):
 		tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
