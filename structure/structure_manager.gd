@@ -4,7 +4,12 @@ extends Node2D
 var structure_scene = preload("res://structure/structure.tscn")
 var example_resource: StructureResource = preload("res://resources/structures/example.tres")
 
+var LINK_DISTANCE = 128
+
 var structures: Array = []
+var links: Array[Array] = [] # Connections between buildings within range, Array[Array[int]] by implementation.
+var structure_groups: Array[Array] = [] # Array of array of connected structures.
+var structure_membership: Dictionary = {} # Maps Structures to their groups (includes itself).
 
 var placing_build = true
 
@@ -42,6 +47,46 @@ func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: Stru
 		struct_scene.structure = structure
 		struct_scene.global_position = pos
 		add_child(struct_scene)
+		links.append([])
+		for i in range(structures.size()):
+			var dist = pos.distance_to(structures[i].global_position)
+			if (dist <= LINK_DISTANCE):
+				links[i].append(structures.size())
+				links[structures.size()].append(i)
 		structures.push_back(struct_scene)
+		determine_groups()
 	
 	return can_place
+
+func determine_groups():
+	var unvisited: Array[bool] = []
+	var to_visit: Array[int] = [0]
+	var group_index: int = 0
+	var unfinished: bool = true
+	for i in range(structures.size()):
+		unvisited.append(true)
+	
+	structure_groups = []
+	
+	while unfinished:
+		structure_groups.append([])
+		while !to_visit.is_empty():
+			var index = to_visit.pop_back()
+			unvisited[index] = false
+			if !links[index].is_empty():
+				for link in links[index]:
+					if unvisited[link]:
+						to_visit.append(link)
+			structure_groups[group_index].append(structures[index])
+			
+		var i = 0
+		while i < unvisited.size() and !unvisited[i]:
+			i += 1
+		if i < structures.size():
+			to_visit.append(i)
+		else:
+			unfinished = false
+	
+	for group in structure_groups:
+		for structure in group:
+			structure_membership.set(structure, group)
