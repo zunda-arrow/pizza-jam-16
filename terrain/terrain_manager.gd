@@ -92,22 +92,32 @@ func get_cellv(vec: Vector2) -> TerrainType:
 	return get_cell(vec.x, vec.y)
 
 # Radius is a square radius
-func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i]):
+func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i]) -> bool:
+	var can_dig = true
 	var cells_to_remove: Array[Vector2i] = []
 	var cells_to_update: Array[Vector2i] = []
+	var building_cells: Array[Vector2i] = %Structure.building_occupation()
 
 	for rect in cells:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if tilemap.get_cell_source_id(Vector2(x,y)) >= 0:
+				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0:
 					if (x < rect_center.x-rect.size.x or x > rect_center.x+rect.size.x or y < rect_center.y-rect.size.y or y > rect_center.y+rect.size.y):
-						cells_to_update.append(Vector2(x,y))
+						cells_to_update.append(Vector2i(x,y))
 					else:
-						cells_to_remove.append(Vector2(x,y))
+						cells_to_remove.append(Vector2i(x,y))
 
-	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
-	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
+	for cell in cells_to_remove:
+		if cell + Vector2i(0,-1) in building_cells and !(cell in building_cells):
+			can_dig = false
+			break
+		
+	if (can_dig):
+		tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
+		tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
+		
+	return can_dig
 
 func get_occupied_tiles() -> Array[Vector2i]:
 	tilemap.get_used_cells()
@@ -134,6 +144,8 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
 				elif placing_method == PlacingMethod.Dig and Vector2i(x,y-1) in building_cells and !(Vector2i(x,y) in building_cells):
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
+				#elif Vector2i(x,y) in occupied_cells:
+				#	$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
 				else:
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(0,0), 0)
 
