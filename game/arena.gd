@@ -50,6 +50,9 @@ func _ready():
 	draw_pile.append_array(cards)
 	draw_pile.shuffle()
 	draw()
+	
+	energy = 9
+	ants = 10
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
@@ -130,5 +133,6 @@ func _on_end_turn_button_button_down() -> void:
 
 	# Reset energy to maximum
 	energy = 9
+	ants = 10
 
 	%EndTurnButton.disabled = false
