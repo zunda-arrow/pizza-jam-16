@@ -25,7 +25,6 @@ func _process(delta):
 	var structure_pos: Array[Vector3] = []
 	for s in %Structure.structures:
 		structure_pos.append(Vector3((s.global_position.x - position.x) / 1080., (s.global_position.y - position.y) / 1080., 1))
-	print(structure_pos)
 	%Terrain/Visibility.material.set_shader_parameter("discoveries", structure_pos)
 
 # Used for generating new terrain when it becomes visible
