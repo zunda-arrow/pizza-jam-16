@@ -40,7 +40,7 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Example description"
 
-[node name="Enegry" type="Label" parent="Panel/VBoxContainer" unique_id=602476245]
+[node name="Energy" type="Label" parent="Panel/VBoxContainer" unique_id=602476245]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Energy"

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" format=3 uid="uid://d1i72b5d5ywyg"]
+[gd_resource type="TileSet" format=3 uid="uid://c48cjwnpo03m1"]
 
 [ext_resource type="Texture2D" uid="uid://bnjsjs1hu7a3a" path="res://assets/terrain/mid_dirt.png" id="1_afeya"]
 [ext_resource type="Texture2D" uid="uid://31lystp27ddm" path="res://assets/terrain/dark_dirt.png" id="2_kajeg"]

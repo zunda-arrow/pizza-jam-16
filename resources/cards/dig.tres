@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://d1ay340mx5p6j"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://cpmkqxu5gj8h4"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_ngoxn"]
 
 [resource]
 script = ExtResource("1_ngoxn")
 card_name = "Dig"
-description = "Remove a 5x5 "
-enegry_cost = 1
+description = "Dig out a 3×3 area."
+energy_cost = 2
+ant_cost = 2
 card_impl = 1
+dig_area = Array[Rect2i]([Rect2i(-2, -2, 3, 3)])
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

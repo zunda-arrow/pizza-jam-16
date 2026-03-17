@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cro8mxb3kbban"]
+
+[ext_resource type="Script" uid="uid://h5wxdbtmqati" path="res://structure/structure_manager.gd" id="1_ql0gi"]
+
+[node name="StructureManager" type="Node2D" unique_id=11068490]
+script = ExtResource("1_ql0gi")
