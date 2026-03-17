@@ -71,7 +71,6 @@ func _on_terrain_update():
 			# We use Vector2i(0, 1) because structures can only be placed
 			# vertically right now.
 			# In the future this should be the direction of the floor.
-			print(c)
 			if %Army.is_cell_on_loop(c, Vector2i(0, 1)):
 				structure.set_connected_to_loop(true)
 				break
