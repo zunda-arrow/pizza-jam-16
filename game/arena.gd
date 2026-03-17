@@ -104,8 +104,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		return
 		
 	if card.get_type() == CardResource.CardType.Dig:
-		%Terrain.destroy(at, card.get_area())
-		success = true
+		success = %Terrain.destroy(at, card.get_area())
 	if card.get_type() == CardResource.CardType.Move:
 		player_position = at
 		success = true
