@@ -57,8 +57,8 @@ func _ready():
 	draw_pile.shuffle()
 	draw()
 	
-	energy = 9
-	ants = 10
+	energy = 3
+	ants = 30
 	
 	# The home is always visible
 	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new())
@@ -145,8 +145,8 @@ func _on_end_turn_button_button_down() -> void:
 	draw()
 
 	# Reset energy to maximum
-	energy = 9
-	ants = 10
+	energy = 3
+	ants = 30 + 10 * %Clock.tick
 
 	%EndTurnButton.disabled = false
 
