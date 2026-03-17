@@ -96,7 +96,10 @@ func _is_cell_filled(pos: Vector2i):
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
 	var success = false
 	print("Using card: ", card, at)
-
+	if (card.energy_cost > energy or card.ant_cost > ants):
+		print("Card Too Expensive")
+		return
+		
 	if card.get_type() == CardResource.CardType.Dig:
 		%Terrain.destroy(at, card.get_area())
 		success = true
@@ -110,6 +113,8 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	_on_terrain_update()
 	
 	if (success):
+		energy -= card.energy_cost
+		ants -= card.ant_cost
 		discard(index)
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2) -> void:
