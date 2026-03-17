@@ -40,6 +40,16 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Example description"
 
+[node name="Energy" type="Label" parent="Panel/VBoxContainer" unique_id=602476245]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Energy"
+
+[node name="Ants" type="Label" parent="Panel/VBoxContainer" unique_id=1979177370]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Ants"
+
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]
 [connection signal="mouse_entered" from="Panel" to="." method="_on_panel_mouse_entered"]
 [connection signal="mouse_exited" from="Panel" to="." method="_on_panel_mouse_exited"]
