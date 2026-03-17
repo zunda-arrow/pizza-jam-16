@@ -1,12 +1,12 @@
 @tool
 extends Node2D
 
-@export var structure: StructureResource
-
-func _ready() -> void:
-	if structure == null:
-		return
-	$Sprite2D.texture = structure.texture
+var structure: StructureResource.Structure:
+	set(structure_):
+		structure = structure_
+		$Sprite2D.texture = structure.resource.texture
+	get():
+		return structure
 
 func set_connected_to_loop(is_connected_: bool):
 	if is_connected_:
@@ -15,7 +15,7 @@ func set_connected_to_loop(is_connected_: bool):
 		$Label.hide()
 
 func get_tiles() -> Array[Vector2i]:
-	var rects: Array[Rect2i] = structure.size
+	var rects: Array[Rect2i] = structure.resource.size
 	var pos = Vector2i(position / 32)
 	var out: Array[Vector2i] = []
 	
