@@ -30,10 +30,8 @@ func _process(delta: float) -> void:
 
 		if grid_position.x == target.x and grid_position.y == target.y:
 			# Inner corner
-			var target_angle = Vector2(r).angle() - PI / 2
-			if (_current_rotation - target_angle >= PI):
-				target_angle = _current_rotation + 3 * PI / 2
-			rotation = lerp(float(_current_rotation), target_angle, timer / .2)
+			var target_angle = Vector2(r).angle() - PI / 2 + 2 * PI
+			rotation = lerp_angle(float(_current_rotation), target_angle, timer / .2)
 			position.x = grid_position.x * 32 + 16
 			position.y = grid_position.y * 32 + 16
 		elif grid_position.x == target.x or grid_position.y == target.y:
@@ -42,10 +40,9 @@ func _process(delta: float) -> void:
 		else:
 			# This must be an outer corner
 			var target_angle = Vector2(r).angle() - PI / 2
-
-			rotation = lerp(float(_current_rotation), target_angle, timer / .2)
-			position.x = sqrt(lerp(grid_position.x**2, target.x**2, timer / .2)) * 32 + 16
-			position.y = sqrt(lerp(grid_position.y**2, target.y**2, timer / .2)) * 32 + 16
+			rotation = lerp_angle(float(_current_rotation), target_angle, timer / .2)
+			position.x = lerp(grid_position.x, target.x, timer / .2) * 32 + 16
+			position.y = lerp(grid_position.y, target.y, timer / .2) * 32 + 16
 
 		if timer >= .2:
 			timer = 0
@@ -53,5 +50,5 @@ func _process(delta: float) -> void:
 				var p = following_path.pop_at(0)
 				grid_position = p[0]
 				ground_direction = p[1]
-				_current_rotation = Vector2(p[1]).angle() - PI / 2
+				_current_rotation = Vector2(p[1]).angle() - PI / 2 + 2 * PI
 				rotation = _current_rotation
