@@ -1,8 +1,7 @@
 extends Node2D
 
-signal card_used(card: CardResource, index: int, position: Vector2)
+signal card_used(card: CardResource, position: Vector2, index: int)
 signal aiming_card(card: CardResource, position: Vector2)
-signal card_discarded(index: int)
 
 @export var cards_in_hand: Array[CardResource]
 
@@ -52,14 +51,11 @@ func try_to_play_card(i: int):
 	var resource = hand.card_scenes[i].instantiated_card_resource
 	var pos = get_global_mouse_position() / 32
 
-	card_used.emit(resource, Vector2i(int(pos.x), int(pos.y)))
-	discard_card(i)
+	card_used.emit(resource, Vector2i(int(pos.x), int(pos.y)), i)
 	_targetting_card_index = -1
 
 func discard_card(i: int):
 	hand.remove_card_from_hand(i)
-	card_discarded.emit(i)
-
 
 func draw_card(card: CardResource.Card):
 	hand.add_card_to_hand(card)
@@ -68,5 +64,4 @@ func _on_hand_card_discarded(i: int) -> void:
 	# I dont think we want discarding actually
 	return
 	_targetting_card_index = -1
-	card_discarded.emit(i)
 	

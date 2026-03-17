@@ -136,7 +136,7 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 func hide_selector():
 	$Selection.hide()
 
-func place_build(cell_coordinate_center: Vector2i, structure: StructureResource):
+func place_build(cell_coordinate_center: Vector2i, structure: StructureResource) -> bool:
 	var can_place = true
 
 	for rect in structure.size:
@@ -156,6 +156,8 @@ func place_build(cell_coordinate_center: Vector2i, structure: StructureResource)
 		struc_scene.global_position = $Selection.map_to_local(cell_coordinate_center)
 		add_child(struc_scene)
 		structures.push_back(struc_scene)
+		
+	return can_place
 
 func _process(_delta: float) -> void:
 	generate()
