@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://cvgqygm3pnmmn"]
 
 [ext_resource type="Script" uid="uid://588pj46a768y" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
-[ext_resource type="TileSet" uid="uid://d1i72b5d5ywyg" path="res://terrain/dirt_tileset.tres" id="2_2ilfp"]
+[ext_resource type="TileSet" uid="uid://c48cjwnpo03m1" path="res://terrain/dirt_tileset.tres" id="2_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
+[ext_resource type="Shader" uid="uid://8jamf66jtelx" path="res://terrain/selection.gdshader" id="3_nigp7"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
 noise_type = 3
@@ -29,6 +30,17 @@ sources/0 = SubResource("TileSetAtlasSource_nigp7")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ilfp"]
 size = Vector2(233, 231)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nigp7"]
+shader = ExtResource("3_nigp7")
+shader_parameter/dash_length = 0.582000027645
+shader_parameter/dash_size = 0.0630000029925
+shader_parameter/dash_rounding = 0.0390000018525
+shader_parameter/dash_distance = 0.1430000067925
+shader_parameter/circle_radius = 0.2890000137275
+shader_parameter/time = 5.49600026106
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nigp7"]
+
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
 initial_seed = 1
@@ -51,3 +63,9 @@ physics_material_override = SubResource("PhysicsMaterial_l7s0s")
 visible = false
 position = Vector2(106.5, 105.5)
 shape = SubResource("RectangleShape2D_2ilfp")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=514706393]
+material = SubResource("ShaderMaterial_nigp7")
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("PlaceholderTexture2D_nigp7")
