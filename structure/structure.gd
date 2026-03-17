@@ -16,7 +16,7 @@ func set_connected_to_loop(is_connected_: bool):
 
 func get_tiles() -> Array[Vector2i]:
 	var rects: Array[Rect2i] = structure.size
-	var pos = Vector2i(position / 32)
+	var pos = Vector2i(position / 32) + Vector2i(-1,1)
 	var out: Array[Vector2i] = []
 	for r in rects:
 		for x in r.size.x:
