@@ -7,6 +7,8 @@ var deck: Array[CardResource.Card] = []
 var draw_pile: Array[CardResource.Card] = []
 var discard_pile: Array[CardResource.Card] = []
 
+var HomeStructure = preload("res://resources/structures/home.tres")
+
 var _energy: int
 var energy: int:
 	set(val):
@@ -57,6 +59,10 @@ func _ready():
 	
 	energy = 9
 	ants = 10
+	
+	# The home is always visible
+	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new())
+
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
@@ -109,7 +115,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		player_position = at
 		success = true
 	if card.get_type() == CardResource.CardType.Build:
-		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure)
+		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new())
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
