@@ -17,7 +17,7 @@ func building_occupation() -> Array[Vector2i]:
 		occupied_cells += s.get_tiles()
 	return occupied_cells
 
-func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: StructureResource):
+func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: StructureResource) -> bool:
 	var can_place = true
 
 	var occupied_cells = occupation_checker.call()
@@ -43,3 +43,5 @@ func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: Stru
 		struct_scene.global_position = pos
 		add_child(struct_scene)
 		structures.push_back(struct_scene)
+	
+	return can_place

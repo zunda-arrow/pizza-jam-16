@@ -64,7 +64,7 @@ func _on_terrain_update():
 	%Army.generate_loop()
 	%Army.spawn_ants()
 
-	for structure in %Terrain.structures:
+	for structure in %Structure.structures:
 		var cells = structure.get_tiles()
 
 		for c in cells:
@@ -110,7 +110,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		player_position = at
 		success = true
 	if card.get_type() == CardResource.CardType.Build:
-		success = %Terrain.place_build(at, card.structure)
+		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure)
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
