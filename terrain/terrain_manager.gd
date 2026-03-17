@@ -1,6 +1,8 @@
 # Handles terrain generation
 extends Node2D
 
+signal chunk_generated(Vector2i)
+
 class DefaultTerrainArea:
 	func get_bounding_area() -> Rect2:
 		return Rect2(Vector2.ZERO, Vector2(1920, 1080))
@@ -75,10 +77,15 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 					rock_cells.append(potential_pos)
 	tilemap.set_cells_terrain_connect(dirt_cells, 0, 0)
 	tilemap.set_cells_terrain_connect(rock_cells, 0, 1)
+	
+	chunk_generated.emit(Vector2i(chunk_x, chunk_y))
 
 func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 	if sqrt(x**2 + y**2) <= spawn_radius:
-		return TerrainType.Air
+		if y < 4:
+			return TerrainType.Air
+		else:
+			return TerrainType.Dirt
 	var point = noise.get_noise_2d(x, y)
 	if point < rock_threshold:
 		return TerrainType.Rock
@@ -119,7 +126,7 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 	
 	var occupied_cells: Array[Vector2i] = get_occupied_cells()
 	print(occupied_cells)
-		
+
 	for rect in cells:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):

@@ -6,9 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://cragqvxbavsjj" path="res://camera/Camera.tscn" id="3_2wy63"]
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="5_ynix6"]
+[ext_resource type="Texture2D" uid="uid://dmt0o6m3nbsr2" path="res://assets/ant_house.png" id="7_5yp8v"]
 
 [node name="Arena" type="Node2D" unique_id=728631546]
 script = ExtResource("1_tb7ye")
+
+[node name="HomeSweetHome" type="Sprite2D" parent="." unique_id=1590567505]
+position = Vector2(16, 83)
+texture = ExtResource("7_5yp8v")
 
 [node name="Terrain" parent="." unique_id=333081327 instance=ExtResource("2_npdor")]
 unique_name_in_owner = true
@@ -63,6 +68,7 @@ I dont think this should be the shop either.
 
 Unknowns: Should the day system be programmed here?"
 
+[connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
 [connection signal="card_discarded" from="Camera/PlayCards" to="." method="_on_play_cards_card_discarded"]
 [connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]

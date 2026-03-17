@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cjp3b48vi7hj2" path="res://ants/army.gd" id="1_btchu"]
 [ext_resource type="TileSet" uid="uid://d1i72b5d5ywyg" path="res://terrain/dirt_tileset.tres" id="2_e47tu"]
+[ext_resource type="Texture2D" uid="uid://7tsmljtpxire" path="res://assets/arrow_circle.png" id="3_7e6m4"]
 [ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="4_7e6m4"]
 
 [node name="Army" type="Node2D" unique_id=1221516024]
@@ -18,6 +19,11 @@ layer_0/tile_data = PackedInt32Array(196609, 0, 1, 196610, 0, 1, 196611, 0, 1, 1
 
 [node name="Ants" type="Node2D" parent="." unique_id=1221974931]
 unique_name_in_owner = true
+
+[node name="Loop" type="Sprite2D" parent="." unique_id=981061253]
+visible = false
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_7e6m4")
 
 [node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("4_7e6m4")]
 offset_left = 60.0

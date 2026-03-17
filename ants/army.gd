@@ -7,9 +7,12 @@ var ant_scene = preload("res://ants/Ant.tscn")
 @export var spawn_ground_direction: Vector2i
 @export var number_of_ants: int
 
+
 var ants: Array[Ant] = []
 var _main_loop: Array = []
 var _check_for_ant_not_on_loop_timer = 0.
+
+var _markers = []
 
 func generate_loop() -> void:
 	if is_grid_cell_filled == null:
@@ -18,6 +21,17 @@ func generate_loop() -> void:
 	# We only care about the ants that are connected to spawn
 	# This position should be a spawn position in the future
 	_main_loop = get_loop(spawn_position, spawn_ground_direction)
+
+	for l in _markers:
+		l.queue_free()
+	_markers = []
+
+	for i in _main_loop:
+		var l = $Loop.duplicate()
+		l.show()
+		add_child(l)
+		l.position = i[0] * 32 + Vector2i(16, 16)
+		_markers.push_back(l)
 
 func spawn_ants():
 	for i in range(number_of_ants):

@@ -29,10 +29,11 @@ var player_position: Vector2i:
 	get():
 		return %Player.position / 32
 
-
 func _ready():
 	%Terrain.region = %Camera
 	_on_terrain_update()
+	%Army.number_of_ants = 10
+	%Army.spawn_ants()
 
 	var cards: Array[CardResource.Card] = [
 		load("res://resources/cards/fungus_bar.tres").new(),
@@ -54,10 +55,9 @@ func _ready():
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
-	%Army.spawn_position = Vector2(3, -1)
+	%Army.spawn_position = Vector2(0, 3)
 	%Army.spawn_ground_direction = Vector2(0, 1)
 	%Army.generate_loop()
-	%Army.spawn_ants()
 
 	for structure in %Terrain.structures:
 		var cells = structure.get_tiles()
@@ -124,3 +124,7 @@ func _on_end_turn_button_button_down() -> void:
 	enegry = 9
 
 	%EndTurnButton.disabled = false
+
+
+func _on_terrain_chunk_generated(Vector2i: Variant) -> void:
+	_on_terrain_update()
