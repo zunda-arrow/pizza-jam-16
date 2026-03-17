@@ -7,7 +7,6 @@
 script = ExtResource("1_ngoxn")
 card_name = "Fungus Bar"
 description = "All nearby cards cost."
-enegry_cost = 1
 card_impl = 3
 structureResource = ExtResource("2_amev7")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
