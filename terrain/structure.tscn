@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cf6kj65eeatxm"]
+
+[ext_resource type="Script" path="res://terrain/structure.gd" id="1_vu45u"]
+[ext_resource type="Resource" uid="uid://bted2loskmxed" path="res://resources/structures/example.tres" id="2_ssdcl"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pugin"]
+size = Vector2(96, 96)
+
+[node name="Structure" type="Node2D" unique_id=650128113]
+script = ExtResource("1_vu45u")
+structure = ExtResource("2_ssdcl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=322916052]
+texture = SubResource("PlaceholderTexture2D_pugin")
+
+[node name="Label" type="Label" parent="." unique_id=1684876691]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -23.0
+offset_right = 13.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "C"

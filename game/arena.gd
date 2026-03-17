@@ -53,6 +53,9 @@ func _ready():
 	draw_pile.append_array(cards)
 	draw_pile.shuffle()
 	draw()
+	
+	energy = 9
+	ants = 10
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
@@ -84,31 +87,45 @@ func draw():
 		hand.append(card)
 		%PlayCards.draw_card(card)
 
+func discard(i: int):
+	%PlayCards.discard_card(i)
+	discard_pile.append(hand[i])
+	hand.pop_at(i)
+	
+
 func _is_cell_filled(pos: Vector2i):
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
 
-func _on_play_cards_card_used(card: CardResource.Card, at: Vector2) -> void:
+func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
+	var success = false
 	print("Using card: ", card, at)
-
+	if (card.energy_cost > energy or card.ant_cost > ants):
+		print("Card Too Expensive")
+		return
+		
 	if card.get_type() == CardResource.CardType.Dig:
 		%Terrain.destroy(at, card.get_area())
+		success = true
 	if card.get_type() == CardResource.CardType.Move:
 		player_position = at
+		success = true
 	if card.get_type() == CardResource.CardType.Build:
-		%Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure)
+		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure)
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
+	
+	if (success):
+		energy -= card.energy_cost
+		ants -= card.ant_cost
+		discard(index)
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2) -> void:
 	if card.get_type() == CardResource.CardType.Dig:
 		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig)
 	if card.get_type() == CardResource.CardType.Build:
 		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build)
-
-func _on_play_cards_card_discarded(index: int) -> void:
-	discard_pile.append(hand[index])
-	hand.pop_at(index)
+		
 
 func _on_end_turn_button_button_down() -> void:
 	# At the end of the turn, we want to draw cards
@@ -116,7 +133,7 @@ func _on_end_turn_button_button_down() -> void:
 	%EndTurnButton.disabled = true
 
 	while len(hand) > 0:
-		%PlayCards.discard_card(0)
+		discard(0)
 		# Give a litte animation
 		await get_tree().create_timer(.05).timeout
 
@@ -124,5 +141,6 @@ func _on_end_turn_button_button_down() -> void:
 
 	# Reset energy to maximum
 	energy = 9
+	ants = 10
 
 	%EndTurnButton.disabled = false
