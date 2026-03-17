@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cro8mxb3kbban" path="res://structure/StructureManager.tscn" id="3_5yp8v"]
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="5_ynix6"]
+[ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
 
 [node name="Arena" type="Node2D" unique_id=728631546]
 script = ExtResource("1_tb7ye")
@@ -28,6 +29,10 @@ unique_name_in_owner = true
 [node name="PlayCards" parent="Camera" unique_id=1516163044 instance=ExtResource("1_ncbvw")]
 unique_name_in_owner = true
 position = Vector2(-960, -540)
+
+[node name="Clock" parent="Camera" unique_id=1104602323 instance=ExtResource("7_u3mh8")]
+unique_name_in_owner = true
+position = Vector2(-900, -480)
 
 [node name="EnergyLabel" type="Label" parent="Camera" unique_id=1812955512]
 unique_name_in_owner = true
@@ -71,3 +76,4 @@ Unknowns: Should the day system be programmed here?"
 [connection signal="card_discarded" from="Camera/PlayCards" to="." method="_on_play_cards_card_discarded"]
 [connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]
 [connection signal="button_down" from="Camera/EndTurnButton" to="." method="_on_end_turn_button_button_down"]
+[connection signal="button_down" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]

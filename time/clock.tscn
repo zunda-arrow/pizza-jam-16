@@ -8,5 +8,4 @@ script = ExtResource("1_8xr6g")
 
 [node name="ClockSprite" type="Sprite2D" parent="." unique_id=1240834444]
 unique_name_in_owner = true
-position = Vector2(86, 77)
 texture = ExtResource("2_6ktf0")
