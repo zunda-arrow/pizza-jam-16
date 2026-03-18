@@ -29,6 +29,7 @@ var generated_chunks = {}
 var occupation_checks = [get_occupied_tiles]
 
 @onready var tilemap: TileMapLayer = %GroundMap
+@onready var healthmap: TileMapLayer = %HealthMap
 
 enum PlacingMethod {
 	Dig,
@@ -93,8 +94,7 @@ func get_cellv(vec: Vector2) -> TerrainType:
 
 # Radius is a square radius
 func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i]) -> bool:
-	var can_dig = true
-	var cells_to_remove: Array[Vector2i] = []
+	var cells_to_damage: Array[Vector2i] = []
 	var cells_to_update: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
 
@@ -106,18 +106,31 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i]) -> bool:
 					if (x < rect_center.x-rect.size.x or x > rect_center.x+rect.size.x or y < rect_center.y-rect.size.y or y > rect_center.y+rect.size.y):
 						cells_to_update.append(Vector2i(x,y))
 					elif Vector2i(x,y-1) in building_cells:
-						can_dig = false
-						break
+						return false
 					else:
-						cells_to_remove.append(Vector2i(x,y))
-			if !can_dig:
-				break
+						cells_to_damage.append(Vector2i(x,y))
+	
+	var cells_to_remove: Array[Vector2i] = []
+	for cell in cells_to_damage:
+		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
+			var health = tilemap.get_cell_tile_data(cell).get_custom_data("initial_health") - 1
+			if health == 0:
+				cells_to_remove.append(cell)
+				continue
+			healthmap.set_cell(cell, 0, Vector2i(health - 1, 0))
+			continue
 		
-	if (can_dig):
-		tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
-		tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
-		
-	return can_dig
+		if healthmap.get_cell_atlas_coords(cell).x == 0:
+			cells_to_remove.append(cell)
+			healthmap.set_cell(cell)
+		else:
+			var health = healthmap.get_cell_atlas_coords(cell).x
+			healthmap.set_cell(cell, 0, Vector2i(health - 1, 0))
+
+	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
+	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
+
+	return true
 
 func get_occupied_tiles() -> Array[Vector2i]:
 	tilemap.get_used_cells()
