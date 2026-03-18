@@ -36,6 +36,9 @@ enum PlacingMethod {
 	Build
 }
 
+var MAP_CHUNKS = 8
+var MAP_SIZE = Rect2i(-MAP_CHUNKS / 2, -MAP_CHUNKS / 2, MAP_CHUNKS, MAP_CHUNKS)
+
 func _ready():
 	if initial_seed == 0:
 		initial_seed = randi()
@@ -55,6 +58,8 @@ func generate() -> void:
 			generate_chunk(start_pos.x + x, start_pos.y + y)
 
 func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chunk of terrain
+	if !MAP_SIZE.has_point(Vector2i(chunk_x, chunk_y)):
+		return
 	if generated_chunks.get(Vector2i(chunk_x, chunk_y), false):
 		return
 	generated_chunks[Vector2i(chunk_x, chunk_y)] = true
@@ -66,15 +71,519 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 				chunk_x * chunk_size + x,
 				chunk_y * chunk_size + y
 			)
+			
+			var my_value = get_cellv(potential_pos)
+
+			var top_left = get_cellv(potential_pos + Vector2i(-1, -1)) == my_value
+			var top_middle = get_cellv(potential_pos + Vector2i(0, -1)) == my_value
+			var top_right = get_cellv(potential_pos + Vector2i(1, -1)) == my_value
+			var middle_left = get_cellv(potential_pos + Vector2i(-1, 0)) == my_value
+			var middle_right = get_cellv(potential_pos + Vector2i(1, 0)) == my_value
+			var bottom_left = get_cellv(potential_pos + Vector2i(-1, 1)) == my_value
+			var bottom_middle = get_cellv(potential_pos + Vector2i(0, 1)) == my_value
+			var bottom_right = get_cellv(potential_pos + Vector2i(1, 1)) == my_value
+
+			var neighbor = find_atlas_chord_from_neighbors(
+				top_left,
+				top_middle,
+				top_right,
+				middle_left,
+				middle_right,
+				bottom_left,
+				bottom_middle,
+				bottom_right
+			)
+
 			match get_cellv(potential_pos):
 				TerrainType.Dirt:
-					dirt_cells.append(potential_pos)
+					tilemap.set_cell(potential_pos, 0, neighbor)
 				TerrainType.Rock:
-					rock_cells.append(potential_pos)
-	tilemap.set_cells_terrain_connect(dirt_cells, 0, 0)
-	tilemap.set_cells_terrain_connect(rock_cells, 0, 1)
-	
+					tilemap.set_cell(potential_pos, 1, neighbor)
+
 	chunk_generated.emit(Vector2i(chunk_x, chunk_y))
+
+func find_atlas_chord_from_neighbors(top_left, top_middle, top_right, middle_left, middle_right, bottom_left, bottom_middle, bottom_right) -> Vector2i:
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(1, 0)
+
+	if (
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(2, 0)
+
+	if (
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(3, 0)
+
+	if (
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_middle == true
+	):
+		return Vector2i(4, 0)
+
+	if (
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == false
+		&& bottom_middle == true
+	):
+		return Vector2i(5, 0)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(6, 0)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(0, 1)
+
+	if (
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(1, 1)
+
+	if (
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(2, 1)
+
+	if (
+		top_left == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(3, 1)
+
+	if (
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == false
+		&& bottom_middle == true
+	):
+		return Vector2i(4, 1)
+
+	if (
+		top_middle == true
+		&& top_right == true
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(5, 1)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == true
+		&& bottom_middle == true
+	):
+		return Vector2i(6, 1)
+
+	if (
+		top_middle == true
+		&& middle_left == false
+		&& middle_right == false
+		&& bottom_middle == true
+	):
+		return Vector2i(0, 2)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(1, 2)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(2, 2)
+
+	if (
+		top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == true
+		&& bottom_middle == true
+	):
+		return Vector2i(3, 2)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == false
+		&& bottom_middle == true
+	):
+		return Vector2i(4, 2)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == true
+		&& bottom_middle == true
+	):
+		return Vector2i(5, 2)
+
+	if (
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(6, 2)
+
+	if (
+		top_middle == true
+		&& top_right == true
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == false
+	):
+		return Vector2i(0, 3)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
+	):
+		return Vector2i(1, 3)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_middle == false
+	):
+		return Vector2i(2, 3)
+
+	if (
+		top_middle == true
+		&& middle_left == false
+		&& middle_right == false
+		&& bottom_middle == false
+	):
+		return Vector2i(3, 3)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(4, 3)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(5, 3)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
+	):
+		return Vector2i(6, 3)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
+	):
+		return Vector2i(0, 4)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
+	):
+		return Vector2i(1, 4)
+
+
+	if (
+		top_middle == true
+		&& top_right == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == false
+	):
+		return Vector2i(2, 4)
+
+	if (
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == false
+	):
+		return Vector2i(3, 4)
+
+	if (
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
+	):
+		return Vector2i(4, 4)
+
+	if (
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_middle == false
+	):
+		return Vector2i(5, 4)
+
+	if (
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == false
+		&& bottom_middle == false
+	):
+		return Vector2i(6, 4)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right	== true
+	):
+		return Vector2i(0, 5)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right	== true
+	):
+		return Vector2i(1, 5)
+
+	if (
+		top_middle == true
+		&& top_right == true
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(2, 5)
+
+	if (
+		top_middle == true
+		&& top_right == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right	== true
+	):
+		return Vector2i(3, 5)
+
+	if (
+		top_middle == true
+		&& top_right == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(4, 5)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_middle == false
+	):
+		return Vector2i(5, 5)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(6, 5)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(0, 6)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(1, 6)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(2, 6)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(3, 6)
+
+	if (
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
+	):
+		return Vector2i(4, 6)
+
+	if (
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == true
+	):
+		return Vector2i(5, 6)
+
+	return Vector2i(1, 0)
 
 func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 	if sqrt(x**2 + y**2) <= spawn_radius:

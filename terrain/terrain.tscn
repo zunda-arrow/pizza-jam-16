@@ -76,10 +76,6 @@ shader_parameter/blending = 0.30800001463
 script = ExtResource("1_nigp7")
 initial_seed = 1
 noise = SubResource("FastNoiseLite_nigp7")
-block_threshold = null
-rock_threshold = null
-spawn_radius = null
-chunk_size = null
 
 [node name="GroundMap" type="TileMapLayer" parent="." unique_id=999621117]
 unique_name_in_owner = true
