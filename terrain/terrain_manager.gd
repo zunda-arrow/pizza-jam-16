@@ -71,30 +71,32 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 				chunk_x * chunk_size + x,
 				chunk_y * chunk_size + y
 			)
+
+			var top_left = get_cellv(potential_pos + Vector2i(-1, -1))
+			var top_middle = get_cellv(potential_pos + Vector2i(0, -1))
+			var top_right = get_cellv(potential_pos + Vector2i(1, -1))
+			var middle_left = get_cellv(potential_pos + Vector2i(-1, 0))
+			var middle_right = get_cellv(potential_pos + Vector2i(1, 0))
+			var bottom_left = get_cellv(potential_pos + Vector2i(-1, 1))
+			var bottom_middle = get_cellv(potential_pos + Vector2i(0, 1))
+			var bottom_right = get_cellv(potential_pos + Vector2i(1, 1))
+
+			var neighbor = find_atlas_chord_from_neighbors(
+				top_left,
+				top_middle,
+				top_right,
+				middle_left,
+				middle_right,
+				bottom_left,
+				bottom_middle,
+				bottom_right
+			)
+
 			match get_cellv(potential_pos):
 				TerrainType.Dirt:
-					var top_left = get_cellv(potential_pos + Vector2i(-1, -1))
-					var top_middle = get_cellv(potential_pos + Vector2i(0, -1))
-					var top_right = get_cellv(potential_pos + Vector2i(1, -1))
-					var middle_left = get_cellv(potential_pos + Vector2i(-1, 0))
-					var middle_right = get_cellv(potential_pos + Vector2i(1, 0))
-					var bottom_left = get_cellv(potential_pos + Vector2i(-1, 1))
-					var bottom_middle = get_cellv(potential_pos + Vector2i(0, 1))
-					var bottom_right = get_cellv(potential_pos + Vector2i(1, 1))
-
-					tilemap.set_cell(potential_pos, 0, find_atlas_chord_from_neighbors(
-						top_left,
-						top_middle,
-						top_right,
-						middle_left,
-						middle_right,
-						bottom_left,
-						bottom_middle,
-						bottom_right
-					))
+					tilemap.set_cell(potential_pos, 0, neighbor)
 				TerrainType.Rock:
-					tilemap.set_cell(potential_pos, 0, Vector2i(1, 0))
-					rock_cells.append(potential_pos)
+					tilemap.set_cell(potential_pos, 1, neighbor)
 
 	chunk_generated.emit(Vector2i(chunk_x, chunk_y))
 
