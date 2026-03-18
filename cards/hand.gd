@@ -30,11 +30,11 @@ func add_card_to_hand(card_resource: CardResource.Card):
 		var my_index = card_scenes.find(next_card)
 		card_clicked.emit(my_index)
 	)
-	next_card.on_right_clicked.connect(func ():
-		var my_index = card_scenes.find(next_card)
-		card_discarded.emit(my_index)
-		remove_card_from_hand(my_index)
-	)
+	#next_card.on_right_clicked.connect(func ():
+		#var my_index = card_scenes.find(next_card)
+		#card_discarded.emit(my_index)
+		#remove_card_from_hand(my_index)
+	#)
 
 func remove_card_from_hand(index: int):
 	var card = card_scenes[index]
