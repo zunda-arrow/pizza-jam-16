@@ -71,15 +71,17 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 				chunk_x * chunk_size + x,
 				chunk_y * chunk_size + y
 			)
+			
+			var my_value = get_cellv(potential_pos)
 
-			var top_left = get_cellv(potential_pos + Vector2i(-1, -1))
-			var top_middle = get_cellv(potential_pos + Vector2i(0, -1))
-			var top_right = get_cellv(potential_pos + Vector2i(1, -1))
-			var middle_left = get_cellv(potential_pos + Vector2i(-1, 0))
-			var middle_right = get_cellv(potential_pos + Vector2i(1, 0))
-			var bottom_left = get_cellv(potential_pos + Vector2i(-1, 1))
-			var bottom_middle = get_cellv(potential_pos + Vector2i(0, 1))
-			var bottom_right = get_cellv(potential_pos + Vector2i(1, 1))
+			var top_left = get_cellv(potential_pos + Vector2i(-1, -1)) == my_value
+			var top_middle = get_cellv(potential_pos + Vector2i(0, -1)) == my_value
+			var top_right = get_cellv(potential_pos + Vector2i(1, -1)) == my_value
+			var middle_left = get_cellv(potential_pos + Vector2i(-1, 0)) == my_value
+			var middle_right = get_cellv(potential_pos + Vector2i(1, 0)) == my_value
+			var bottom_left = get_cellv(potential_pos + Vector2i(-1, 1)) == my_value
+			var bottom_middle = get_cellv(potential_pos + Vector2i(0, 1)) == my_value
+			var bottom_right = get_cellv(potential_pos + Vector2i(1, 1)) == my_value
 
 			var neighbor = find_atlas_chord_from_neighbors(
 				top_left,
@@ -102,482 +104,482 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 
 func find_atlas_chord_from_neighbors(top_left, top_middle, top_right, middle_left, middle_right, bottom_left, bottom_middle, bottom_right) -> Vector2i:
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(1, 0)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(2, 0)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(3, 0)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_middle == true
 	):
 		return Vector2i(4, 0)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == false
+		&& bottom_middle == true
 	):
 		return Vector2i(5, 0)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right == TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(6, 0)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(0, 1)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right == TerrainType.Air
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(1, 1)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(2, 1)
 
 	if (
-		top_left == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right == TerrainType.Air
+		top_left == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(3, 1)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == false
+		&& bottom_middle == true
 	):
 		return Vector2i(4, 1)
 
 	if (
-		top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_middle == true
+		&& top_right == true
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(5, 1)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == true
+		&& bottom_middle == true
 	):
 		return Vector2i(6, 1)
 
 	if (
-		top_middle != TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
+		top_middle == true
+		&& middle_left == false
+		&& middle_right == false
+		&& bottom_middle == true
 	):
 		return Vector2i(0, 2)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(1, 2)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(2, 2)
 
 	if (
-		top_middle != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
+		top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == true
+		&& bottom_middle == true
 	):
 		return Vector2i(3, 2)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == false
+		&& bottom_middle == true
 	):
 		return Vector2i(4, 2)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_left == true
+		&& bottom_middle == true
 	):
 		return Vector2i(5, 2)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right == TerrainType.Air
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(6, 2)
 
 	if (
-		top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_middle == true
+		&& top_right == true
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == false
 	):
 		return Vector2i(0, 3)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
 	):
 		return Vector2i(1, 3)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_middle == false
 	):
 		return Vector2i(2, 3)
 
 	if (
-		top_middle != TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_middle == true
+		&& middle_left == false
+		&& middle_right == false
+		&& bottom_middle == false
 	):
 		return Vector2i(3, 3)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right	== TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(4, 3)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right	== TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(5, 3)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
 	):
 		return Vector2i(6, 3)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
 	):
 		return Vector2i(0, 4)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
 	):
 		return Vector2i(1, 4)
 
 
 	if (
-		top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_middle == true
+		&& top_right == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == false
 	):
 		return Vector2i(2, 4)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == false
 	):
 		return Vector2i(3, 4)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_middle == false
 	):
 		return Vector2i(4, 4)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_middle == false
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_middle == false
 	):
 		return Vector2i(5, 4)
 
 	if (
-		top_middle == TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_middle == false
+		&& middle_left == false
+		&& middle_right == false
+		&& bottom_middle == false
 	):
 		return Vector2i(6, 4)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right	!= TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right	== true
 	):
 		return Vector2i(0, 5)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right	!= TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right	== true
 	):
 		return Vector2i(1, 5)
 
 	if (
-		top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right	== TerrainType.Air
+		top_middle == true
+		&& top_right == true
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(2, 5)
 
 	if (
-		top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right	!= TerrainType.Air
+		top_middle == true
+		&& top_right == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right	== true
 	):
 		return Vector2i(3, 5)
 
 	if (
-		top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left == TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right	== TerrainType.Air
+		top_middle == true
+		&& top_right == false
+		&& middle_left == false
+		&& middle_right == true
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(4, 5)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right == TerrainType.Air
-		&& bottom_middle == TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& middle_left == true
+		&& middle_right == false
+		&& bottom_middle == false
 	):
 		return Vector2i(5, 5)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right == TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(6, 5)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(0, 6)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right == TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(1, 6)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right == TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(2, 6)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right == TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(3, 6)
 
 	if (
-		top_left == TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right != TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left != TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right == TerrainType.Air
+		top_left == false
+		&& top_middle == true
+		&& top_right == true
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == true
+		&& bottom_middle == true
+		&& bottom_right == false
 	):
 		return Vector2i(4, 6)
 
 	if (
-		top_left != TerrainType.Air
-		&& top_middle != TerrainType.Air
-		&& top_right == TerrainType.Air
-		&& middle_left != TerrainType.Air
-		&& middle_right != TerrainType.Air
-		&& bottom_left == TerrainType.Air
-		&& bottom_middle != TerrainType.Air
-		&& bottom_right != TerrainType.Air
+		top_left == true
+		&& top_middle == true
+		&& top_right == false
+		&& middle_left == true
+		&& middle_right == true
+		&& bottom_left == false
+		&& bottom_middle == true
+		&& bottom_right == true
 	):
 		return Vector2i(5, 6)
 
