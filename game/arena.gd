@@ -25,6 +25,8 @@ var ants: int:
 	get():
 		return _ants
 
+var eff: int
+
 var player_position: Vector2i:
 	set(pos):
 		%Player.position = pos * 32
@@ -42,13 +44,13 @@ func _ready():
 
 	var cards: Array[CardResource.Card] = [
 		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/scoop.tres").new(),
+		load("res://resources/cards/breakfast.tres").new(),
+		load("res://resources/cards/beam_drill.tres").new(),
+		load("res://resources/cards/dirt_nap.tres").new(),
+		load("res://resources/cards/super_drill.tres").new(),
 		load("res://resources/cards/drill.tres").new(),
-		load("res://resources/cards/quarry.tres").new(),
-		load("res://resources/cards/explosive_drill.tres").new(),
+		load("res://resources/cards/big_drill.tres").new(),
+		load("res://resources/cards/super_buff.tres").new(),
 		load("res://resources/cards/bulldozer.tres").new(),
 		load("res://resources/cards/brainstorm.tres").new(),
 		]
@@ -60,6 +62,7 @@ func _ready():
 	
 	energy = 3
 	ants = 30
+	eff = 0
 	
 	# The home is always visible
 	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new())
@@ -108,20 +111,28 @@ func _is_cell_filled(pos: Vector2i):
 
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
 	var success = false
+	var x = 0
 	print("Using card: ", card, at)
-	if (card.energy_cost > energy or card.ant_cost > ants):
+	if card.energy_cost > energy or card.ant_cost > ants:
 		print("Card Too Expensive")
 		return
+	
+	if card.energy_cost < 0:
+		x += energy
+		energy = -1
+	elif card.ant_cost < 0:
+		x += ants / 10
+		ants = -1
 		
 	if card.get_type() == CardResource.CardType.Dig:
-		success = %Terrain.destroy(at, card.get_area())
+		success = %Terrain.destroy(at, card.get_area(), card.power() + eff, x)
 	if card.get_type() == CardResource.CardType.Move:
 		player_position = at
 		success = true
 	if card.get_type() == CardResource.CardType.Build:
 		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new())
 	if card.get_type() == CardResource.CardType.Utility:
-		success = %Utility.utilize(card.utility)
+		success = %Utility.utilize(card.utility, x)
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
@@ -132,11 +143,18 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		discard(index)
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) -> void:
+	var x = 0
 	if card.energy_cost > energy or card.ant_cost > ants:
 		return
+		
+	if card.energy_cost < 0:
+		x += energy
+	elif card.ant_cost < 0:
+		x += ants / 10
+	
 	%PlayCards.show_target_arrow(i)
 	if card.get_type() == CardResource.CardType.Dig:
-		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig)
+		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig, x)
 	if card.get_type() == CardResource.CardType.Build:
 		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build)
 
@@ -158,6 +176,9 @@ func _on_end_turn_button_button_down() -> void:
 	# Reset energy to maximum
 	energy = 3
 	ants += 10
+	eff = 0
+	
+	%Utility.turn_resources()
 
 	%EndTurnButton.disabled = false
 
@@ -172,6 +193,9 @@ func _on_utility_ants_gain(n: int) -> void:
 
 func _on_utility_draw_gain(n: int) -> void:
 	draw(n)
+	
+func _on_utility_eff_gain(n: int) -> void:
+	eff += n
 
 
 func _on_clock_day_start(day: int) -> void:

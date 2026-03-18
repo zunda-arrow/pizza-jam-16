@@ -3,11 +3,12 @@ extends Resource
 
 @export var card_name: String
 @export_multiline var description: String
-@export_range(0, 100) var energy_cost: int
-@export_range(0, 100) var ant_cost: int
+@export_range(-100, 100) var energy_cost: int
+@export_range(-100, 100) var ant_cost: int
 @export var card_impl: Cards
 @export var	structureResource: StructureResource
 @export var dig_area: Array[Rect2i]
+@export_range(-1,10) var dig_power: int
 @export var utility: UtilityResource
 
 
@@ -34,6 +35,7 @@ class Card extends Node:
 	var ant_cost: int
 	var structure: StructureResource
 	var dig_area: Array[Rect2i]
+	var dig_power: int
 	var utility: UtilityResource
 	
 	func get_type() -> CardType:
@@ -48,6 +50,9 @@ class Dig extends Card:
 
 	func get_area() -> Array[Rect2i]:
 		return dig_area
+	
+	func power() -> int:
+		return dig_power
 
 class Move extends Card:
 	func get_type() -> CardType:
@@ -80,5 +85,6 @@ func new() -> Card:
 	card.ant_cost = ant_cost
 	card.structure = structureResource
 	card.dig_area = dig_area
+	card.dig_power = dig_power
 	card.utility = utility
 	return card

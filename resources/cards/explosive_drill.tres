@@ -5,9 +5,10 @@
 [resource]
 script = ExtResource("1_vi1n0")
 card_name = "Explosive Drill"
-description = "Mine out a 6×6 area."
+description = "Mine out a 8×8 area."
 energy_cost = 3
 ant_cost = 30
 card_impl = 1
-dig_area = Array[Rect2i]([Rect2i(-3, -3, 6, 6)])
+dig_area = Array[Rect2i]([Rect2i(-4, -4, 8, 8)])
+dig_power = 1
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

@@ -93,12 +93,16 @@ func get_cellv(vec: Vector2) -> TerrainType:
 	return get_cell(vec.x, vec.y)
 
 # Radius is a square radius
-func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i]) -> bool:
+func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, X: int) -> bool:
 	var cells_to_damage: Array[Vector2i] = []
 	var cells_to_update: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
+	var area: Array[Rect2i] = x_area(cells, X)
+	
+	if power < 0:
+		power *= -X
 
-	for rect in cells:
+	for rect in area:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
@@ -113,11 +117,11 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i]) -> bool:
 	var cells_to_remove: Array[Vector2i] = []
 	for cell in cells_to_damage:
 		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
-			var health = tilemap.get_cell_tile_data(cell).get_custom_data("initial_health") - 1
-			if health == 0:
+			var health = tilemap.get_cell_tile_data(cell).get_custom_data("initial_health") - power
+			if health <= 0:
 				cells_to_remove.append(cell)
 				continue
-			healthmap.set_cell(cell, 0, Vector2i(health - 1, 0))
+			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
 			continue
 		
 		if healthmap.get_cell_atlas_coords(cell).x == 0:
@@ -142,14 +146,15 @@ func get_occupied_cells() -> Array[Vector2i]:
 		occupied_cells += check.call()
 	return occupied_cells
 					
-func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int):
+func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, X: int):
 	$Selection.clear()
 	$Selection.show()
 	
 	var occupied_cells: Array[Vector2i] = get_occupied_cells()
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
+	var area = x_area(cells, X)
 
-	for rect in cells:
+	for rect in area:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
@@ -162,6 +167,17 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 				else:
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(0,0), 0)
 
+func x_area(cells: Array[Rect2i], X: int) -> Array[Rect2i]:
+	var area = cells.duplicate()
+	
+	for i in area.size():
+		if area[i].size.x < 0:
+			area[i] = Rect2i((area[i].size.x * X)/2, area[i].position.y, -area[i].size.x * X, area[i].size.y)
+		if cells[i].size.y < 0:
+			area[i] = Rect2i(area[i].position.x, (area[i].size.y * X)/2, area[i].size.x, -area[i].size.y * X)
+	
+	return area
+	
 func hide_selector():
 	$Selection.hide()
 
