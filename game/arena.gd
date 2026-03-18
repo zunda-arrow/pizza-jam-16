@@ -1,6 +1,6 @@
 extends Node2D
 
-var HAND_SIZE = 6
+var DEFAULT_HAND = 6
 
 var hand: Array[CardResource.Card] = []
 var deck: Array[CardResource.Card] = []
@@ -46,16 +46,17 @@ func _ready():
 		load("res://resources/cards/fungus_bar.tres").new(),
 		load("res://resources/cards/fungus_bar.tres").new(),
 		load("res://resources/cards/scoop.tres").new(),
-		load("res://resources/cards/dig.tres").new(),
+		load("res://resources/cards/drill.tres").new(),
 		load("res://resources/cards/quarry.tres").new(),
-		load("res://resources/cards/excavate.tres").new(),
-		load("res://resources/cards/bulldoze.tres").new(),
+		load("res://resources/cards/explosive_drill.tres").new(),
+		load("res://resources/cards/bulldozer.tres").new(),
+		load("res://resources/cards/brainstorm.tres").new(),
 		]
 
 	deck.append_array(cards)
 	draw_pile.append_array(cards)
 	draw_pile.shuffle()
-	draw()
+	draw(DEFAULT_HAND)
 	
 	energy = 3
 	ants = 30
@@ -82,16 +83,19 @@ func _on_terrain_update():
 				break
 
 
-func draw():
-	for i in range(HAND_SIZE):
+func draw(n: int):
+	for i in range(n):
 		if len(draw_pile) == 0:
 			# When the draw pile is empty, we put the discard pile back
 			# into the draw pile.
 			draw_pile = discard_pile
 			discard_pile = []
-		var card = draw_pile.pop_at(randi() % len(draw_pile))
-		hand.append(card)
-		%PlayCards.draw_card(card)
+		if !draw_pile.is_empty():
+			var card = draw_pile.pop_at(randi() % len(draw_pile))
+			hand.append(card)
+			%PlayCards.draw_card(card)
+		else:
+			break
 
 func discard(i: int):
 	%PlayCards.discard_card(i)
@@ -116,6 +120,8 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		success = true
 	if card.get_type() == CardResource.CardType.Build:
 		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new())
+	if card.get_type() == CardResource.CardType.Utility:
+		success = %Utility.utilize(card.utility)
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
@@ -142,7 +148,7 @@ func _on_end_turn_button_button_down() -> void:
 		# Give a litte animation
 		await get_tree().create_timer(.05).timeout
 
-	draw()
+	draw(DEFAULT_HAND)
 
 	# Reset energy to maximum
 	energy = 3
@@ -153,3 +159,12 @@ func _on_end_turn_button_button_down() -> void:
 
 func _on_terrain_chunk_generated(Vector2i: Variant) -> void:
 	_on_terrain_update()
+	
+func _on_utility_energy_gain(n: int) -> void:
+	energy += n
+	
+func _on_utility_ants_gain(n: int) -> void:
+	ants += n
+
+func _on_utility_draw_gain(n: int) -> void:
+	draw(n)

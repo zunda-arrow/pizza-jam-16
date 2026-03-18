@@ -8,19 +8,23 @@ extends Resource
 @export var card_impl: Cards
 @export var	structureResource: StructureResource
 @export var dig_area: Array[Rect2i]
+@export var utility: UtilityResource
+
+
 enum CardType {
 	Unset,
 	Dig,
 	Move,
 	Build,
-	Power,
+	Utility,
 }
 
 enum Cards {
 	Default,
 	Dig,
 	Move,
-	Build
+	Build,
+	Utility
 }
 
 class Card extends Node:
@@ -30,6 +34,7 @@ class Card extends Node:
 	var ant_cost: int
 	var structure: StructureResource
 	var dig_area: Array[Rect2i]
+	var utility: UtilityResource
 	
 	func get_type() -> CardType:
 		return CardType.Unset
@@ -54,12 +59,17 @@ class Build extends Card:
 		
 	func get_area() -> Array[Rect2i]:
 		return structure.size
+		
+class Utility extends Card:
+	func get_type() -> CardType:
+		return CardType.Utility
 
 var all_cards = {
 	Cards.Default: Card,
 	Cards.Dig: Dig,
 	Cards.Move: Move,
 	Cards.Build: Build,
+	Cards.Utility: Utility
 }
 
 func new() -> Card:
@@ -70,4 +80,5 @@ func new() -> Card:
 	card.ant_cost = ant_cost
 	card.structure = structureResource
 	card.dig_area = dig_area
+	card.utility = utility
 	return card
