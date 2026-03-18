@@ -36,7 +36,8 @@ enum PlacingMethod {
 	Build
 }
 
-var MAP_CHUNKS = 8
+# The amount of chunks from the left to right of the map
+var MAP_CHUNKS = 10
 var MAP_SIZE = Rect2i(-MAP_CHUNKS / 2, -MAP_CHUNKS / 2, MAP_CHUNKS, MAP_CHUNKS)
 
 func _ready():
@@ -51,8 +52,9 @@ func reset_map(new_seed) -> void:
 
 func generate() -> void:
 	var rect = region.get_bounding_area()
-	var start_pos = floor(Vector2(tilemap.local_to_map(rect.position)) / chunk_size)
-	var size_chunks = ceil(rect.size / tilemap.tile_set.tile_size.x / chunk_size)
+	# We generate the ring of chunks around the camera to make sure an unloaded chunk is never visible
+	var start_pos = floor(Vector2(tilemap.local_to_map(rect.position) - Vector2i(1, 1)) / chunk_size)
+	var size_chunks = ceil(rect.size / tilemap.tile_set.tile_size.x / chunk_size) + Vector2(2, 2)
 	for y in size_chunks.y:
 		for x in size_chunks.x:
 			generate_chunk(start_pos.x + x, start_pos.y + y)
@@ -63,8 +65,6 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 	if generated_chunks.get(Vector2i(chunk_x, chunk_y), false):
 		return
 	generated_chunks[Vector2i(chunk_x, chunk_y)] = true
-	var dirt_cells = []
-	var rock_cells = []
 	for y in chunk_size:
 		for x in chunk_size:
 			var potential_pos = Vector2i(
@@ -195,7 +195,7 @@ func find_atlas_chord_from_neighbors(top_left, top_middle, top_right, middle_lef
 		return Vector2i(2, 1)
 
 	if (
-		top_left == false
+		top_middle == false
 		&& middle_left == true
 		&& middle_right == true
 		&& bottom_left == false
