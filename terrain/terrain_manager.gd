@@ -602,7 +602,7 @@ func get_cellv(vec: Vector2) -> TerrainType:
 	return get_cell(vec.x, vec.y)
 
 # Radius is a square radius
-func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, X: int) -> bool:
+func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, X: int = 0) -> bool:
 	var cells_to_damage: Array[Vector2i] = []
 	var cells_to_update: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
@@ -625,25 +625,39 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 	
 	var cells_to_remove: Array[Vector2i] = []
 	for cell in cells_to_damage:
+		var initial_health = tilemap.get_cell_tile_data(cell).get_custom_data("initial_health")
 		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
-			var health = tilemap.get_cell_tile_data(cell).get_custom_data("initial_health") - power
+			var health = initial_health - power
 			if health <= 0:
 				cells_to_remove.append(cell)
+				%Cracks.set_cell(cell)
 				continue
 			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
+			set_cracks_for_cell(cell, health, initial_health)
 			continue
 		
 		if healthmap.get_cell_atlas_coords(cell).x == 0:
 			cells_to_remove.append(cell)
+			%Cracks.set_cell(cell)
 			healthmap.set_cell(cell)
 		else:
 			var health = healthmap.get_cell_atlas_coords(cell).x
 			healthmap.set_cell(cell, 0, Vector2i(health - 1, 0))
+			set_cracks_for_cell(cell, health, initial_health)
 
 	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
 	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
 
 	return true
+
+func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
+	var crack_number
+	if health == initial_health:
+		crack_number = 0
+	else:
+		crack_number = floor(8 - (float(health) / float(initial_health) * 8)) + 1
+
+	%Cracks.set_cell(cell, 2, Vector2i(0, crack_number))
 
 func get_occupied_tiles() -> Array[Vector2i]:
 	tilemap.get_used_cells()
