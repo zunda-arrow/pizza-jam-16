@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://588pj46a768y" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
 [ext_resource type="TileSet" uid="uid://c48cjwnpo03m1" path="res://terrain/dirt_tileset.tres" id="2_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
-[ext_resource type="Shader" uid="uid://8jamf66jtelx" path="res://terrain/selection.gdshader" id="3_nigp7"]
+[ext_resource type="Shader" path="res://terrain/selection.gdshader" id="3_nigp7"]
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
-[ext_resource type="Shader" uid="uid://dhqaxoav82mct" path="res://terrain/visibility.gdshader" id="5_7nt5j"]
+[ext_resource type="Shader" path="res://terrain/visibility.gdshader" id="5_7nt5j"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
 noise_type = 3
