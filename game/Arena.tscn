@@ -77,18 +77,28 @@ text = "Turn 0"
 
 [node name="EndTurnButton" type="Button" parent="Camera" unique_id=1964738272]
 unique_name_in_owner = true
-offset_left = -378.0
-offset_top = 411.0
-offset_right = -83.0
-offset_bottom = 486.0
+offset_left = 629.0
+offset_top = 337.0
+offset_right = 924.0
+offset_bottom = 412.0
 theme_override_font_sizes/font_size = 30
 text = "End Turn"
 
+[node name="GoHome" type="Button" parent="Camera" unique_id=2052981044]
+unique_name_in_owner = true
+offset_left = 439.0
+offset_top = 423.0
+offset_right = 931.0
+offset_bottom = 498.0
+theme_override_font_sizes/font_size = 30
+text = "I got lost and I want to go home
+"
+
 [node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("5_ynix6")]
-offset_left = 80.0
-offset_top = 97.0
-offset_right = 984.0
-offset_bottom = 423.0
+offset_left = 1040.0
+offset_top = -681.0
+offset_right = 1944.0
+offset_bottom = -101.0
 text = "This scene is the main part of the game. When you have to bulid, place, and do the other things to win the day, it will all go here. The goal of this day is to start a day, but not to keep track of money. Changes like getting an artifact or money should be reported to a master scene.
 In other words, this scene is not the Inventory.
 I dont think this should be the shop either.
@@ -106,3 +116,4 @@ Unknowns: Should the day system be programmed here?"
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
 [connection signal="button_down" from="Camera/EndTurnButton" to="." method="_on_end_turn_button_button_down"]
 [connection signal="button_down" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
+[connection signal="button_down" from="Camera/GoHome" to="Camera" method="_on_go_home_button_down"]

@@ -1,10 +1,13 @@
 @tool
 extends Node2D
 
+var lifetime = 0
+
 var structure: StructureResource.Structure:
 	set(structure_):
 		structure = structure_
 		$Sprite2D.texture = structure.resource.texture
+		lifetime = structure.resource.lifetime
 	get():
 		return structure
 
