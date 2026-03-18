@@ -6,6 +6,7 @@ extends Resource
 @export var size: Array[Rect2i]
 @export var texture: Texture2D
 @export var structure_type: Structures
+@export var lifetime: int
 
 enum Structures {
 	Default,
