@@ -3,10 +3,6 @@ extends Node2D
 
 signal chunk_generated(Vector2i)
 
-class DefaultTerrainArea:
-	func get_bounding_area() -> Rect2:
-		return Rect2(Vector2.ZERO, Vector2(1920, 1080))
-
 enum TerrainType{
 	Air,
 	Dirt,
@@ -23,7 +19,6 @@ enum TerrainType{
 
 @export var chunk_size: int = 16
 
-var region = DefaultTerrainArea.new()
 var generated_chunks = {}
 
 var occupation_checks = [get_occupied_tiles]
@@ -51,17 +46,13 @@ func reset_map(new_seed) -> void:
 	noise.seed = new_seed
 
 func generate() -> void:
-	var rect = region.get_bounding_area()
+	var rect = MAP_SIZE
 	# We generate the ring of chunks around the camera to make sure an unloaded chunk is never visible
-	var start_pos = floor(Vector2(tilemap.local_to_map(rect.position) - Vector2i(1, 1)) / chunk_size)
-	var size_chunks = ceil(rect.size / tilemap.tile_set.tile_size.x / chunk_size) + Vector2(2, 2)
-	for y in size_chunks.y:
-		for x in size_chunks.x:
-			generate_chunk(start_pos.x + x, start_pos.y + y)
+	for y in MAP_SIZE.size.y:
+		for x in MAP_SIZE.size.x:
+			generate_chunk(MAP_SIZE.position.x + x, MAP_SIZE.position.y + y)
 
 func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chunk of terrain
-	if !MAP_SIZE.has_point(Vector2i(chunk_x, chunk_y)):
-		return
 	if generated_chunks.get(Vector2i(chunk_x, chunk_y), false):
 		return
 	generated_chunks[Vector2i(chunk_x, chunk_y)] = true
@@ -704,5 +695,3 @@ func x_area(cells: Array[Rect2i], X: int) -> Array[Rect2i]:
 func hide_selector():
 	$Selection.hide()
 
-func _process(_delta: float) -> void:
-	generate()
