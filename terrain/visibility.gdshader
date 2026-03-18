@@ -11,6 +11,8 @@ uniform vec3 vignette_color: source_color;
 uniform vec2 interactable_pos;
 uniform float interactable_size;
 uniform vec4 interactable_color: source_color;
+uniform vec4 invalid_color: source_color;
+uniform bool valid_placement;
 
 // https://iquilezles.org/articles/distfunctions2d/
 float sdCircle( vec2 p, float r )
@@ -56,7 +58,7 @@ void fragment() {
 	COLOR.a = map.y;
 	
 	if (map.x < 1.0) {
-		COLOR.rgb = interactable_color.rgb;
-		COLOR.a = interactable_color.a;
+		COLOR.rgb = valid_placement ? interactable_color.rgb : invalid_color.rgb;
+		COLOR.a = valid_placement ? interactable_color.a : invalid_color.a;
 	}
 }

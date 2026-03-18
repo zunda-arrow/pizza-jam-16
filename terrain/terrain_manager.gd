@@ -694,4 +694,3 @@ func x_area(cells: Array[Rect2i], X: int) -> Array[Rect2i]:
 	
 func hide_selector():
 	$Selection.hide()
-
