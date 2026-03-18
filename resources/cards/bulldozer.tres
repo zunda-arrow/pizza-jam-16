@@ -4,10 +4,9 @@
 
 [resource]
 script = ExtResource("1_wm1p5")
-card_name = "Bulldoze"
-description = "Dig out a 5×2 area."
-energy_cost = 3
-ant_cost = 1
+card_name = "Bulldozer"
+description = "Mine out a 7×3 area."
+energy_cost = 2
 card_impl = 1
-dig_area = Array[Rect2i]([Rect2i(-3, -1, 5, 2)])
+dig_area = Array[Rect2i]([Rect2i(-4, -1, 7, 3)])
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

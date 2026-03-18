@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://55qahaohtkfd"]
+
+[ext_resource type="Script" uid="uid://tavcua6ixsc3" path="res://utility/utility_manager.gd" id="1_nehmx"]
+
+[node name="Utility" type="Node2D" unique_id=130806600]
+script = ExtResource("1_nehmx")

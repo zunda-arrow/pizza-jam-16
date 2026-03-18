@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://c6nce3c3m58nq"]
 
-[ext_resource type="PackedScene" uid="uid://b6lf5vwv0thx3" path="res://cards/PlayCards.tscn" id="1_ncbvw"]
+[ext_resource type="PackedScene" uid="uid://rymwewttx11s" path="res://cards/PlayCards.tscn" id="1_ncbvw"]
 [ext_resource type="Script" uid="uid://blovuluvc6xh4" path="res://game/arena.gd" id="1_tb7ye"]
 [ext_resource type="PackedScene" uid="uid://cvgqygm3pnmmn" path="res://terrain/terrain.tscn" id="2_npdor"]
 [ext_resource type="PackedScene" uid="uid://cragqvxbavsjj" path="res://camera/Camera.tscn" id="3_2wy63"]
 [ext_resource type="PackedScene" uid="uid://cro8mxb3kbban" path="res://structure/StructureManager.tscn" id="3_5yp8v"]
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
+[ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
 [ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="5_ynix6"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
 
@@ -18,6 +19,9 @@ block_threshold = 0.2
 rock_threshold = -0.4
 
 [node name="Structure" parent="." unique_id=11068490 instance=ExtResource("3_5yp8v")]
+unique_name_in_owner = true
+
+[node name="Utility" parent="." unique_id=130806600 instance=ExtResource("4_4ggwo")]
 unique_name_in_owner = true
 
 [node name="Army" parent="." unique_id=1221516024 instance=ExtResource("3_q8ykg")]
@@ -74,6 +78,9 @@ I dont think this should be the shop either.
 Unknowns: Should the day system be programmed here?"
 
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
+[connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
+[connection signal="draw_gain" from="Utility" to="." method="_on_utility_draw_gain"]
+[connection signal="energy_gain" from="Utility" to="." method="_on_utility_energy_gain"]
 [connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
 [connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]
 [connection signal="button_down" from="Camera/EndTurnButton" to="." method="_on_end_turn_button_button_down"]
