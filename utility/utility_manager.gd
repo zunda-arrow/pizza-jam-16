@@ -3,6 +3,7 @@ extends Node2D
 signal energy_gain(n: int)
 signal ants_gain(n: int)
 signal draw_gain(n: int)
+signal eff_gain(n: int)
 
 var energy: Array[int] = []
 var ants: Array[int] = []
@@ -11,36 +12,50 @@ var discard: Array[int] = []
 var efficiency: Array[int] = []
 var treasure: Array[int] = []
 
-func utilize(utility: UtilityResource) -> bool:
-	# TODO: Discard, Efficiency, Treasure
+func utilize(utility: UtilityResource, X: int) -> bool:
+	# TODO: Discard, Treasure
 	if !utility.energy.is_empty():
 		var array = utility.energy.duplicate()
-		energy_gain.emit(array.pop_front())
+		energy_gain.emit(x_scaling(array.pop_front(), X))
 		for i in range(array.size()):
 			if i == energy.size():
 				energy.append(0)
-			energy[i] += array[i]
+			energy[i] += x_scaling(array[i], X)
 	if !utility.ants.is_empty():
 		var array = utility.ants.duplicate()
-		ants_gain.emit(array.pop_front())
+		ants_gain.emit(x_scaling(array.pop_front(), X))
 		for i in range(array.size()):
 			if i == ants.size():
 				ants.append(0)
-			ants[i] += array[i]
+			ants[i] += x_scaling(array[i], X)
 	if !utility.draw.is_empty():
 		var array = utility.draw.duplicate()
-		draw_gain.emit((array.pop_front()))
+		draw_gain.emit(x_scaling(array.pop_front(), X))
 		for i in range(array.size()):
 			if i == draws.size():
 				draws.append(0)
-			draws[i] += array[i]
+			draws[i] += x_scaling(array[i], X)
+	if !utility.efficiency.is_empty():
+		var array = utility.efficiency.duplicate()
+		eff_gain.emit(x_scaling(array.pop_front(), X))
+		for i in range(array.size()):
+			if i == efficiency.size():
+				efficiency.append(0)
+			efficiency[i] += x_scaling(array[i], X)
 			
 	return true
 
-func turn_reources():
+func x_scaling(n: int, X: int) -> int:
+	if n < 0:
+		return -n * X
+	return n
+
+func turn_resources():
 	if !energy.is_empty():
 		energy_gain.emit(energy.pop_front())
 	if !ants.is_empty():
 		ants_gain.emit(ants.pop_front())
 	if !draws.is_empty():
 		draw_gain.emit(draws.pop_front())
+	if !efficiency.is_empty():
+		eff_gain.emit(efficiency.pop_front())

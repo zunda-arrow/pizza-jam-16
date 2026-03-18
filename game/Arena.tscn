@@ -17,6 +17,8 @@ script = ExtResource("1_tb7ye")
 unique_name_in_owner = true
 block_threshold = 0.2
 rock_threshold = -0.4
+spawn_radius = 10.0
+chunk_size = 16
 
 [node name="Structure" parent="." unique_id=11068490 instance=ExtResource("3_5yp8v")]
 unique_name_in_owner = true
@@ -108,6 +110,7 @@ Unknowns: Should the day system be programmed here?"
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
 [connection signal="draw_gain" from="Utility" to="." method="_on_utility_draw_gain"]
+[connection signal="eff_gain" from="Utility" to="." method="_on_utility_eff_gain"]
 [connection signal="energy_gain" from="Utility" to="." method="_on_utility_energy_gain"]
 [connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
 [connection signal="cancel_aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_cancel_aiming_card"]
