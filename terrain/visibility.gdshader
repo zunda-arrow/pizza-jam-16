@@ -58,7 +58,12 @@ void fragment() {
 	COLOR.a = map.y;
 	
 	if (map.x < 1.0) {
+<<<<<<< HEAD
 		COLOR.rgb = valid_placement ? interactable_color.rgb : invalid_color.rgb;
 		COLOR.a = valid_placement ? interactable_color.a : invalid_color.a;
+=======
+		COLOR.rgb = interactable_color.rgb;
+		COLOR.a = interactable_color.a;
+>>>>>>> origin/main
 	}
 }
