@@ -157,7 +157,7 @@ func _on_end_turn_button_button_down() -> void:
 
 	# Reset energy to maximum
 	energy = 3
-	ants = 30 + 10 * %Clock.tick
+	ants += 10
 
 	%EndTurnButton.disabled = false
 
@@ -172,3 +172,11 @@ func _on_utility_ants_gain(n: int) -> void:
 
 func _on_utility_draw_gain(n: int) -> void:
 	draw(n)
+
+
+func _on_clock_day_start(day: int) -> void:
+	%DayLabel.text = "Day " + str(day)
+	%TurnLabel.text = "Turn 0"
+
+func _on_clock_day_tick(tick: int) -> void:
+	%TurnLabel.text = "Turn " + str(tick)
