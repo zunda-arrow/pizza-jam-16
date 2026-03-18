@@ -3,6 +3,8 @@ extends Node2D
 var ant_scene = preload("res://ants/Ant.tscn")
 
 @export var is_grid_cell_filled = null
+@export var get_cell_to_walk_to = null
+
 @export var spawn_position: Vector2i
 @export var spawn_ground_direction: Vector2i
 @export var number_of_ants: int
@@ -10,7 +12,6 @@ var ant_scene = preload("res://ants/Ant.tscn")
 
 var ants: Array[Ant] = []
 var _main_loop: Array = []
-var _check_for_ant_not_on_loop_timer = 0.
 
 var _markers = []
 
@@ -74,29 +75,30 @@ func get_path_to_cell(loop: Array, from: Vector2i, to: Vector2i):
 	if index_of_to == -1 or index_of_from == -1:
 		return []
 
-	var path: Array
+	var path_right: Array
+	var path_left: Array
 	
-	var direction = "right"
+	var i = index_of_from
+	while i != index_of_to:
+		path_right.push_back(loop[i])
+		i+=+1
+		if i >= len(loop):
+			i = 0
 
-	if abs(index_of_to - index_of_from) < len(loop) - index_of_to - index_of_from:
-		var i = index_of_from
-		while i != index_of_to:
-			path.push_back(loop[i])
-			i+=+1
-			if i >= len(loop):
-				i = 0
-	else:
-		direction = "left"
-		var i = index_of_from
-		while i != index_of_to:
-			path.push_back(loop[i])
-			i-=1
-			if i < 0:
-				i = len(loop) - 1
+	i = index_of_from
+	while i != index_of_to:
+		path_left.push_back(loop[i])
+		i-=1
+		if i < 0:
+			i = len(loop) - 1
 
-	path.push_back(loop[index_of_to])
+	path_left.push_back(loop[index_of_to])
+	path_right.push_back(loop[index_of_to])
 
-	return [path, direction]
+	if len(path_left) < len(path_right):
+		return [path_left, "left"]
+
+	return [path_right, "right"]
 
 func default_is_grid_cell_filled(cell: Vector2) -> bool:
 	return $TileMap.get_cell_tile_data(0, cell) != null
@@ -105,24 +107,31 @@ func is_cell_on_loop(cell: Vector2i, ground = null):
 	if _main_loop.find_custom(func(x): return x[0] == cell and (ground == null or x[1] == ground)) != -1:
 		return true
 
-func _process(delta: float) -> void:
-	_check_for_ant_not_on_loop_timer += delta
+func find_close_tiles(cell: Vector2i, range: int):
+	var index = _main_loop.find_custom(func(x): return x[0] == cell)
+	var c = randi_range(0, range * 2)
+	
+	var index2 = (index + c - range)
+	if index2 >= len(_main_loop):
+		index2 -= len(_main_loop)
+	if index2 < 0:
+		index += len(_main_loop)
 
-	# We only check if the ants ants are not on the loop every .5 seconds to prevent lag
-	if _check_for_ant_not_on_loop_timer > .5:
-		_check_for_ant_not_on_loop_timer = 0
-		for ant in ants:
-			if not is_cell_on_loop(ant.grid_position, ant.ground_direction):
-				# If the ants get removed from the main loop, put them back at spawn.
-				ant.grid_position = spawn_position
-				ant.ground_direction = spawn_ground_direction
+	return _main_loop[index2][0]
+
+func _process(delta: float) -> void:
+	if not get_cell_to_walk_to:
+		return
 
 	for ant in ants:
-		if len(ant.following_path) == 0:
-			var cell = _main_loop.pick_random()
-			var d = get_path_to_cell(_main_loop, ant.grid_position, cell[0])
+		if len(ant.following_path) != 0:
+			continue
 
-			if len(d) == 0:
-				continue
+		var cell = get_cell_to_walk_to.call()
+		if cell == null:
+			continue
+		var d = get_path_to_cell(_main_loop, ant.grid_position, cell)
+		if len(d) == 0:
+			continue
 
-			ant.move_to_tile(d[0], d[1])
+		ant.move_to_tile(d[0], d[1])

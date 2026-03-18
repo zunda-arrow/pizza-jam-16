@@ -39,6 +39,7 @@ func _ready():
 	%Structure.has_terrain = _is_cell_filled
 	_on_terrain_update()
 	%Army.number_of_ants = 10
+	%Army.get_cell_to_walk_to = _get_ant_pathfindable_cell
 	%Army.spawn_ants()
 
 	var cards: Array[CardResource.Card] = [
@@ -114,6 +115,23 @@ func discard(i: int):
 
 func _is_cell_filled(pos: Vector2i):
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
+
+func _get_ant_pathfindable_cell():
+	var point = null
+
+	var structures: Array = %Structure.structures
+
+	var i = 0
+
+	while point == null and i < 5:
+		i+=1
+		var structure = structures.pick_random()
+		for tile in structure.get_tiles():
+			if %Army.is_cell_on_loop(tile):
+				point = tile
+	
+	return %Army.find_close_tiles(point, 4)
+
 
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
 	var success = false
