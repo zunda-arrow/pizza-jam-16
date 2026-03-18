@@ -3,11 +3,32 @@
 [ext_resource type="Script" uid="uid://588pj46a768y" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
 [ext_resource type="TileSet" uid="uid://c48cjwnpo03m1" path="res://terrain/dirt_tileset.tres" id="2_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
+[ext_resource type="Texture2D" uid="uid://5oqbjh767n6g" path="res://assets/cracks.png" id="3_nc45s"]
+[ext_resource type="Shader" path="res://terrain/selection.gdshader" id="3_nigp7"]
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
 noise_type = 3
 frequency = 0.05
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fpiom"]
+texture = ExtResource("3_nc45s")
+margins = Vector2i(4, 4)
+separation = Vector2i(0, 6)
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+0:3/0 = 0
+0:4/0 = 0
+0:5/0 = 0
+0:6/0 = 0
+0:7/0 = 0
+0:8/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jk8on"]
+tile_size = Vector2i(32, 32)
+sources/2 = SubResource("TileSetAtlasSource_fpiom")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nigp7"]
 texture = ExtResource("3_2ilfp")
@@ -57,12 +78,17 @@ noise = SubResource("FastNoiseLite_nigp7")
 unique_name_in_owner = true
 tile_set = ExtResource("2_2ilfp")
 
+[node name="Cracks" type="TileMapLayer" parent="." unique_id=1223525908]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_jk8on")
+
 [node name="Selection" type="TileMapLayer" parent="." unique_id=1551127036]
 z_index = 3999
 tile_set = SubResource("TileSet_l7s0s")
 
 [node name="HealthMap" type="TileMapLayer" parent="." unique_id=1068031049]
 unique_name_in_owner = true
+visible = false
 tile_set = SubResource("TileSet_fpiom")
 
 [node name="Building" type="RigidBody2D" parent="." unique_id=2137802564]
