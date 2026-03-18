@@ -131,12 +131,17 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		ants -= card.ant_cost
 		discard(index)
 
-func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2) -> void:
+func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) -> void:
+	if card.energy_cost > energy or card.ant_cost > ants:
+		return
+	%PlayCards.show_target_arrow(i)
 	if card.get_type() == CardResource.CardType.Dig:
 		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig)
 	if card.get_type() == CardResource.CardType.Build:
 		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build)
-		
+
+func _on_play_cards_cancel_aiming_card() -> void:
+	%Terrain.hide_selector()
 
 func _on_end_turn_button_button_down() -> void:
 	# At the end of the turn, we want to draw cards
@@ -155,7 +160,6 @@ func _on_end_turn_button_button_down() -> void:
 	ants = 30 + 10 * %Clock.tick
 
 	%EndTurnButton.disabled = false
-
 
 func _on_terrain_chunk_generated(Vector2i: Variant) -> void:
 	_on_terrain_update()

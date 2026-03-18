@@ -27,4 +27,3 @@ It does not handle keeping track of what cards you have. This is just the hand a
 
 [connection signal="card_clicked" from="Hand" to="." method="_on_hand_card_clicked"]
 [connection signal="card_discarded" from="Hand" to="." method="_on_hand_card_discarded"]
-[connection signal="card_draw" from="Hand" to="." method="_on_hand_card_draw"]

@@ -1,7 +1,8 @@
 extends Node2D
 
 signal card_used(card: CardResource, position: Vector2, index: int)
-signal aiming_card(card: CardResource, position: Vector2)
+signal aiming_card(card: CardResource, position: Vector2, index: int)
+signal cancel_aiming_card()
 
 @export var cards_in_hand: Array[CardResource]
 
@@ -15,8 +16,10 @@ var _targetting_card_index = -1
 
 func _on_hand_card_clicked(i: int) -> void:
 	_targetting_card_index = i
-	var stat_pos = hand.position_card(i)
-	target_arrow.set_start_position(stat_pos)
+	
+func show_target_arrow(i: int):
+	var start_pos = hand.position_card(i)
+	target_arrow.set_start_position(start_pos)
 	target_arrow.show()
 
 func _process(delta: float) -> void:
@@ -34,10 +37,16 @@ func _process(delta: float) -> void:
 	if _targetting_card_index != -1:
 		var resource = hand.card_scenes[_targetting_card_index].instantiated_card_resource
 		var pos = get_global_mouse_position() / 32
-		aiming_card.emit(resource, Vector2i(int(pos.x), int(pos.y)))
+		aiming_card.emit(resource, Vector2i(int(pos.x), int(pos.y)), _targetting_card_index)
 
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.is_pressed():
+		# The right mouse button can be used to cancel an action
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			_targetting_card_index = -1
+			target_arrow.hide()
+			cancel_aiming_card.emit()
 	if event is InputEventMouseButton and event.is_released():
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if _targetting_card_index == -1:
