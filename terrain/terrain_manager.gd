@@ -68,13 +68,195 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 			)
 			match get_cellv(potential_pos):
 				TerrainType.Dirt:
-					dirt_cells.append(potential_pos)
+					var top_left = get_cellv(potential_pos + Vector2i(-1, -1))
+					var top_middle = get_cellv(potential_pos + Vector2i(0, -1))
+					var top_right = get_cellv(potential_pos + Vector2i(1, -1))
+					var middle_left = get_cellv(potential_pos + Vector2i(-1, 0))
+					var middle_right = get_cellv(potential_pos + Vector2i(1, 0))
+					var bottom_left = get_cellv(potential_pos + Vector2i(-1, 1))
+					var bottom_middle = get_cellv(potential_pos + Vector2i(0, 1))
+					var bottom_right = get_cellv(potential_pos + Vector2i(1, 1))
+
+					tilemap.set_cell(potential_pos, 0, find_atlas_chord_from_neighbors(
+						top_left,
+						top_middle,
+						top_right,
+						middle_left,
+						middle_right,
+						bottom_left,
+						bottom_middle,
+						bottom_right
+					))
 				TerrainType.Rock:
+					tilemap.set_cell(potential_pos, 0, Vector2i(1, 0))
 					rock_cells.append(potential_pos)
-	tilemap.set_cells_terrain_connect(dirt_cells, 0, 0)
-	tilemap.set_cells_terrain_connect(rock_cells, 0, 1)
-	
+
 	chunk_generated.emit(Vector2i(chunk_x, chunk_y))
+
+func find_atlas_chord_from_neighbors(top_left, top_middle, top_right, middle_left, middle_right, bottom_left, bottom_middle, bottom_right) -> Vector2i:
+	if (
+		top_left != TerrainType.Air
+		&& top_middle != TerrainType.Air
+		&& top_right != TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_left != TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+		&& bottom_right != TerrainType.Air
+	):
+		return Vector2i(1, 0)
+
+	if (
+		top_middle == TerrainType.Air
+		&& middle_left == TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(2, 0)
+
+	if (
+		top_middle == TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(3, 0)
+
+	if (
+		top_middle == TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right == TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(4, 0)
+
+	if (
+		top_middle == TerrainType.Air
+		&& middle_left == TerrainType.Air
+		&& middle_right == TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(5, 0)
+
+	if (
+		top_left != TerrainType.Air
+		&& top_middle != TerrainType.Air
+		&& top_right != TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_left != TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+		&& bottom_right == TerrainType.Air
+	):
+		return Vector2i(6, 0)
+
+	if (
+		top_left != TerrainType.Air
+		&& top_middle != TerrainType.Air
+		&& top_right != TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_left == TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+		&& bottom_right != TerrainType.Air
+	):
+		return Vector2i(0, 1)
+
+	if (
+		top_left == TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_left != TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+		&& bottom_right == TerrainType.Air
+	):
+		return Vector2i(1, 1)
+
+	if (
+		top_left == TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_left == TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+		&& bottom_right != TerrainType.Air
+	):
+		return Vector2i(2, 1)
+
+	if (
+		top_left == TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_left == TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+		&& bottom_right == TerrainType.Air
+	):
+		return Vector2i(3, 1)
+
+	if (
+		top_middle == TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right == TerrainType.Air
+		&& bottom_left == TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(4, 1)
+
+	if (
+		top_middle != TerrainType.Air
+		&& middle_left == TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(5, 1)
+
+	if (
+		top_middle != TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right == TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(6, 1)
+
+	if (
+		top_middle == TerrainType.Air
+		&& middle_left == TerrainType.Air
+		&& middle_right == TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(0, 2)
+
+	if (
+		top_middle != TerrainType.Air
+		&& top_right == TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(1, 2)
+
+	if (
+		top_left == TerrainType.Air
+		&& top_middle != TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right != TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+	):
+		return Vector2i(2, 2)
+
+	if (
+		top_left != TerrainType.Air
+		&& top_middle != TerrainType.Air
+		&& top_right != TerrainType.Air
+		&& middle_left != TerrainType.Air
+		&& middle_right == TerrainType.Air
+		&& bottom_left != TerrainType.Air
+		&& bottom_middle != TerrainType.Air
+		&& bottom_right != TerrainType.Air
+	):
+		return Vector2i(3, 2)
+
+
+	return Vector2i(1, 0)
 
 func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 	if sqrt(x**2 + y**2) <= spawn_radius:
