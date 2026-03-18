@@ -44,6 +44,13 @@ func _ready():
 
 	var cards: Array[CardResource.Card] = [
 		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
+		load("res://resources/cards/fungus_bar.tres").new(),
 		load("res://resources/cards/breakfast.tres").new(),
 		load("res://resources/cards/beam_drill.tres").new(),
 		load("res://resources/cards/dirt_nap.tres").new(),
@@ -116,6 +123,18 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	if card.energy_cost > energy or card.ant_cost > ants:
 		print("Card Too Expensive")
 		return
+		
+	if card.get_type() == CardResource.CardType.Build:
+		var structures_nodes: Array[Node2D] = %Structure.structures
+		var in_range = false
+		for node in structures_nodes:
+			if (node.global_position / 32 - at).length() < card.structure.tiles_radius:
+				in_range = true
+				break
+		if in_range == false:
+			print("Cannot Play Structure out of Range")
+			%Terrain.hide_selector()
+			return
 	
 	if card.energy_cost < 0:
 		x += energy
@@ -156,7 +175,10 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 	if card.get_type() == CardResource.CardType.Dig:
 		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig, x)
 	if card.get_type() == CardResource.CardType.Build:
-		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build)
+		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build, x)
+		var s_position = %Terrain/GroundMap.to_global(%Terrain/GroundMap.map_to_local(at)) - $%Camera.position
+		%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(s_position.x / 1080., s_position.y / 1080.))
+		%Camera/Visibility.material.set_shader_parameter("interactable_size", card.structure.tiles_radius * 32. / 1080.)
 
 func _on_play_cards_cancel_aiming_card() -> void:
 	%Terrain.hide_selector()
@@ -211,3 +233,10 @@ func _on_clock_day_start(day: int) -> void:
 
 func _on_clock_day_tick(tick: int) -> void:
 	%TurnLabel.text = "Turn " + str(tick)
+
+func _process(delta: float) -> void:
+	var structure_pos: Array[Vector3] = []
+	for s in %Structure.structures:
+		structure_pos.append(Vector3((s.global_position.x - $Camera.position.x) / 1080., (s.global_position.y - $Camera.position.y) / 1080., 1))
+	%Camera/Visibility.material.set_shader_parameter("discoveries", structure_pos)
+	%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(-1,-1))

@@ -17,8 +17,6 @@ script = ExtResource("1_tb7ye")
 unique_name_in_owner = true
 block_threshold = 0.2
 rock_threshold = -0.4
-spawn_radius = 10.0
-chunk_size = 16
 
 [node name="Structure" parent="." unique_id=11068490 instance=ExtResource("3_5yp8v")]
 unique_name_in_owner = true

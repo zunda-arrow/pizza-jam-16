@@ -7,6 +7,7 @@ extends Resource
 @export var texture: Texture2D
 @export var structure_type: Structures
 @export var lifetime: int
+@export var tiles_radius: int = 8
 
 enum Structures {
 	Default,
