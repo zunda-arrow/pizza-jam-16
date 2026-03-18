@@ -6,6 +6,11 @@ uniform float discovery_size: hint_range(0.0,1.0);
 uniform float box_rounding: hint_range(0.0,1.0);
 uniform float blurriness: hint_range(0.0,1.0);
 uniform float blending: hint_range(0.0,1.0);
+uniform float building_radius;
+uniform vec3 vignette_color: source_color;
+uniform vec2 interactable_pos;
+uniform float interactable_size;
+uniform vec4 interactable_color: source_color;
 
 // https://iquilezles.org/articles/distfunctions2d/
 float sdCircle( vec2 p, float r )
@@ -29,17 +34,29 @@ float smin( float a, float b, float k )
 }
 
 vec4 construct( in vec2 uv) {
-	vec4 m = vec4(0.0,0.0,0.0,1.0);	
+	vec4 m = vec4(1.0,1.0,0.0,0.0);	
 	for (int i = 0; i < discoveries.length();  i++) {
 		if (discoveries[i].z != 1.) continue;
-		m.w = smin(m.w, smoothstep(0.0,blurriness,sdRoundedBox(vec2(uv.x - discoveries[i].x, uv.y - discoveries[i].y),vec2(discovery_size,discovery_size),vec4(box_rounding))), blending) * 1.6;
+		vec2 spot = vec2(uv.x - discoveries[i].x, uv.y - discoveries[i].y);
+		m.y = smin(m.y, smoothstep(0.0,blurriness,sdRoundedBox(spot,vec2(discovery_size,discovery_size),vec4(box_rounding))), blending) * 1.6;
 	}
+	
+	if (interactable_pos.x > -1.) {
+		m.x = smoothstep(0.0,0.001,sdCircle(uv - interactable_pos, interactable_size));
+	}
+	
 	return m;
 }
 
-void fragment() {
-	float map = 1.0;
-	
+void fragment() {	
 	vec2 uv = vec2((UV.x - 0.5) * (1920. / 1080.), UV.y - 0.5);
-	COLOR = construct(uv);
+	vec4 map = construct(uv);
+	
+	COLOR.rgb = vignette_color;
+	COLOR.a = map.y;
+	
+	if (map.x < 1.0) {
+		COLOR.rgb = interactable_color.rgb;
+		COLOR.a = interactable_color.a;
+	}
 }

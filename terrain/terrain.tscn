@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://5oqbjh767n6g" path="res://assets/cracks.png" id="3_nc45s"]
 [ext_resource type="Shader" path="res://terrain/selection.gdshader" id="3_nigp7"]
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
-[ext_resource type="Shader" path="res://terrain/visibility.gdshader" id="5_7nt5j"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
 noise_type = 3
@@ -70,28 +69,6 @@ sources/0 = SubResource("TileSetAtlasSource_nc45s")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ilfp"]
 size = Vector2(233, 231)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nigp7"]
-shader = ExtResource("3_nigp7")
-shader_parameter/dash_length = 0.582000027645
-shader_parameter/dash_size = 0.0630000029925
-shader_parameter/dash_rounding = 0.0390000018525
-shader_parameter/dash_distance = 0.1430000067925
-shader_parameter/circle_radius = 0.2890000137275
-shader_parameter/time = 5.49600026106
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nigp7"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mk5yb"]
-shader = ExtResource("5_7nt5j")
-shader_parameter/discoveries = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-shader_parameter/time = 0.0
-shader_parameter/discovery_size = 0.066000003135
-shader_parameter/box_rounding = 0.0110000005225
-shader_parameter/blurriness = 0.682000032395
-shader_parameter/blending = 0.30800001463
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7nt5j"]
-
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
 initial_seed = 1
@@ -123,18 +100,3 @@ physics_material_override = SubResource("PhysicsMaterial_l7s0s")
 visible = false
 position = Vector2(106.5, 105.5)
 shape = SubResource("RectangleShape2D_2ilfp")
-
-[node name="BuildingRadiusView" type="TextureRect" parent="." unique_id=514706393]
-visible = false
-material = SubResource("ShaderMaterial_nigp7")
-offset_right = 1920.0
-offset_bottom = 1080.0
-texture = SubResource("PlaceholderTexture2D_nigp7")
-
-[node name="Visibility" type="TextureRect" parent="." unique_id=2147283416]
-visible = false
-z_index = 4000
-material = SubResource("ShaderMaterial_mk5yb")
-offset_right = 1920.0
-offset_bottom = 1080.0
-texture = SubResource("PlaceholderTexture2D_7nt5j")
