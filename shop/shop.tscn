@@ -13,6 +13,13 @@ offset_bottom = 1080.0
 texture = ExtResource("2_sxvro")
 stretch_mode = 1
 
+[node name="Money" type="Label" parent="." unique_id=967338387]
+offset_left = 1676.0
+offset_top = 62.0
+offset_right = 1716.0
+offset_bottom = 85.0
+text = "Money: "
+
 [node name="CardContainer" type="Node2D" parent="." unique_id=1890192673]
 unique_name_in_owner = true
 
