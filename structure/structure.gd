@@ -30,4 +30,3 @@ func get_tiles() -> Array[Vector2i]:
 			for y in r.size.y:
 				out += [pos + Vector2i(x,y) + r.position]
 	return out
-				

@@ -52,7 +52,7 @@ func _on_terrain_update():
 
 	for structure in %Structure.structures:
 		for c in structure.structure.resource.path_finding_points:
-			if %Army.is_cell_on_loop(c):
+			if %Army.is_cell_on_loop(c + structure.get_tile_position()):
 				structure.set_connected_to_loop(true)
 				break
 
