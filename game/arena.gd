@@ -87,8 +87,6 @@ func _on_terrain_update():
 
 	for structure in %Structure.structures:
 		for c in structure.structure.resource.path_finding_points:
-			
-			print(c, %Army.is_cell_on_loop(c + (Vector2i(structure.position) / 32)))
 			if %Army.is_cell_on_loop(c + (Vector2i(structure.position) / 32)):
 				structure.set_connected_to_loop(true)
 				break
@@ -155,6 +153,20 @@ func _get_ant_pathfindable_cell():
 		return %Army.find_close_tiles(%Army.spawn_position, 3)
 
 
+func dig_area_touches_path(dig_area: Array[Rect2i], center: Vector2i) -> bool:
+	for rect in dig_area:
+		rect = rect.grow(1)
+		var rect_center = center + rect.position
+		for x in range(rect_center.x,rect_center.x+rect.size.x):
+			for y in range(rect_center.y,rect_center.y+rect.size.y):
+				if (x == rect_center.x or x == rect_center.x+rect.size.x - 1) and (y == rect_center.y or y == rect_center.y+rect.size.y - 1):
+					# I dont want to allow corners
+					continue
+				if %Army.is_cell_on_loop(Vector2i(x, y)):
+					return true
+
+	return false
+
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
 	var success = false
 	var x = 0
@@ -172,13 +184,14 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	
 	if card.energy_cost < 0:
 		x += energy
-		energy = 0
 	elif card.ant_cost < 0:
 		x += ants / 10
-		ants = 0
 
 	if card.get_type() == CardResource.CardType.Dig:
-		success = %Terrain.destroy(at, card.get_area(), card.power() + eff, x)
+		if dig_area_touches_path(card.get_area(), at):
+			success = %Terrain.destroy(at, card.get_area(), card.power() + eff, x)
+		else:
+			success = false
 		if success:
 			%Camera.shake(Vector2(3,0), 0.95)
 	if card.get_type() == CardResource.CardType.Move:
@@ -192,8 +205,14 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
-	
+
 	if (success):
+		# Use all all energy for X cost cards
+		if card.energy_cost < 0:
+			energy = 0
+		elif card.ant_cost < 0:
+			ants = 0
+		
 		if energy > 0:
 			energy -= card.energy_cost
 		if ants > 0:
@@ -212,9 +231,10 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 	
 	%PlayCards.show_target_arrow(i)
 	if card.get_type() == CardResource.CardType.Dig:
-		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig, x)
+		var dig_touches_path = dig_area_touches_path(card.get_area(), at)
+		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig, x, null, dig_touches_path)
 	if card.get_type() == CardResource.CardType.Build:
-		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, x, card.structure.requires_contact)
+		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, x, card.structure.requires_contact, null)
 		var s_position = %Terrain/GroundMap.to_global(%Terrain/GroundMap.map_to_local(at)) - $%Camera.position
 		var valid = _validate_structure_at(card, at)
 		%Camera/Visibility.material.set_shader_parameter("valid_placement", valid)
