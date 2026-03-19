@@ -1,6 +1,6 @@
 extends Node2D
 
-signal day_start(day: int)
+signal day_end(day: int)
 signal day_tick(tick: int)
 
 @export var day_length := 3
@@ -15,7 +15,7 @@ func advance_time() -> void:
 	tick += 1
 	if tick > day_length - 1: # Overtime detection would go here
 		set_time(0, day + 1)
-		day_start.emit(day)
+		day_end.emit(day)
 	else:
 		day_tick.emit(tick)
 

@@ -113,6 +113,6 @@ text = "I got lost and I want to go home
 [connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
 [connection signal="cancel_aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_cancel_aiming_card"]
 [connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]
-[connection signal="day_start" from="Camera/Clock" to="." method="_on_clock_day_start"]
+[connection signal="day_end" from="Camera/Clock" to="." method="_on_clock_day_end"]
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
-[connection signal="pressed" from="Camera/EndTurnButton" to="." method="on_turn_end"]
+[connection signal="pressed" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]

@@ -1,8 +1,8 @@
 extends Node2D
 
-signal end_turn
+signal day_end
 
-var DEFAULT_HAND = 6
+const DEFAULT_HAND = 6
 
 var hand: Array[CardResource.Card] = []
 var draw_pile = []
@@ -190,7 +190,9 @@ func _on_utility_draw_gain(n: int) -> void:
 func _on_utility_eff_gain(n: int) -> void:
 	eff += n
 
-func _on_clock_day_start(day: int) -> void:
+func _on_clock_day_end(day: int) -> void:
+	day_end.emit()
+	
 	%DayLabel.text = "Day " + str(day)
 	%TurnLabel.text = "Turn 0"
 	
@@ -205,9 +207,9 @@ func _on_clock_day_start(day: int) -> void:
 
 func _on_clock_day_tick(tick: int) -> void:
 	%TurnLabel.text = "Turn " + str(tick)
+	on_turn_end()
 
 func on_turn_end() -> void:
-	end_turn.emit()
 	%EndTurnButton.disabled = true
 
 	while len(hand) > 0:
@@ -215,7 +217,9 @@ func on_turn_end() -> void:
 		# Give a litte animation
 		await get_tree().create_timer(.05).timeout
 
-func start_turn() -> void:
+	start_turn()
+
+func start_turn():
 	%Camera.make_active()
 	draw(DEFAULT_HAND)
 

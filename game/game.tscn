@@ -11,6 +11,7 @@ script = ExtResource("1_l1rk1")
 [node name="Arena" parent="." unique_id=728631546 instance=ExtResource("2_vasa2")]
 
 [node name="ShopCamera" parent="." unique_id=1849506086 instance=ExtResource("3_4fuuu")]
+process_mode = 2
 
 [node name="Shop" parent="ShopCamera" unique_id=2098500626 instance=ExtResource("3_h7iqs")]
 unique_name_in_owner = true
@@ -18,6 +19,6 @@ position = Vector2(-960, -540)
 
 [connection signal="day_start" from="." to="Arena" method="start_day"]
 [connection signal="turn_start" from="." to="Arena" method="start_turn"]
-[connection signal="end_turn" from="Arena" to="." method="on_turn_end"]
+[connection signal="day_end" from="Arena" to="." method="on_day_end"]
 [connection signal="card_purchased" from="ShopCamera/Shop" to="." method="on_card_purchased"]
 [connection signal="shopping_done" from="ShopCamera/Shop" to="." method="shop_phase_done"]

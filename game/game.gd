@@ -17,8 +17,9 @@ func _ready() -> void:
 func start_game() -> void:
 	day_start.emit(deck) # Day start also starts a turn.
 
-func on_turn_end() -> void:
+func on_day_end() -> void:
 	$ShopCamera.make_active()
+	get_tree().paused = true
 
 func on_money_earned(value: int) -> void:
 	money += value
@@ -31,4 +32,5 @@ func on_card_purchased(card: CardResource) -> void:
 
 func shop_phase_done() -> void:
 	$ShopCamera.hide()
+	get_tree().paused = false
 	turn_start.emit()
