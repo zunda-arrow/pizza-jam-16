@@ -171,7 +171,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	elif card.ant_cost < 0:
 		x += ants / 10
 		ants = 0
-		
+
 	if card.get_type() == CardResource.CardType.Dig:
 		success = %Terrain.destroy(at, card.get_area(), card.power() + eff, x)
 	if card.get_type() == CardResource.CardType.Move:

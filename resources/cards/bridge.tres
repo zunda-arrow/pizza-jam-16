@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://bslqktadao1nj"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_04hcy"]
+[ext_resource type="Resource" uid="uid://dl63w4hb5j0of" path="res://resources/structures/bridge.tres" id="2_04hcy"]
+
+[resource]
+script = ExtResource("1_04hcy")
+card_name = "Bridge"
+ant_cost = 10
+card_impl = 3
+structureResource = ExtResource("2_04hcy")
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

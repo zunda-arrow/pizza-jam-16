@@ -80,9 +80,27 @@ func get_loop(pos: Vector2i, ground: Vector2i):
 			walkable_cells.push_back([pos, ground])
 			pos += forward
 
-	walkable_cells = walkable_cells.filter(func(x): return cell_in_structure_range.call(x[0]))
+	var out = []
 
-	return walkable_cells
+	# If we have path issues on small loops, this
+	# might be the cause.
+	var from_start = 0
+	while cell_in_structure_range.call(walkable_cells[from_start][0]):
+		out.push_back(walkable_cells[from_start])
+		from_start += 1
+		if from_start >= len(walkable_cells):
+			break
+
+	var from_end = len(walkable_cells) - 1
+	while cell_in_structure_range.call(walkable_cells[from_end][0]):
+		out.push_front(walkable_cells[from_end])
+		from_end -= 1
+		if len(walkable_cells) - from_end == from_start:
+			break
+		if from_end < 0:
+			break
+
+	return out
 
 func get_path_to_cell(loop: Array, from: Vector2i, to: Vector2i):
 	var index_of_from = loop.find_custom(func(x): return x[0] == from)
@@ -126,7 +144,7 @@ func is_cell_on_loop(cell: Vector2i, ground = null):
 func find_close_tiles(cell: Vector2i, range: int):
 	var index = _main_loop.find_custom(func(x): return x[0] == cell)
 	var c = randi_range(0, range * 2)
-	
+
 	var index2 = (index + c - range)
 	if index2 >= len(_main_loop):
 		index2 -= len(_main_loop)
