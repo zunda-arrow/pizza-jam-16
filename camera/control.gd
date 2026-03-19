@@ -21,7 +21,9 @@ func _ready():
 	for child in get_children():
 		if child.name.begins_with("_"):
 			child.queue_free()
-			
+
+	make_active()
+
 func shake(power: Vector2, falloff: float) -> void:
 	shake_power = power
 	shake_falloff = falloff
@@ -50,3 +52,6 @@ func get_bounding_area() -> Rect2:
 func _on_go_home_button_down() -> void:
 	going_home = true
 	_time = 0
+
+func make_active() -> void:
+	$Camera2D.make_current()
