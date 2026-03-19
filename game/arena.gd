@@ -167,6 +167,18 @@ func dig_area_touches_path(dig_area: Array[Rect2i], center: Vector2i) -> bool:
 
 	return false
 
+
+func x_area(cells: Array[Rect2i], X: int) -> Array[Rect2i]:
+	var area = cells.duplicate()
+	
+	for i in area.size():
+		if area[i].size.x < 0:
+			area[i] = Rect2i((area[i].size.x * X)/2, area[i].position.y, -area[i].size.x * X, area[i].size.y)
+		if cells[i].size.y < 0:
+			area[i] = Rect2i(area[i].position.x, (area[i].size.y * X)/2, area[i].size.x, -area[i].size.y * X)
+	
+	return area
+
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
 	var success = false
 	var x = 0
@@ -188,8 +200,15 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		x += ants / 10
 
 	if card.get_type() == CardResource.CardType.Dig:
-		if dig_area_touches_path(card.get_area(), at):
-			success = %Terrain.destroy(at, card.get_area(), card.power() + eff, x)
+		var area = card.get_area()
+		if x > 0:
+			area = x_area(area, x)
+		var power = card.power()
+		if power < 0:
+			power = x
+		power += eff
+		if dig_area_touches_path(area, at):
+			success = %Terrain.destroy(at, card.get_area(), power, x)
 		else:
 			success = false
 		if success:
@@ -231,10 +250,13 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 	
 	%PlayCards.show_target_arrow(i)
 	if card.get_type() == CardResource.CardType.Dig:
-		var dig_touches_path = dig_area_touches_path(card.get_area(), at)
-		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig, x, null, dig_touches_path)
+		var area = card.get_area()
+		if x > 0:
+			area = x_area(area, x)
+		var dig_touches_path = dig_area_touches_path(area, at)
+		%Terrain.show_selector(at, area, %Terrain.PlacingMethod.Dig, null, dig_touches_path)
 	if card.get_type() == CardResource.CardType.Build:
-		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, x, card.structure.requires_contact, null)
+		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, card.structure.requires_contact, null)
 		var s_position = %Terrain/GroundMap.to_global(%Terrain/GroundMap.map_to_local(at)) - $%Camera.position
 		var valid = _validate_structure_at(card, at)
 		%Camera/Visibility.material.set_shader_parameter("valid_placement", valid)

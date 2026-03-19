@@ -600,16 +600,12 @@ var extra_particle_generators: Array[GPUParticles2D] = []
 		#p.queue_free()
 
 # Radius is a square radius
-func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, X: int = 0) -> bool:
+func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int) -> bool:
 	var cells_to_damage: Array[Vector2i] = []
 	var cells_to_update: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
-	var area: Array[Rect2i] = x_area(cells, X)
-	
-	if power < 0:
-		power *= -X
 
-	for rect in area:
+	for rect in cells:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
@@ -625,7 +621,6 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 	for cell in cells_to_damage:
 		var p = $BreakParticles.duplicate()
 		add_child(p)
-		print(p.position)
 		p.emitting = true
 		p.process_material.emission_shape_scale = Vector3(32,32,1)
 		p.position = $GroundMap.map_to_local(cell)
@@ -680,13 +675,13 @@ func get_occupied_cells() -> Array[Vector2i]:
 		occupied_cells += check.call()
 	return occupied_cells
 					
-func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, X: int, requires_contact, dig_touches_path):
+func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, requires_contact, dig_touches_path):
 	$Selection.clear()
 	$Selection.show()
 	
 	var occupied_cells: Array[Vector2i] = get_occupied_cells()
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
-	var area = x_area(cells, X)
+	var area = cells
 
 	var has_ground = true
 	if requires_contact != null:
@@ -709,17 +704,6 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 				#	$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
 				else:
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(0,0), 0)
-
-func x_area(cells: Array[Rect2i], X: int) -> Array[Rect2i]:
-	var area = cells.duplicate()
-	
-	for i in area.size():
-		if area[i].size.x < 0:
-			area[i] = Rect2i((area[i].size.x * X)/2, area[i].position.y, -area[i].size.x * X, area[i].size.y)
-		if cells[i].size.y < 0:
-			area[i] = Rect2i(area[i].position.x, (area[i].size.y * X)/2, area[i].size.x, -area[i].size.y * X)
-	
-	return area
 	
 func hide_selector():
 	$Selection.hide()
