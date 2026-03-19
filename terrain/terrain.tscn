@@ -8,9 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
 [ext_resource type="Texture2D" uid="uid://brh2jyxks7ayc" path="res://assets/particle/dirt.png" id="7_nc45s"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
-noise_type = 3
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nc45s"]
 frequency = 0.05
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fpiom"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fpiom"]
 texture = ExtResource("3_nc45s")
@@ -96,7 +98,8 @@ hue_variation_max = -2.2351742e-08
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
 initial_seed = 1
-noise = SubResource("FastNoiseLite_nigp7")
+terrain_shape_noise = SubResource("FastNoiseLite_nc45s")
+gold_ore_noise = SubResource("FastNoiseLite_fpiom")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=547818870]
 scroll_scale = Vector2(0.8, 0.8)
