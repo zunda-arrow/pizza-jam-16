@@ -22,6 +22,7 @@ var ants: int:
 	set(val):
 		_ants = val
 		%AntsLabel.text = "Ants: " + str(_ants)
+		%Army.number_of_ants = val
 	get():
 		return _ants
 
@@ -38,9 +39,7 @@ func _ready():
 	%Structure.occupation_checker = %Terrain.get_occupied_cells
 	%Structure.has_terrain = _is_cell_filled
 	_on_terrain_update()
-	%Army.number_of_ants = 10
 	%Army.get_cell_to_walk_to = _get_ant_pathfindable_cell
-	%Army.spawn_ants()
 
 	var cards: Array[CardResource.Card] = [
 		load("res://resources/cards/fungus_bar.tres").new(),
@@ -140,7 +139,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	if card.energy_cost > energy or card.ant_cost > ants:
 		print("Card Too Expensive")
 		return
-		
+
 	if card.get_type() == CardResource.CardType.Build:
 		var structures_nodes: Array[Node2D] = %Structure.structures
 		var in_range = false
@@ -155,10 +154,10 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	
 	if card.energy_cost < 0:
 		x += energy
-		energy = -1
+		energy = 0
 	elif card.ant_cost < 0:
 		x += ants / 10
-		ants = -1
+		ants = 0
 		
 	if card.get_type() == CardResource.CardType.Dig:
 		success = %Terrain.destroy(at, card.get_area(), card.power() + eff, x)
@@ -174,8 +173,10 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	_on_terrain_update()
 	
 	if (success):
-		energy -= card.energy_cost
-		ants -= card.ant_cost
+		if energy > 0:
+			energy -= card.energy_cost
+		if ants > 0:
+			ants -= card.ant_cost
 		discard(index)
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) -> void:

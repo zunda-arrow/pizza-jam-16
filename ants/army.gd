@@ -7,13 +7,24 @@ var ant_scene = preload("res://ants/Ant.tscn")
 
 @export var spawn_position: Vector2i
 @export var spawn_ground_direction: Vector2i
-@export var number_of_ants: int
+@export var home_position: Vector2i
+
+var number_of_ants: int:
+	set(val):
+		if number_of_ants > val:
+			send_ants_home(number_of_ants - val)
+		if number_of_ants < val:
+			spawn_ants(val - number_of_ants)
+		number_of_ants = val
+	get():
+		return number_of_ants
 
 
 var ants: Array[Ant] = []
 var _main_loop: Array = []
 
 var _markers = []
+
 
 func generate_loop() -> void:
 	if is_grid_cell_filled == null:
@@ -29,19 +40,21 @@ func generate_loop() -> void:
 
 	for i in _main_loop:
 		var l = $Loop.duplicate()
-		l.show()
+		# l.show()
 		add_child(l)
 		l.position = i[0] * 32 + Vector2i(16, 16)
 		_markers.push_back(l)
 
-func spawn_ants():
-	for i in range(number_of_ants):
-		var random_test_ant: Ant = ant_scene.instantiate()
-		%Ants.add_child(random_test_ant)
-		random_test_ant.grid_position = spawn_position
-		random_test_ant.ground_direction = spawn_ground_direction
-		ants.push_back(random_test_ant)
-		await get_tree().create_timer(.1).timeout
+func spawn_ants(n):
+	for i in range(n):
+		var a: Ant = ant_scene.instantiate()
+		a.grid_position = spawn_position
+		a.ground_direction = spawn_ground_direction
+		a.position = spawn_position * 32 + Vector2i(16, 16)
+		add_child(a)
+		ants.push_back(a)
+		a.thinking_time = 10000
+		await get_tree().create_timer(.05).timeout
 
 func get_loop(pos: Vector2i, ground: Vector2i):
 	var walkable_cells: Array = []
@@ -119,11 +132,33 @@ func find_close_tiles(cell: Vector2i, range: int):
 
 	return _main_loop[index2][0]
 
+func send_ants_home(n: int):
+	for i in range(n):
+		var ant_to_send_home = ants.filter(func(x): return x != null and not x.going_home).pick_random()
+		
+		if (ant_to_send_home == null):
+			print("Cound not find an ant to send home.")
+			return
+	
+		ant_to_send_home.going_home = true
+		var d = get_path_to_cell(_main_loop, ant_to_send_home.grid_position, home_position)
+		if len(d) == 0:
+			print("Can not send ant home due to broken path.")
+			ant_to_send_home.queue_free()
+			return
+
+		ant_to_send_home.move_to_tile(d[0], d[1])
+
 func _process(delta: float) -> void:
 	if not get_cell_to_walk_to:
 		return
 
+	ants = ants.filter(func(x): return x != null)
+
 	for ant in ants:
+		if ant.is_thinking():
+			continue
+
 		if len(ant.following_path) != 0:
 			continue
 
