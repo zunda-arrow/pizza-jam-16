@@ -46,4 +46,5 @@ offset_right = 1009.0
 offset_bottom = 872.0
 text = "Known issues:
 Ants glitch out when the dirt they are standing on is removed.
-Ants may warp from one end of the path to the other."
+Ants may warp from one end of the path to the other.
+Cells that connect to bridges can be deleted."

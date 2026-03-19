@@ -76,7 +76,7 @@ func discard(i: int):
 
 func _is_cell_filled(pos: Vector2i):
 	for structure in %Structure.structures:
-		if structure.structure.resource.structure_name == "Bridge":
+		if structure.structure.resource.structure_name in ["Bridge", "Ladder"]:
 			if pos in structure.get_tiles():
 				return true
 

@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dmqbdj5qxxeu6"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dktpx4orlph6v"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_nfese"]
-[ext_resource type="Resource" uid="uid://b34d3qplyevxx" path="res://resources/structures/ladder.tres" id="2_nfese"]
+[ext_resource type="Resource" uid="uid://c6vy58lfr3pkn" path="res://resources/structures/ladder.tres" id="2_nfese"]
 
 [resource]
 script = ExtResource("1_nfese")
