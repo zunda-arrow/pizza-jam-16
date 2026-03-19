@@ -697,7 +697,7 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
 				if placing_method == PlacingMethod.Build and (Vector2i(x,y) in occupied_cells or not has_ground):
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
-				elif placing_method == PlacingMethod.Dig and Vector2i(x,y-1) in building_cells and !(Vector2i(x,y) in building_cells) or !dig_touches_path:
+				elif placing_method == PlacingMethod.Dig and (Vector2i(x,y-1) in building_cells and !(Vector2i(x,y) in building_cells) or !dig_touches_path):
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
 				#elif Vector2i(x,y) in occupied_cells:
 				#	$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
