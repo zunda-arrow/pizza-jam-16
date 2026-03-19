@@ -19,6 +19,7 @@ var ants: int = 0 :
 	set(val):
 		ants = val
 		%AntsLabel.text = "Ants: " + str(ants)
+		%Army.number_of_ants = val
 
 var eff: int
 
@@ -37,8 +38,10 @@ func _ready():
 	%Structure.occupation_checker = %Terrain.get_occupied_cells
 	%Structure.has_terrain = _is_cell_filled
 	_on_terrain_update()
+	
 	%Army.number_of_ants = 10
 	%Army.spawn_ants()
+	%Army.get_cell_to_walk_to = _get_ant_pathfindable_cell
 	
 	# The home is always placed
 	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new())
@@ -81,6 +84,32 @@ func discard(i: int):
 
 func _is_cell_filled(pos: Vector2i):
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
+	
+func _validate_structure_at(card: CardResource.Card, at: Vector2):
+		var structures_nodes: Array[Node2D] = %Structure.structures
+		var in_range = false
+		for node in structures_nodes:
+			if (node.global_position / 32 - at).length() < card.structure.tiles_radius + 1.5:
+				in_range = true
+				break
+		return in_range
+
+func _get_ant_pathfindable_cell():
+	var point = null
+
+	var structures: Array = %Structure.structures
+
+	var i = 0
+
+	while point == null and i < 5:
+		i+=1
+		var structure = structures.pick_random()
+		for tile in structure.get_tiles():
+			if %Army.is_cell_on_loop(tile):
+				point = tile
+	
+	return %Army.find_close_tiles(point, 4)
+
 
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
 	var success = false
@@ -89,21 +118,31 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	if card.energy_cost > energy or card.ant_cost > ants:
 		print("Card Too Expensive")
 		return
+
+	if card.get_type() == CardResource.CardType.Build:
+		var in_range = _validate_structure_at(card, at)
+		if in_range == false:
+			print("Cannot Play Structure out of Range")
+			%Terrain.hide_selector()
+			return
 	
 	if card.energy_cost < 0:
 		x += energy
-		energy = -1
+		energy = 0
 	elif card.ant_cost < 0:
 		x += ants / 10
-		ants = -1
+		ants = 0
 		
 	if card.get_type() == CardResource.CardType.Dig:
 		success = %Terrain.destroy(at, card.get_area(), card.power() + eff, x)
+		if success:
+			%Camera.shake(Vector2(3,0), 0.95)
 	if card.get_type() == CardResource.CardType.Move:
 		player_position = at
 		success = true
 	if card.get_type() == CardResource.CardType.Build:
 		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new())
+		%Camera.shake(Vector2(0,1), 0.9)
 	if card.get_type() == CardResource.CardType.Utility:
 		success = %Utility.utilize(card.utility, x)
 
@@ -111,8 +150,10 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	_on_terrain_update()
 	
 	if (success):
-		energy -= card.energy_cost
-		ants -= card.ant_cost
+		if energy > 0:
+			energy -= card.energy_cost
+		if ants > 0:
+			ants -= card.ant_cost
 		discard(index)
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) -> void:
@@ -129,7 +170,12 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 	if card.get_type() == CardResource.CardType.Dig:
 		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig, x)
 	if card.get_type() == CardResource.CardType.Build:
-		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build)
+		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build, x)
+		var s_position = %Terrain/GroundMap.to_global(%Terrain/GroundMap.map_to_local(at)) - $%Camera.position
+		var valid = _validate_structure_at(card, at)
+		%Camera/Visibility.material.set_shader_parameter("valid_placement", valid)
+		%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(s_position.x / 1080., s_position.y / 1080.))
+		%Camera/Visibility.material.set_shader_parameter("interactable_size", card.structure.tiles_radius * 32. / 1080.)
 
 func _on_play_cards_cancel_aiming_card() -> void:
 	%Terrain.hide_selector()
@@ -152,6 +198,8 @@ func _on_utility_eff_gain(n: int) -> void:
 func _on_clock_day_start(day: int) -> void:
 	%DayLabel.text = "Day " + str(day)
 	%TurnLabel.text = "Turn 0"
+	
+	ants = 0
 	
 	for s in %Structure.structures:
 		if s.lifetime == 0:
@@ -191,3 +239,10 @@ func start_day(deck: Array[CardResource.Card]) -> void:
 	
 	draw_pile = deck.duplicate()
 	draw_pile.shuffle()
+
+func _process(delta: float) -> void:
+	var structure_pos: Array[Vector3] = []
+	for s in %Structure.structures:
+		structure_pos.append(Vector3((s.global_position.x - $Camera.position.x) / 1080., (s.global_position.y - $Camera.position.y) / 1080., 1))
+	%Camera/Visibility.material.set_shader_parameter("discoveries", structure_pos)
+	%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(-1,-1))

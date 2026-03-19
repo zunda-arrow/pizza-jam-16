@@ -3,10 +3,6 @@ extends Node2D
 
 signal chunk_generated(Vector2i)
 
-class DefaultTerrainArea:
-	func get_bounding_area() -> Rect2:
-		return Rect2(Vector2.ZERO, Vector2(1920, 1080))
-
 enum TerrainType{
 	Air,
 	Dirt,
@@ -23,7 +19,6 @@ enum TerrainType{
 
 @export var chunk_size: int = 16
 
-var region = DefaultTerrainArea.new()
 var generated_chunks = {}
 
 var occupation_checks = [get_occupied_tiles]
@@ -51,17 +46,13 @@ func reset_map(new_seed) -> void:
 	noise.seed = new_seed
 
 func generate() -> void:
-	var rect = region.get_bounding_area()
+	var rect = MAP_SIZE
 	# We generate the ring of chunks around the camera to make sure an unloaded chunk is never visible
-	var start_pos = floor(Vector2(tilemap.local_to_map(rect.position) - Vector2i(1, 1)) / chunk_size)
-	var size_chunks = ceil(rect.size / tilemap.tile_set.tile_size.x / chunk_size) + Vector2(2, 2)
-	for y in size_chunks.y:
-		for x in size_chunks.x:
-			generate_chunk(start_pos.x + x, start_pos.y + y)
+	for y in MAP_SIZE.size.y:
+		for x in MAP_SIZE.size.x:
+			generate_chunk(MAP_SIZE.position.x + x, MAP_SIZE.position.y + y)
 
 func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chunk of terrain
-	if !MAP_SIZE.has_point(Vector2i(chunk_x, chunk_y)):
-		return
 	if generated_chunks.get(Vector2i(chunk_x, chunk_y), false):
 		return
 	generated_chunks[Vector2i(chunk_x, chunk_y)] = true
@@ -600,9 +591,16 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 
 func get_cellv(vec: Vector2) -> TerrainType:
 	return get_cell(vec.x, vec.y)
+	
+# I am really sorry
+var extra_particle_generators: Array[GPUParticles2D] = []
+#func destroy_particles():
+	#await get_tree().create_timer(1.0).timeout
+	#for p in extra_particle_generators:
+		#p.queue_free()
 
 # Radius is a square radius
-func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, X: int) -> bool:
+func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, X: int = 0) -> bool:
 	var cells_to_damage: Array[Vector2i] = []
 	var cells_to_update: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
@@ -625,25 +623,52 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 	
 	var cells_to_remove: Array[Vector2i] = []
 	for cell in cells_to_damage:
+		var p = $BreakParticles.duplicate()
+		add_child(p)
+		print(p.position)
+		p.emitting = true
+		p.process_material.emission_shape_scale = Vector3(32,32,1)
+		p.position = $GroundMap.map_to_local(cell)
+		extra_particle_generators.append(p)
+		p.amount = 4
+
+		var initial_health = tilemap.get_cell_tile_data(cell).get_custom_data("initial_health")
 		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
-			var health = tilemap.get_cell_tile_data(cell).get_custom_data("initial_health") - power
+			var health = initial_health - power
 			if health <= 0:
 				cells_to_remove.append(cell)
+				%Cracks.set_cell(cell)
 				continue
 			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
+			set_cracks_for_cell(cell, health, initial_health)
 			continue
 		
 		if healthmap.get_cell_atlas_coords(cell).x == 0:
 			cells_to_remove.append(cell)
+			%Cracks.set_cell(cell)
 			healthmap.set_cell(cell)
 		else:
 			var health = healthmap.get_cell_atlas_coords(cell).x
 			healthmap.set_cell(cell, 0, Vector2i(health - 1, 0))
-
+			set_cracks_for_cell(cell, health, initial_health)
+			
 	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
 	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
+	
+
+	#destroy_particles()
+		
 
 	return true
+
+func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
+	var crack_number
+	if health == initial_health:
+		crack_number = 0
+	else:
+		crack_number = floor(8 - (float(health) / float(initial_health) * 8)) + 1
+
+	%Cracks.set_cell(cell, 2, Vector2i(0, crack_number))
 
 func get_occupied_tiles() -> Array[Vector2i]:
 	tilemap.get_used_cells()
@@ -689,6 +714,3 @@ func x_area(cells: Array[Rect2i], X: int) -> Array[Rect2i]:
 	
 func hide_selector():
 	$Selection.hide()
-
-func _process(_delta: float) -> void:
-	generate()

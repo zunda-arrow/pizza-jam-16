@@ -1,9 +1,11 @@
 extends AnimatedSprite2D
 class_name Ant
 
+@export var TIME_BETWEEN_PATH_FINDING_SECONDS = .5
 var following_path: Array = []
 var timer = 0
 var facing = "right"
+var going_home = false
 var _current_rotation = 0
 
 func _ready() -> void:
@@ -11,20 +13,34 @@ func _ready() -> void:
 
 var grid_position: Vector2i
 var ground_direction: Vector2i = Vector2i(0, 1)
+var thinking_time = 0
 
 func move_to_tile(along_path: Array, facing_: String):
 	following_path = along_path
 	facing = facing_ 
 
+func is_thinking():
+	return thinking_time < TIME_BETWEEN_PATH_FINDING_SECONDS
+
 func _process(delta: float) -> void:
 	timer += delta
+	
+	thinking_time += delta
 	
 	if facing == "left":
 		flip_h = true
 	else:
 		flip_h = false
 
+	if len(following_path) == 0:
+		pause()
+		if going_home:
+			queue_free()
+	else:
+		play()
+
 	if len(following_path) > 0:
+		thinking_time = 0
 		var target = following_path[0][0]
 		var r = following_path[0][1]
 
