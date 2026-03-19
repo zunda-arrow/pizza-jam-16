@@ -17,11 +17,14 @@ shader_parameter/vignette_color = Color(0, 0, 0, 1)
 shader_parameter/interactable_pos = Vector2(0, 0)
 shader_parameter/interactable_size = 0.0
 shader_parameter/interactable_color = Color(0.897657, 0.86365783, 1, 0.21960784)
+shader_parameter/invalid_color = Color(0.1764706, 0, 0, 1)
+shader_parameter/valid_placement = true
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eus7h"]
 
 [node name="Camera" type="Node2D" unique_id=2140926887]
 script = ExtResource("1_qpltt")
+shake_speed = 50.0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=107190833]
 limit_enabled = false

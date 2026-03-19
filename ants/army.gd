@@ -41,7 +41,7 @@ func generate_loop() -> void:
 
 	for i in _main_loop:
 		var l = $Loop.duplicate()
-		l.show()
+		# l.show()
 		add_child(l)
 		l.position = i[0] * 32 + Vector2i(16, 16)
 		_markers.push_back(l)

@@ -124,6 +124,32 @@ func _is_cell_filled(pos: Vector2i):
 				return true
 
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
+	
+func _validate_structure_at(card: CardResource.Card, at: Vector2):
+		var structures_nodes: Array[Node2D] = %Structure.structures
+		var in_range = false
+		for node in structures_nodes:
+			if (node.global_position / 32 - at).length() < card.structure.tiles_radius + 1.5:
+				in_range = true
+				break
+		return in_range
+
+func _get_ant_pathfindable_cell():
+	var point = null
+
+	var structures: Array = %Structure.structures
+
+	var i = 0
+
+	while point == null and i < 5:
+		i+=1
+		var structure = structures.pick_random()
+		for tile in structure.get_tiles():
+			if %Army.is_cell_on_loop(tile):
+				point = tile
+	
+	return %Army.find_close_tiles(point, 4)
+
 
 func _cell_in_structure_range(cell: Vector2i):
 	for structure in %Structure.structures:
@@ -154,12 +180,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		return
 
 	if card.get_type() == CardResource.CardType.Build:
-		var structures_nodes: Array[Node2D] = %Structure.structures
-		var in_range = false
-		for node in structures_nodes:
-			if (node.global_position / 32 - at).length() < card.structure.tiles_radius:
-				in_range = true
-				break
+		var in_range = _validate_structure_at(card, at)
 		if in_range == false:
 			print("Cannot Play Structure out of Range")
 			%Terrain.hide_selector()
@@ -174,11 +195,14 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 
 	if card.get_type() == CardResource.CardType.Dig:
 		success = %Terrain.destroy(at, card.get_area(), card.power() + eff, x)
+		if success:
+			%Camera.shake(Vector2(3,0), 0.95)
 	if card.get_type() == CardResource.CardType.Move:
 		player_position = at
 		success = true
 	if card.get_type() == CardResource.CardType.Build:
 		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new())
+		%Camera.shake(Vector2(0,1), 0.9)
 	if card.get_type() == CardResource.CardType.Utility:
 		success = %Utility.utilize(card.utility, x)
 
@@ -208,6 +232,8 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 	if card.get_type() == CardResource.CardType.Build:
 		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, x, card.structure.requires_contact)
 		var s_position = %Terrain/GroundMap.to_global(%Terrain/GroundMap.map_to_local(at)) - $%Camera.position
+		var valid = _validate_structure_at(card, at)
+		%Camera/Visibility.material.set_shader_parameter("valid_placement", valid)
 		%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(s_position.x / 1080., s_position.y / 1080.))
 		%Camera/Visibility.material.set_shader_parameter("interactable_size", card.structure.tiles_radius * 32. / 1080.)
 
