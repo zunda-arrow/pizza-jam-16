@@ -38,3 +38,9 @@ text = "In the future this scene will probably remove ants from loops that dont 
 The second reason, is that buildings will be easier to understand and program if they dont actually need to wait for an ant. This will also make the game more snappy because there will be less waiting.
 
 Right now, I think the end goal will be to have an appropriate amount of ants walking from active buildings to the center. I think this will feel more than anty enough."
+
+[node name="Markers" type="Node2D" parent="." unique_id=71559748]
+unique_name_in_owner = true
+
+[node name="Ants" type="Node2D" parent="." unique_id=1324310828]
+unique_name_in_owner = true

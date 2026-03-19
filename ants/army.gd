@@ -40,9 +40,9 @@ func generate_loop() -> void:
 	_markers = []
 
 	for i in _main_loop:
-		var l = $Loop.duplicate()
+		var l: Sprite2D = $Loop.duplicate()
 		l.show()
-		add_child(l)
+		%Markers.add_child(l)
 		l.position = i[0] * 32 + Vector2i(16, 16)
 		_markers.push_back(l)
 
@@ -73,7 +73,7 @@ func spawn_ants(n):
 		a.grid_position = spawn_position
 		a.ground_direction = spawn_ground_direction
 		a.position = spawn_position * 32 + Vector2i(16, 16)
-		add_child(a)
+		%Ants.add_child(a)
 		ants.push_back(a)
 		a.thinking_time = 10000
 		await get_tree().create_timer(.05).timeout
