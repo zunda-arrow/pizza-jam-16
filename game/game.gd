@@ -11,10 +11,11 @@ func _ready() -> void:
 	
 	$ShopCamera.hide()
 	%Shop.get_money = get_money
+	
+	start_game()
 
 func start_game() -> void:
-	day_start.emit(deck)
-	turn_start.emit()
+	day_start.emit(deck) # Day start also starts a turn.
 
 func on_turn_end() -> void:
 	$ShopCamera.make_active()

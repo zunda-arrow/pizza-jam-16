@@ -5,7 +5,7 @@ signal end_turn
 var DEFAULT_HAND = 6
 
 var hand: Array[CardResource.Card] = []
-var draw_pile: Array[CardResource.Card] = []
+var draw_pile = []
 var discard_pile: Array[CardResource.Card] = []
 
 var HomeStructure = preload("res://resources/structures/home.tres")
@@ -35,7 +35,7 @@ func _ready():
 	%Structure.has_terrain = _is_cell_filled
 	_on_terrain_update()
 	
-	%Army.number_of_ants = 10
+	%Army.number_of_ants = 0
 	%Army.get_cell_to_walk_to = _get_ant_pathfindable_cell
 	
 	# The home is always placed
@@ -228,13 +228,15 @@ func start_turn() -> void:
 
 	%EndTurnButton.disabled = false
 
-func start_day(deck: Array[CardResource.Card]) -> void:
+func start_day(deck) -> void:
 	energy = 3
 	ants = 0
 	eff = 0
 	
 	draw_pile = deck.duplicate()
 	draw_pile.shuffle()
+	
+	start_turn()
 
 func _process(delta: float) -> void:
 	var structure_pos: Array[Vector3] = []
