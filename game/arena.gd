@@ -134,23 +134,6 @@ func _validate_structure_at(card: CardResource.Card, at: Vector2):
 				break
 		return in_range
 
-func _get_ant_pathfindable_cell():
-	var point = null
-
-	var structures: Array = %Structure.structures
-
-	var i = 0
-
-	while point == null and i < 5:
-		i+=1
-		var structure = structures.pick_random()
-		for tile in structure.get_tiles():
-			if %Army.is_cell_on_loop(tile):
-				point = tile
-	
-	return %Army.find_close_tiles(point, 4)
-
-
 func _cell_in_structure_range(cell: Vector2i):
 	for structure in %Structure.structures:
 		if structure.position.distance_to(cell * 32 + Vector2i(16, 16)) < structure.structure.resource.tiles_radius * 32:
