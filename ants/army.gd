@@ -46,6 +46,27 @@ func generate_loop() -> void:
 		l.position = i[0] * 32 + Vector2i(16, 16)
 		_markers.push_back(l)
 
+	# We reset ant paths when ground is removed
+	# This is to prevent ants path finding over a part of the map that no longer exists
+	# Ants who's block they were standing on was mined, are send back to spawn.
+	for ant in ants:
+		if not is_cell_on_loop(ant.grid_position):
+			ant.grid_position = spawn_position
+			ant.ground_direction = spawn_ground_direction
+			ant.following_path.clear()
+			# Hack to force the ants to instantly start moving again
+			ant.thinking_time = .3
+
+		if len(ant.following_path) == 0:
+			continue
+
+		var possible_cell = get_path_to_cell(_main_loop, ant.grid_position, ant.following_path[len(ant.following_path) - 1][0])
+		if possible_cell:
+			ant.following_path = possible_cell[0]
+			ant.facing = possible_cell[1]
+		else:
+			ant.following_path.clear()
+
 func spawn_ants(n):
 	for i in range(n):
 		var a: Ant = ant_scene.instantiate()
@@ -109,30 +130,43 @@ func get_path_to_cell(loop: Array, from: Vector2i, to: Vector2i):
 	if index_of_to == -1 or index_of_from == -1:
 		return []
 
-	var path_right: Array
-	var path_left: Array
+	var path_right = []
+	var path_left = []
 	
 	var i = index_of_from
 	while i != index_of_to:
 		path_right.push_back(loop[i])
 		i+=+1
 		if i >= len(loop):
-			i = 0
+			path_right = null
+			break
 
 	i = index_of_from
 	while i != index_of_to:
 		path_left.push_back(loop[i])
 		i-=1
 		if i < 0:
-			i = len(loop) - 1
+			path_left = null
+			break
 
-	path_left.push_back(loop[index_of_to])
-	path_right.push_back(loop[index_of_to])
+	if path_left != null:
+		path_left.push_back(loop[index_of_to])
+	if path_right != null:
+		path_right.push_back(loop[index_of_to])
 
-	if len(path_left) < len(path_right):
+	if path_left and path_right != null:
+		if len(path_left) < len(path_right):
+			return [path_left, "left"]
+
+		return [path_right, "right"]
+	
+	if path_left != null:
 		return [path_left, "left"]
-
-	return [path_right, "right"]
+	
+	if path_right != null:
+		return [path_right, "right"]
+	
+	return []
 
 func default_is_grid_cell_filled(cell: Vector2) -> bool:
 	return $TileMap.get_cell_tile_data(0, cell) != null
