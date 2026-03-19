@@ -24,6 +24,7 @@ shader_parameter/valid_placement = true
 
 [node name="Camera" type="Node2D" unique_id=2140926887]
 script = ExtResource("1_qpltt")
+shake_speed = 50.0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=107190833]
 limit_enabled = false
