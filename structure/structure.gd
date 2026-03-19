@@ -18,7 +18,6 @@ func set_connected_to_loop(is_connected_: bool):
 		$Label.hide()
 
 func get_tile_position():
-	var size: Rect2 = $Sprite2D.get_rect()
 	return Vector2i((position - Vector2(16, 16)) / 32) 
 
 func get_tiles() -> Array[Vector2i]:

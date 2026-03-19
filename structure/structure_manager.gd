@@ -14,10 +14,15 @@ var placing_build = true
 var has_terrain = func(_pos: Vector2): return true # This is specifically to check if there is terrain under a structure
 var occupation_checker = func(): return building_occupation() # This can be overriden (eg. to use the terrain_manager occupation checker)
 
+# The "requires contact" cells for a structure resource are what is considered occupied
 func building_occupation() -> Array[Vector2i]:
 	var occupied_cells: Array[Vector2i] = []
 	for s in structures:
-		occupied_cells += s.get_tiles()
+		for r in s.structure.resource.requires_contact:
+			var pos = s.get_tile_position() + r.position
+			for x in range(ceil(pos.x),ceil(pos.x+r.size.x)):
+				for y in range(ceil(pos.y),ceil(pos.y+r.size.y)):
+					occupied_cells += [Vector2i(x, y)]
 	return occupied_cells
 
 func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: StructureResource.Structure) -> bool:
