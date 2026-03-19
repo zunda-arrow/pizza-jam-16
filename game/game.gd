@@ -2,6 +2,7 @@ extends Node2D
 
 signal turn_start
 signal day_start(deck: Array[CardResource.Card])
+signal shop_start
 
 var deck = []
 var money := 0
@@ -18,7 +19,7 @@ func start_game() -> void:
 	day_start.emit(deck) # Day start also starts a turn.
 
 func on_day_end() -> void:
-	$ShopCamera.make_active()
+	shop_start.emit()
 	get_tree().paused = true
 
 func on_money_earned(value: int) -> void:
