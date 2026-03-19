@@ -639,6 +639,11 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
 	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
 
+	$BreakParticles.emitting = true
+	$BreakParticles.process_material.emission_shape_scale = Vector3(cells[0].size.x * 16, cells[0].size.y * 16, 1)
+	$BreakParticles.position = $GroundMap.to_global($GroundMap.map_to_local(cell_coordinate_center))
+	$BreakParticles.amount = cells[0].size.x * cells[0].size.y * 5
+
 	return true
 
 func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
