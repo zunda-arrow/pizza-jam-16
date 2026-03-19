@@ -86,13 +86,10 @@ func _on_terrain_update():
 	%Army.generate_loop()
 
 	for structure in %Structure.structures:
-		var cells = structure.get_tiles()
-
-		for c in cells:
-			# We use Vector2i(0, 1) because structures can only be placed
-			# vertically right now.
-			# In the future this should be the direction of the floor.
-			if %Army.is_cell_on_loop(c, Vector2i(0, 1)):
+		for c in structure.structure.resource.path_finding_points:
+			
+			print(c, %Army.is_cell_on_loop(c + (Vector2i(structure.position) / 32)))
+			if %Army.is_cell_on_loop(c + (Vector2i(structure.position) / 32)):
 				structure.set_connected_to_loop(true)
 				break
 
@@ -147,11 +144,15 @@ func _get_ant_pathfindable_cell():
 	var structures: Array = %Structure.structures
 
 	var structure = structures.pick_random()
-	var cell = Vector2i(structure.structure.resource.path_finding_point) + (Vector2i(structure.position) / 32)
-	if %Army.is_cell_on_loop(cell):
-		point = Vector2i(cell)
+	for p in structure.structure.resource.path_finding_points:
+		var cell = Vector2i(p) + (Vector2i(structure.position) / 32)
+		if %Army.is_cell_on_loop(cell):
+			point = Vector2i(cell)
 
-	return %Army.find_close_tiles(point, 4)
+	if point:
+		return %Army.find_close_tiles(point, 4)
+	else:
+		return %Army.find_close_tiles(%Army.spawn_position, 3)
 
 
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
