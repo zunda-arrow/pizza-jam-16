@@ -591,6 +591,13 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 
 func get_cellv(vec: Vector2) -> TerrainType:
 	return get_cell(vec.x, vec.y)
+	
+# I am really sorry
+var extra_particle_generators: Array[GPUParticles2D] = []
+#func destroy_particles():
+	#await get_tree().create_timer(1.0).timeout
+	#for p in extra_particle_generators:
+		#p.queue_free()
 
 # Radius is a square radius
 func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, X: int = 0) -> bool:
@@ -616,6 +623,15 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 	
 	var cells_to_remove: Array[Vector2i] = []
 	for cell in cells_to_damage:
+		var p = $BreakParticles.duplicate()
+		add_child(p)
+		print(p.position)
+		p.emitting = true
+		p.process_material.emission_shape_scale = Vector3(32,32,1)
+		p.position = $GroundMap.map_to_local(cell)
+		extra_particle_generators.append(p)
+		p.amount = 4
+
 		var initial_health = tilemap.get_cell_tile_data(cell).get_custom_data("initial_health")
 		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
 			var health = initial_health - power
@@ -635,14 +651,13 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 			var health = healthmap.get_cell_atlas_coords(cell).x
 			healthmap.set_cell(cell, 0, Vector2i(health - 1, 0))
 			set_cracks_for_cell(cell, health, initial_health)
-
+			
 	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
 	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
+	
 
-	$BreakParticles.emitting = true
-	$BreakParticles.process_material.emission_shape_scale = Vector3(cells[0].size.x * 16, cells[0].size.y * 16, 1)
-	$BreakParticles.position = $GroundMap.to_global($GroundMap.map_to_local(cell_coordinate_center))
-	$BreakParticles.amount = cells[0].size.x * cells[0].size.y * 5
+	#destroy_particles()
+		
 
 	return true
 
