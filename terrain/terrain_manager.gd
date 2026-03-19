@@ -4,15 +4,23 @@ extends Node2D
 signal chunk_generated(Vector2i)
 signal money_dug(value: int)
 
+# The enum value - 1 is used to grab the tileset
 enum TerrainType{
 	Air,
 	Dirt,
-	Rock
+	Rock,
+	LightDirt,
+	ShroomDirt,
+	Mystery,
 }
 
 @export var initial_seed = 0 # The noise seed on ready. If set to 0, random seed.
 
-@export var noise: FastNoiseLite # The noise we will use to generate the terrain
+@export var terrain_shape_noise: FastNoiseLite # The noise we will use to generate the terrain
+@export var light_dirt_noise: FastNoiseLite
+@export var rock_noise: FastNoiseLite
+@export var gold_ore_noise: FastNoiseLite
+
 @export var block_threshold: float = 0.5 # Threshold to place a block (less than)
 @export var rock_threshold: float = 1.0 # Threshold to place an unbreakable block #TODO: Implement
 
@@ -44,7 +52,10 @@ func _ready():
 
 func reset_map(new_seed) -> void:
 	tilemap.clear()
-	noise.seed = new_seed
+	terrain_shape_noise.seed = new_seed
+	rock_noise.seed = new_seed
+	gold_ore_noise.seed = new_seed
+	light_dirt_noise.seed = new_seed
 
 func generate() -> void:
 	var rect = MAP_SIZE
@@ -86,11 +97,7 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 				bottom_right
 			)
 
-			match get_cellv(potential_pos):
-				TerrainType.Dirt:
-					tilemap.set_cell(potential_pos, 0, neighbor)
-				TerrainType.Rock:
-					tilemap.set_cell(potential_pos, 1, neighbor)
+			tilemap.set_cell(potential_pos, get_cellv(potential_pos) - 1, neighbor)
 
 	chunk_generated.emit(Vector2i(chunk_x, chunk_y))
 
@@ -583,12 +590,22 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 			return TerrainType.Air
 		else:
 			return TerrainType.Dirt
-	var point = noise.get_noise_2d(x, y)
-	if point < rock_threshold:
+	var point = terrain_shape_noise.get_noise_2d(x, y)
+		
+	if point > 0.3:
+		return TerrainType.Air
+	
+	if rock_noise.get_noise_2d(x, y) > 0.05:
 		return TerrainType.Rock
-	elif point < block_threshold:
-		return TerrainType.Dirt
-	return TerrainType.Air
+
+	if gold_ore_noise.get_noise_2d(x, y) > 0.3:
+		return TerrainType.ShroomDirt
+
+	if light_dirt_noise.get_noise_2d(x, y) > 0.05:
+		return TerrainType.LightDirt
+
+	return TerrainType.Dirt
+
 
 func get_cellv(vec: Vector2) -> TerrainType:
 	return get_cell(vec.x, vec.y)

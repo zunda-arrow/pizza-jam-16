@@ -10,11 +10,28 @@
 [ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="5_ynix6"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n65lt"]
+frequency = 0.03
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fq16a"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4ggwo"]
+frequency = 0.03
+offset = Vector3(50, 50, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dakxn"]
+frequency = 0.125
+
 [node name="Arena" type="Node2D" unique_id=728631546]
 script = ExtResource("1_tb7ye")
 
 [node name="Terrain" parent="." unique_id=333081327 instance=ExtResource("2_npdor")]
 unique_name_in_owner = true
+terrain_shape_noise = SubResource("FastNoiseLite_n65lt")
+light_dirt_noise = SubResource("FastNoiseLite_fq16a")
+rock_noise = SubResource("FastNoiseLite_4ggwo")
+gold_ore_noise = SubResource("FastNoiseLite_dakxn")
 block_threshold = 0.2
 rock_threshold = -0.4
 spawn_radius = 5.5
