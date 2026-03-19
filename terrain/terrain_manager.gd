@@ -15,7 +15,7 @@ enum TerrainType{
 @export var block_threshold: float = 0.5 # Threshold to place a block (less than)
 @export var rock_threshold: float = 1.0 # Threshold to place an unbreakable block #TODO: Implement
 
-@export var spawn_radius: float = 10.0
+@export var spawn_radius: float = 6.0
 
 @export var chunk_size: int = 16
 
@@ -600,23 +600,19 @@ var extra_particle_generators: Array[GPUParticles2D] = []
 		#p.queue_free()
 
 # Radius is a square radius
-func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, X: int = 0) -> bool:
+func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int) -> bool:
 	var cells_to_damage: Array[Vector2i] = []
 	var cells_to_update: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
-	var area: Array[Rect2i] = x_area(cells, X)
-	
-	if power < 0:
-		power *= -X
 
-	for rect in area:
+	for rect in cells:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
 				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0:
 					if (x < rect_center.x-rect.size.x or x > rect_center.x+rect.size.x or y < rect_center.y-rect.size.y or y > rect_center.y+rect.size.y):
 						cells_to_update.append(Vector2i(x,y))
-					elif Vector2i(x,y-1) in building_cells:
+					elif Vector2i(x,y) in building_cells:
 						return false
 					else:
 						cells_to_damage.append(Vector2i(x,y))
@@ -625,7 +621,6 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 	for cell in cells_to_damage:
 		var p = $BreakParticles.duplicate()
 		add_child(p)
-		print(p.position)
 		p.emitting = true
 		p.position = $GroundMap.map_to_local(cell)
 		extra_particle_generators.append(p)
@@ -679,37 +674,35 @@ func get_occupied_cells() -> Array[Vector2i]:
 		occupied_cells += check.call()
 	return occupied_cells
 					
-func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, X: int):
+func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, requires_contact, dig_touches_path):
 	$Selection.clear()
 	$Selection.show()
 	
 	var occupied_cells: Array[Vector2i] = get_occupied_cells()
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
-	var area = x_area(cells, X)
+	var area = cells
+
+	var has_ground = true
+	if requires_contact != null:
+		for dirt_cell in requires_contact:
+			var rect_center = cell_coordinate_center + dirt_cell.position
+			for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
+				for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
+					if %GroundMap.get_cell_tile_data(Vector2(x, y)) == null:
+						has_ground = false
 
 	for rect in area:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if placing_method == PlacingMethod.Build and ((y == rect_center.y+rect.size.y-1 and tilemap.get_cell_source_id(Vector2(x,y+1)) == -1) or Vector2i(x,y) in occupied_cells):
+				if placing_method == PlacingMethod.Build and (Vector2i(x,y) in occupied_cells or not has_ground):
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
-				elif placing_method == PlacingMethod.Dig and Vector2i(x,y-1) in building_cells and !(Vector2i(x,y) in building_cells):
+				elif placing_method == PlacingMethod.Dig and (Vector2i(x,y) in building_cells or !dig_touches_path):
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
 				#elif Vector2i(x,y) in occupied_cells:
 				#	$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
 				else:
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(0,0), 0)
-
-func x_area(cells: Array[Rect2i], X: int) -> Array[Rect2i]:
-	var area = cells.duplicate()
-	
-	for i in area.size():
-		if area[i].size.x < 0:
-			area[i] = Rect2i((area[i].size.x * X)/2, area[i].position.y, -area[i].size.x * X, area[i].size.y)
-		if cells[i].size.y < 0:
-			area[i] = Rect2i(area[i].position.x, (area[i].size.y * X)/2, area[i].size.x, -area[i].size.y * X)
-	
-	return area
 	
 func hide_selector():
 	$Selection.hide()

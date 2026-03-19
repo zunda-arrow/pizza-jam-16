@@ -4,10 +4,14 @@ extends Resource
 #### Definitions for each Structure ####
 @export var structure_name: String
 @export var size: Array[Rect2i]
+## Section of the structure that is required to touch ground
+@export var requires_contact: Array[Rect2i]
+## The point on the sitructure the ants will walk to when they decide to visit.
+@export var path_finding_points: Array[Vector2i]
 @export var texture: Texture2D
 @export var structure_type: Structures
 @export var lifetime: int
-@export var tiles_radius: int = 8
+@export var tiles_radius: int = 11
 
 enum Structures {
 	Default,

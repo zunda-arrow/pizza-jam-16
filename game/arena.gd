@@ -40,21 +40,18 @@ func _ready():
 	
 	# The home is always placed
 	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new())
+	_on_terrain_update()
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
+	%Army.cell_in_structure_range = _cell_in_structure_range
 	%Army.spawn_position = Vector2(0, 3)
 	%Army.spawn_ground_direction = Vector2(0, 1)
 	%Army.generate_loop()
 
 	for structure in %Structure.structures:
-		var cells = structure.get_tiles()
-
-		for c in cells:
-			# We use Vector2i(0, 1) because structures can only be placed
-			# vertically right now.
-			# In the future this should be the direction of the floor.
-			if %Army.is_cell_on_loop(c, Vector2i(0, 1)):
+		for c in structure.structure.resource.path_finding_points:
+			if %Army.is_cell_on_loop(c + (Vector2i(structure.position) / 32)):
 				structure.set_connected_to_loop(true)
 				break
 
@@ -78,6 +75,11 @@ func discard(i: int):
 	hand.pop_at(i)
 
 func _is_cell_filled(pos: Vector2i):
+	for structure in %Structure.structures:
+		if structure.structure.resource.structure_name in ["Bridge", "Ladder"]:
+			if pos in structure.get_tiles():
+				return true
+
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
 	
 func _validate_structure_at(card: CardResource.Card, at: Vector2):
@@ -89,22 +91,55 @@ func _validate_structure_at(card: CardResource.Card, at: Vector2):
 				break
 		return in_range
 
+func _cell_in_structure_range(cell: Vector2i):
+	for structure in %Structure.structures:
+		if structure.position.distance_to(cell * 32 + Vector2i(16, 16)) < structure.structure.resource.tiles_radius * 32:
+			return true
+	
+	return false
+
 func _get_ant_pathfindable_cell():
 	var point = null
 
 	var structures: Array = %Structure.structures
 
-	var i = 0
+	var structure = structures.pick_random()
+	for p in structure.structure.resource.path_finding_points:
+		var cell = Vector2i(p) + (Vector2i(structure.position) / 32)
+		if %Army.is_cell_on_loop(cell):
+			point = Vector2i(cell)
 
-	while point == null and i < 5:
-		i+=1
-		var structure = structures.pick_random()
-		for tile in structure.get_tiles():
-			if %Army.is_cell_on_loop(tile):
-				point = tile
+	if point:
+		return %Army.find_close_tiles(point, 4)
+	else:
+		return %Army.find_close_tiles(%Army.spawn_position, 3)
+
+
+func dig_area_touches_path(dig_area: Array[Rect2i], center: Vector2i) -> bool:
+	for rect in dig_area:
+		rect = rect.grow(1)
+		var rect_center = center + rect.position
+		for x in range(rect_center.x,rect_center.x+rect.size.x):
+			for y in range(rect_center.y,rect_center.y+rect.size.y):
+				if (x == rect_center.x or x == rect_center.x+rect.size.x - 1) and (y == rect_center.y or y == rect_center.y+rect.size.y - 1):
+					# I dont want to allow corners
+					continue
+				if %Army.is_cell_on_loop(Vector2i(x, y)):
+					return true
+
+	return false
+
+
+func x_area(cells: Array[Rect2i], X: int) -> Array[Rect2i]:
+	var area = cells.duplicate()
 	
-	return %Army.find_close_tiles(point, 4)
-
+	for i in area.size():
+		if area[i].size.x < 0:
+			area[i] = Rect2i((area[i].size.x * X)/2, area[i].position.y, -area[i].size.x * X, area[i].size.y)
+		if cells[i].size.y < 0:
+			area[i] = Rect2i(area[i].position.x, (area[i].size.y * X)/2, area[i].size.x, -area[i].size.y * X)
+	
+	return area
 
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
 	var success = false
@@ -123,13 +158,21 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	
 	if card.energy_cost < 0:
 		x += energy
-		energy = 0
 	elif card.ant_cost < 0:
 		x += ants / 10
-		ants = 0
-		
+
 	if card.get_type() == CardResource.CardType.Dig:
-		success = %Terrain.destroy(at, card.get_area(), card.power() + eff, x)
+		var area = card.get_area()
+		if x > 0:
+			area = x_area(area, x)
+		var power = card.power()
+		if power < 0:
+			power = x
+		power += eff
+		if dig_area_touches_path(area, at):
+			success = %Terrain.destroy(at, area, power)
+		else:
+			success = false
 		if success:
 			%Camera.shake(Vector2(3,0), 0.95)
 	if card.get_type() == CardResource.CardType.Move:
@@ -143,8 +186,14 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
-	
+
 	if (success):
+		# Use all all energy for X cost cards
+		if card.energy_cost < 0:
+			energy = 0
+		elif card.ant_cost < 0:
+			ants = 0
+		
 		if energy > 0:
 			energy -= card.energy_cost
 		if ants > 0:
@@ -163,9 +212,13 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 	
 	%PlayCards.show_target_arrow(i)
 	if card.get_type() == CardResource.CardType.Dig:
-		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig, x)
+		var area = card.get_area()
+		if x > 0:
+			area = x_area(area, x)
+		var dig_touches_path = dig_area_touches_path(area, at)
+		%Terrain.show_selector(at, area, %Terrain.PlacingMethod.Dig, null, dig_touches_path)
 	if card.get_type() == CardResource.CardType.Build:
-		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build, x)
+		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, card.structure.requires_contact, null)
 		var s_position = %Terrain/GroundMap.to_global(%Terrain/GroundMap.map_to_local(at)) - $%Camera.position
 		var valid = _validate_structure_at(card, at)
 		%Camera/Visibility.material.set_shader_parameter("valid_placement", valid)
@@ -197,13 +250,18 @@ func _on_clock_day_end(day: int) -> void:
 	%TurnLabel.text = "Turn 0"
 	
 	ants = 0
-	
-	for s in %Structure.structures:
+
+	var i = len(%Structure.structures) - 1
+	while i > 0:
+		var s = %Structure.structures[i]
 		if s.lifetime == 0:
-			%Structure.structures.erase(s)
+			%Structure.structures.pop_at(i)
 			s.queue_free()
 		elif s.lifetime > 0:
 			s.lifetime -= 1
+		i -= 1
+
+	_on_terrain_update()
 
 func _on_clock_day_tick(tick: int) -> void:
 	%TurnLabel.text = "Turn " + str(tick)
