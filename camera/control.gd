@@ -2,11 +2,14 @@ extends Node2D
 
 @export var speed := 1000.0
 @export var camera_size := Vector2i(1920, 1080)
+@export_range(1,200,0.1) var shake_speed = 0.5
 
 @onready var camera: Camera2D = $Camera2D
 
 var _time = 0
 var going_home = false
+var shake_power: Vector2 = Vector2(0,0)
+var shake_falloff = 0
 
 func _ready():
 	if get_tree().root == get_parent():
@@ -18,6 +21,10 @@ func _ready():
 	for child in get_children():
 		if child.name.begins_with("_"):
 			child.queue_free()
+			
+func shake(power: Vector2, falloff: float) -> void:
+	shake_power = power
+	shake_falloff = falloff
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -31,12 +38,14 @@ func _process(delta):
 			going_home = false
 				
 	position += inp.normalized() * speed * delta
+	
+	position += shake_power * sin(_time * shake_speed)
+	shake_power *= shake_falloff
 
 # Used for generating new terrain when it becomes visible
 func get_bounding_area() -> Rect2:
 	var size = camera_size / camera.zoom.x
 	return Rect2(camera.global_position - size/2, size)
-
 
 func _on_go_home_button_down() -> void:
 	going_home = true
