@@ -1,14 +1,12 @@
 [gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://bted2loskmxed"]
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_pugin"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pugin"]
-size = Vector2(96, 96)
+[ext_resource type="Texture2D" uid="uid://ksi7yqgqrefd" path="res://assets/structures/mushroom_bar.png" id="2_6a2ch"]
 
 [resource]
 script = ExtResource("1_pugin")
-structure_name = "Example"
+structure_name = "Mushroom Bar"
 size = Array[Rect2i]([Rect2i(-1, -1, 3, 3)])
 required_ground = Array[Rect2i]([Rect2i(-1, 2, 3, 1)])
 path_finding_points = Array[Vector2i]([Vector2i(0, 1), Vector2i(-1, 1), Vector2i(1, 1)])
-texture = SubResource("PlaceholderTexture2D_pugin")
+texture = ExtResource("2_6a2ch")
