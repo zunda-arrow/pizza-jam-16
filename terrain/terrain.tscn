@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://5oqbjh767n6g" path="res://assets/cracks.png" id="3_nc45s"]
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
-[ext_resource type="Texture2D" uid="uid://5svgf2qmdvnh" path="res://assets/particle/dirt_1.png" id="6_mk5yb"]
+[ext_resource type="Texture2D" uid="uid://brh2jyxks7ayc" path="res://assets/particle/dirt.png" id="6_mk5yb"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
 noise_type = 3
@@ -79,7 +79,7 @@ curve = SubResource("Curve_mk5yb")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mk5yb"]
 particle_flag_disable_z = true
-emission_shape_scale = Vector3(8, 8, 1)
+emission_shape_scale = Vector3(16, 16, 1)
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
 angle_min = -720.0
@@ -90,6 +90,8 @@ gravity = Vector3(0, 0, 0)
 radial_accel_min = -79.48
 radial_accel_max = -24.600002
 alpha_curve = SubResource("CurveTexture_nc45s")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = -2.2351742e-08
 
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
