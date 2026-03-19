@@ -11,6 +11,9 @@ extends Resource
 @export_range(-1,10) var dig_power: int
 @export var utility: UtilityResource
 
+@export var cost := 0
+@export var rarity := 1.0
+
 
 enum CardType {
 	Unset,

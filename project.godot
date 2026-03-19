@@ -26,6 +26,7 @@ buses/default_bus_layout="uid://c3bctvykx7ims"
 [autoload]
 
 ConfigManager="*res://menu/config_manager.gd"
+AllCards="*uid://c2r0gkwertfjf"
 
 [display]
 

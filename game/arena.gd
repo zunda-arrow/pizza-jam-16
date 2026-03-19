@@ -42,21 +42,8 @@ func _ready():
 	%Army.number_of_ants = 10
 	%Army.spawn_ants()
 
-	var cards: Array[CardResource.Card] = [
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/breakfast.tres").new(),
-		load("res://resources/cards/beam_drill.tres").new(),
-		load("res://resources/cards/dirt_nap.tres").new(),
-		load("res://resources/cards/super_drill.tres").new(),
-		load("res://resources/cards/drill.tres").new(),
-		load("res://resources/cards/big_drill.tres").new(),
-		load("res://resources/cards/super_buff.tres").new(),
-		load("res://resources/cards/bulldozer.tres").new(),
-		load("res://resources/cards/brainstorm.tres").new(),
-		]
-
-	deck.append_array(cards)
-	draw_pile.append_array(cards)
+	deck.append_array(AllCards.cards)
+	draw_pile.append_array(AllCards.cards)
 	draw_pile.shuffle()
 	draw(DEFAULT_HAND)
 	
