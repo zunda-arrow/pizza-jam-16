@@ -6,7 +6,7 @@ extends Resource
 @export var size: Array[Rect2i]
 ## Section of the structure that is required to touch ground
 @export var requires_contact: Array[Rect2i]
-## The point on the structure the ants will walk to when they decide to visit.
+## The point on the sitructure the ants will walk to when they decide to visit.
 @export var path_finding_point: Vector2i
 @export var texture: Texture2D
 @export var structure_type: Structures

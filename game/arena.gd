@@ -38,7 +38,6 @@ func _ready():
 	%Terrain.occupation_checks.append(%Structure.building_occupation)
 	%Structure.occupation_checker = %Terrain.get_occupied_cells
 	%Structure.has_terrain = _is_cell_filled
-	_on_terrain_update()
 	%Army.get_cell_to_walk_to = _get_ant_pathfindable_cell
 
 	var cards: Array[CardResource.Card] = [
@@ -73,13 +72,15 @@ func _ready():
 	energy = 3
 	ants = 30
 	eff = 0
-	
+
 	# The home is always visible
 	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new())
+	_on_terrain_update()
 
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
+	%Army.cell_in_structure_range = _cell_in_structure_range
 	%Army.spawn_position = Vector2(0, 3)
 	%Army.spawn_ground_direction = Vector2(0, 1)
 	%Army.generate_loop()
@@ -124,6 +125,13 @@ func _is_cell_filled(pos: Vector2i):
 
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
 
+func _cell_in_structure_range(cell: Vector2i):
+	for structure in %Structure.structures:
+		if structure.position.distance_to(cell * 32 + Vector2i(16, 16)) < structure.structure.resource.tiles_radius * 32:
+			return true
+	
+	return false
+
 func _get_ant_pathfindable_cell():
 	var point = null
 
@@ -133,7 +141,7 @@ func _get_ant_pathfindable_cell():
 	var cell = Vector2i(structure.structure.resource.path_finding_point) + (Vector2i(structure.position) / 32)
 	if %Army.is_cell_on_loop(cell):
 		point = Vector2i(cell)
-	
+
 	return %Army.find_close_tiles(point, 4)
 
 

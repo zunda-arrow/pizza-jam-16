@@ -4,6 +4,7 @@ var ant_scene = preload("res://ants/Ant.tscn")
 
 @export var is_grid_cell_filled = null
 @export var get_cell_to_walk_to = null
+@export var cell_in_structure_range = null
 
 @export var spawn_position: Vector2i
 @export var spawn_ground_direction: Vector2i
@@ -78,6 +79,8 @@ func get_loop(pos: Vector2i, ground: Vector2i):
 		if is_grid_cell_filled.call(pos + ground) == true:
 			walkable_cells.push_back([pos, ground])
 			pos += forward
+
+	walkable_cells = walkable_cells.filter(func(x): return cell_in_structure_range.call(x[0]))
 
 	return walkable_cells
 
