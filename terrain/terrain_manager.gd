@@ -674,7 +674,7 @@ func get_occupied_cells() -> Array[Vector2i]:
 		occupied_cells += check.call()
 	return occupied_cells
 					
-func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, requires_contact, dig_touches_path):
+func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, required_ground, dig_touches_path):
 	$Selection.clear()
 	$Selection.show()
 	
@@ -683,8 +683,8 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 	var area = cells
 
 	var has_ground = true
-	if requires_contact != null:
-		for dirt_cell in requires_contact:
+	if required_ground != null:
+		for dirt_cell in required_ground:
 			var rect_center = cell_coordinate_center + dirt_cell.position
 			for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
 				for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):

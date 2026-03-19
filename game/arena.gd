@@ -218,7 +218,7 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 		var dig_touches_path = dig_area_touches_path(area, at)
 		%Terrain.show_selector(at, area, %Terrain.PlacingMethod.Dig, null, dig_touches_path)
 	if card.get_type() == CardResource.CardType.Build:
-		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, card.structure.requires_contact, null)
+		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, card.structure.required_ground, null)
 		var s_position = %Terrain/GroundMap.to_global(%Terrain/GroundMap.map_to_local(at)) - $%Camera.position
 		var valid = _validate_structure_at(card, at)
 		%Camera/Visibility.material.set_shader_parameter("valid_placement", valid)
