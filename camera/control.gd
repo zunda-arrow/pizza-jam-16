@@ -22,8 +22,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	_time += delta
-	
-		
+
 	# Sets discovery overlay shader. Not sure if this should go here
 	%Terrain/Visibility.position = position - Vector2(1920. / 2., 1080. / 2.)
 	var structure_pos: Array[Vector3] = []
@@ -37,7 +36,7 @@ func _process(delta):
 		global_position = lerp(global_position, Vector2(0,0), _time * 0.4)
 		if global_position == Vector2(0,0) or inp.length() > 0.1:
 			going_home = false
-				
+
 	position += inp.normalized() * speed * delta
 
 # Used for generating new terrain when it becomes visible

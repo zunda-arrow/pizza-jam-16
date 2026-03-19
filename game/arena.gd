@@ -1,29 +1,24 @@
 extends Node2D
 
+signal end_turn
+
 var DEFAULT_HAND = 6
 
 var hand: Array[CardResource.Card] = []
-var deck: Array[CardResource.Card] = []
 var draw_pile: Array[CardResource.Card] = []
 var discard_pile: Array[CardResource.Card] = []
 
 var HomeStructure = preload("res://resources/structures/home.tres")
 
-var _energy: int
 var energy: int:
 	set(val):
-		_energy = val
-		%EnergyLabel.text = "Energy: " + str(_energy)
-	get():
-		return _energy
+		energy = val
+		%EnergyLabel.text = "Energy: " + str(energy)
 
-var _ants: int
-var ants: int:
+var ants: int = 0 :
 	set(val):
-		_ants = val
-		%AntsLabel.text = "Ants: " + str(_ants)
-	get():
-		return _ants
+		ants = val
+		%AntsLabel.text = "Ants: " + str(ants)
 
 var eff: int
 
@@ -33,27 +28,20 @@ var player_position: Vector2i:
 	get():
 		return %Player.position / 32
 
+var visible_region :
+	set(value):
+		%Terrain.region = value
+
 func _ready():
-	%Terrain.region = %Camera
 	%Terrain.occupation_checks.append(%Structure.building_occupation)
 	%Structure.occupation_checker = %Terrain.get_occupied_cells
 	%Structure.has_terrain = _is_cell_filled
 	_on_terrain_update()
 	%Army.number_of_ants = 10
 	%Army.spawn_ants()
-
-	deck.append_array(AllCards.cards)
-	draw_pile.append_array(AllCards.cards)
-	draw_pile.shuffle()
-	draw(DEFAULT_HAND)
 	
-	energy = 3
-	ants = 30
-	eff = 0
-	
-	# The home is always visible
+	# The home is always placed
 	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new())
-
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
@@ -71,7 +59,6 @@ func _on_terrain_update():
 			if %Army.is_cell_on_loop(c, Vector2i(0, 1)):
 				structure.set_connected_to_loop(true)
 				break
-
 
 func draw(n: int):
 	for i in range(n):
@@ -91,7 +78,6 @@ func discard(i: int):
 	%PlayCards.discard_card(i)
 	discard_pile.append(hand[i])
 	hand.pop_at(i)
-	
 
 func _is_cell_filled(pos: Vector2i):
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
@@ -148,42 +134,20 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 func _on_play_cards_cancel_aiming_card() -> void:
 	%Terrain.hide_selector()
 
-func _on_end_turn_button_button_down() -> void:
-	# At the end of the turn, we want to draw cards
-
-	%EndTurnButton.disabled = true
-
-	while len(hand) > 0:
-		discard(0)
-		# Give a litte animation
-		await get_tree().create_timer(.05).timeout
-
-	draw(DEFAULT_HAND)
-
-	# Reset energy to maximum
-	energy = 3
-	ants += 10
-	eff = 0
-	
-	%Utility.turn_resources()
-
-	%EndTurnButton.disabled = false
-
 func _on_terrain_chunk_generated(Vector2i: Variant) -> void:
 	_on_terrain_update()
-	
+
 func _on_utility_energy_gain(n: int) -> void:
 	energy += n
-	
+
 func _on_utility_ants_gain(n: int) -> void:
 	ants += n
 
 func _on_utility_draw_gain(n: int) -> void:
 	draw(n)
-	
+
 func _on_utility_eff_gain(n: int) -> void:
 	eff += n
-
 
 func _on_clock_day_start(day: int) -> void:
 	%DayLabel.text = "Day " + str(day)
@@ -198,3 +162,32 @@ func _on_clock_day_start(day: int) -> void:
 
 func _on_clock_day_tick(tick: int) -> void:
 	%TurnLabel.text = "Turn " + str(tick)
+
+func on_turn_end() -> void:
+	end_turn.emit()
+	%EndTurnButton.disabled = true
+
+	while len(hand) > 0:
+		discard(0)
+		# Give a litte animation
+		await get_tree().create_timer(.05).timeout
+
+func start_turn() -> void:
+	draw(DEFAULT_HAND)
+
+	# Reset energy to maximum
+	energy = 3
+	ants += 10
+	eff = 0
+
+	%Utility.turn_resources()
+
+	%EndTurnButton.disabled = false
+
+func start_day(deck: Array[CardResource.Card]) -> void:
+	energy = 3
+	ants = 0
+	eff = 0
+	
+	draw_pile = deck.duplicate()
+	draw_pile.shuffle()

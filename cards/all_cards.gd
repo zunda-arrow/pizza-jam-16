@@ -1,6 +1,6 @@
 extends Node
 
-var resources = [
+var resources: Array[CardResource] = [
 	load("res://resources/cards/fungus_bar.tres"),
 	load("res://resources/cards/breakfast.tres"),
 	load("res://resources/cards/beam_drill.tres"),

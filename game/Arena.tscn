@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://rymwewttx11s" path="res://cards/PlayCards.tscn" id="1_ncbvw"]
 [ext_resource type="Script" uid="uid://blovuluvc6xh4" path="res://game/arena.gd" id="1_tb7ye"]
 [ext_resource type="PackedScene" uid="uid://cvgqygm3pnmmn" path="res://terrain/terrain.tscn" id="2_npdor"]
-[ext_resource type="PackedScene" uid="uid://cragqvxbavsjj" path="res://camera/Camera.tscn" id="3_2wy63"]
 [ext_resource type="PackedScene" uid="uid://cro8mxb3kbban" path="res://structure/StructureManager.tscn" id="3_5yp8v"]
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
@@ -27,73 +26,6 @@ unique_name_in_owner = true
 [node name="Army" parent="." unique_id=1221516024 instance=ExtResource("3_q8ykg")]
 unique_name_in_owner = true
 
-[node name="Camera" parent="." unique_id=2140926887 instance=ExtResource("3_2wy63")]
-unique_name_in_owner = true
-z_index = 4096
-
-[node name="PlayCards" parent="Camera" unique_id=1516163044 instance=ExtResource("1_ncbvw")]
-unique_name_in_owner = true
-position = Vector2(-960, -540)
-
-[node name="Clock" parent="Camera" unique_id=1104602323 instance=ExtResource("7_u3mh8")]
-unique_name_in_owner = true
-position = Vector2(-900, -480)
-
-[node name="EnergyLabel" type="Label" parent="Camera" unique_id=1812955512]
-unique_name_in_owner = true
-offset_left = 596.0
-offset_top = -503.0
-offset_right = 934.0
-offset_bottom = -407.0
-theme_override_font_sizes/font_size = 40
-text = "Energy:"
-
-[node name="AntsLabel" type="Label" parent="Camera" unique_id=463997152]
-unique_name_in_owner = true
-offset_left = 597.0
-offset_top = -428.0
-offset_right = 935.0
-offset_bottom = -332.0
-theme_override_font_sizes/font_size = 40
-text = "Ants:"
-
-[node name="DayLabel" type="Label" parent="Camera" unique_id=604140666]
-unique_name_in_owner = true
-offset_left = 595.0
-offset_top = -355.0
-offset_right = 933.0
-offset_bottom = -259.0
-theme_override_font_sizes/font_size = 40
-text = "Day 0"
-
-[node name="TurnLabel" type="Label" parent="Camera" unique_id=2108522871]
-unique_name_in_owner = true
-offset_left = 740.0
-offset_top = -354.0
-offset_right = 1078.0
-offset_bottom = -258.0
-theme_override_font_sizes/font_size = 40
-text = "Turn 0"
-
-[node name="EndTurnButton" type="Button" parent="Camera" unique_id=1964738272]
-unique_name_in_owner = true
-offset_left = 629.0
-offset_top = 337.0
-offset_right = 924.0
-offset_bottom = 412.0
-theme_override_font_sizes/font_size = 30
-text = "End Turn"
-
-[node name="GoHome" type="Button" parent="Camera" unique_id=2052981044]
-unique_name_in_owner = true
-offset_left = 439.0
-offset_top = 423.0
-offset_right = 931.0
-offset_bottom = 498.0
-theme_override_font_sizes/font_size = 30
-text = "I got lost and I want to go home
-"
-
 [node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("5_ynix6")]
 offset_left = 1040.0
 offset_top = -681.0
@@ -105,16 +37,79 @@ I dont think this should be the shop either.
 
 Unknowns: Should the day system be programmed here?"
 
+[node name="CameraContainer" type="Node2D" parent="." unique_id=168339012]
+
+[node name="PlayCards" parent="CameraContainer" unique_id=1516163044 instance=ExtResource("1_ncbvw")]
+unique_name_in_owner = true
+position = Vector2(-960, -540)
+
+[node name="Clock" parent="CameraContainer" unique_id=1104602323 instance=ExtResource("7_u3mh8")]
+unique_name_in_owner = true
+position = Vector2(-900, -480)
+
+[node name="EnergyLabel" type="Label" parent="CameraContainer" unique_id=1812955512]
+unique_name_in_owner = true
+offset_left = 596.0
+offset_top = -503.0
+offset_right = 934.0
+offset_bottom = -407.0
+theme_override_font_sizes/font_size = 40
+text = "Energy:"
+
+[node name="AntsLabel" type="Label" parent="CameraContainer" unique_id=463997152]
+unique_name_in_owner = true
+offset_left = 597.0
+offset_top = -428.0
+offset_right = 935.0
+offset_bottom = -332.0
+theme_override_font_sizes/font_size = 40
+text = "Ants:"
+
+[node name="DayLabel" type="Label" parent="CameraContainer" unique_id=604140666]
+unique_name_in_owner = true
+offset_left = 595.0
+offset_top = -355.0
+offset_right = 933.0
+offset_bottom = -259.0
+theme_override_font_sizes/font_size = 40
+text = "Day 0"
+
+[node name="TurnLabel" type="Label" parent="CameraContainer" unique_id=2108522871]
+unique_name_in_owner = true
+offset_left = 740.0
+offset_top = -354.0
+offset_right = 1078.0
+offset_bottom = -258.0
+theme_override_font_sizes/font_size = 40
+text = "Turn 0"
+
+[node name="EndTurnButton" type="Button" parent="CameraContainer" unique_id=1964738272]
+unique_name_in_owner = true
+offset_left = 629.0
+offset_top = 337.0
+offset_right = 924.0
+offset_bottom = 412.0
+theme_override_font_sizes/font_size = 30
+text = "End Turn"
+
+[node name="GoHome" type="Button" parent="CameraContainer" unique_id=2052981044]
+unique_name_in_owner = true
+offset_left = 439.0
+offset_top = 423.0
+offset_right = 931.0
+offset_bottom = 498.0
+theme_override_font_sizes/font_size = 30
+text = "I got lost and I want to go home
+"
+
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
 [connection signal="draw_gain" from="Utility" to="." method="_on_utility_draw_gain"]
 [connection signal="eff_gain" from="Utility" to="." method="_on_utility_eff_gain"]
 [connection signal="energy_gain" from="Utility" to="." method="_on_utility_energy_gain"]
-[connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
-[connection signal="cancel_aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_cancel_aiming_card"]
-[connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]
-[connection signal="day_start" from="Camera/Clock" to="." method="_on_clock_day_start"]
-[connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
-[connection signal="button_down" from="Camera/EndTurnButton" to="." method="_on_end_turn_button_button_down"]
-[connection signal="button_down" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
-[connection signal="button_down" from="Camera/GoHome" to="Camera" method="_on_go_home_button_down"]
+[connection signal="aiming_card" from="CameraContainer/PlayCards" to="." method="_on_play_cards_aiming_card"]
+[connection signal="cancel_aiming_card" from="CameraContainer/PlayCards" to="." method="_on_play_cards_cancel_aiming_card"]
+[connection signal="card_used" from="CameraContainer/PlayCards" to="." method="_on_play_cards_card_used"]
+[connection signal="day_start" from="CameraContainer/Clock" to="." method="_on_clock_day_start"]
+[connection signal="day_tick" from="CameraContainer/Clock" to="." method="_on_clock_day_tick"]
+[connection signal="pressed" from="CameraContainer/EndTurnButton" to="." method="on_turn_end"]
