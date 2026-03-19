@@ -170,7 +170,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 			power = x
 		power += eff
 		if dig_area_touches_path(area, at):
-			success = %Terrain.destroy(at, card.get_area(), power)
+			success = %Terrain.destroy(at, area, power)
 		else:
 			success = false
 		if success:
