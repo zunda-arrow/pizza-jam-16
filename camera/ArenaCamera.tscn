@@ -22,7 +22,7 @@ shader_parameter/valid_placement = true
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eus7h"]
 
-[node name="Camera" type="Node2D" unique_id=2140926887]
+[node name="ArenaCamera" type="Node2D" unique_id=2140926887]
 script = ExtResource("1_qpltt")
 shake_speed = 50.0
 

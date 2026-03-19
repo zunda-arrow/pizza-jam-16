@@ -29,10 +29,6 @@ var player_position: Vector2i:
 	get():
 		return %Player.position / 32
 
-var visible_region :
-	set(value):
-		%Terrain.region = value
-
 func _ready():
 	%Terrain.occupation_checks.append(%Structure.building_occupation)
 	%Structure.occupation_checker = %Terrain.get_occupied_cells
@@ -40,7 +36,6 @@ func _ready():
 	_on_terrain_update()
 	
 	%Army.number_of_ants = 10
-	%Army.spawn_ants()
 	%Army.get_cell_to_walk_to = _get_ant_pathfindable_cell
 	
 	# The home is always placed
@@ -221,6 +216,7 @@ func on_turn_end() -> void:
 		await get_tree().create_timer(.05).timeout
 
 func start_turn() -> void:
+	%Camera.make_active()
 	draw(DEFAULT_HAND)
 
 	# Reset energy to maximum
@@ -243,6 +239,6 @@ func start_day(deck: Array[CardResource.Card]) -> void:
 func _process(delta: float) -> void:
 	var structure_pos: Array[Vector3] = []
 	for s in %Structure.structures:
-		structure_pos.append(Vector3((s.global_position.x - $Camera.position.x) / 1080., (s.global_position.y - $Camera.position.y) / 1080., 1))
+		structure_pos.append(Vector3((s.global_position.x - %Camera.position.x) / 1080., (s.global_position.y - %Camera.position.y) / 1080., 1))
 	%Camera/Visibility.material.set_shader_parameter("discoveries", structure_pos)
 	%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(-1,-1))

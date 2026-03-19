@@ -2,6 +2,7 @@
 extends Node2D
 
 signal card_purchased(card: CardResource)
+signal shopping_done
 
 var cardScene = preload("res://cards/Card.tscn")
 
@@ -18,7 +19,7 @@ func _ready() -> void:
 	roll_cards()
 
 func generate_shop() -> void:
-	for child in get_children():
+	for child in %CardContainer.get_children():
 		child.queue_free()
 	var current_pos = start_pos
 	var i := 0
@@ -27,14 +28,14 @@ func generate_shop() -> void:
 			var new_card = cardScene.instantiate()
 			new_card.position = current_pos
 			new_card.on_clicked.connect(func(): card_clicked(i, new_card.card_resource))
-			add_child(new_card)
+			%CardContainer.add_child(new_card)
 			i += 1
 			current_pos.x += gap.x
 		current_pos.x = start_pos.x
 		current_pos.y += gap.y
 
 func roll_cards() -> void:
-	for child in get_children():
+	for child in %CardContainer.get_children():
 		child.show()
 		var card = roll_card()
 		child.card_resource = card
@@ -50,5 +51,8 @@ func roll_card() -> CardResource:
 func card_clicked(idx: int, card: CardResource) -> void:
 	if not card or get_money.call() < card.cost: # Can't afford
 		return
-	get_child(idx).hide()
+	%CardContainer.get_child(idx).hide()
 	card_purchased.emit(card)
+
+func on_done_pressed() -> void:
+	shopping_done.emit()

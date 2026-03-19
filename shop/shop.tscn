@@ -1,6 +1,26 @@
 [gd_scene format=3 uid="uid://bkcrj2gp4i7ud"]
 
 [ext_resource type="Script" uid="uid://b2lit0eqsgwyw" path="res://shop/shop.gd" id="1_r2p71"]
+[ext_resource type="Texture2D" uid="uid://hudlef003v24" path="res://assets/terrain/parallex.png" id="2_sxvro"]
 
 [node name="Shop" type="Node2D" unique_id=2098500626]
 script = ExtResource("1_r2p71")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=257616050]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_sxvro")
+stretch_mode = 1
+
+[node name="CardContainer" type="Node2D" parent="." unique_id=1890192673]
+unique_name_in_owner = true
+
+[node name="Button" type="Button" parent="." unique_id=52281123]
+offset_left = 1644.0
+offset_top = 866.0
+offset_right = 1698.0
+offset_bottom = 897.0
+text = "Done!"
+
+[connection signal="pressed" from="Button" to="." method="on_done_pressed"]
