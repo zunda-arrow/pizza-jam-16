@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://rymwewttx11s" path="res://cards/PlayCards.tscn" id="1_ncbvw"]
 [ext_resource type="Script" uid="uid://blovuluvc6xh4" path="res://game/arena.gd" id="1_tb7ye"]
 [ext_resource type="PackedScene" uid="uid://cvgqygm3pnmmn" path="res://terrain/terrain.tscn" id="2_npdor"]
-[ext_resource type="PackedScene" uid="uid://cragqvxbavsjj" path="res://camera/Camera.tscn" id="3_2wy63"]
+[ext_resource type="PackedScene" uid="uid://cragqvxbavsjj" path="res://camera/ArenaCamera.tscn" id="3_2wy63"]
 [ext_resource type="PackedScene" uid="uid://cro8mxb3kbban" path="res://structure/StructureManager.tscn" id="3_5yp8v"]
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
@@ -29,9 +29,19 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 home_position = Vector2i(0, 3)
 
+[node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("5_ynix6")]
+offset_left = 1040.0
+offset_top = -681.0
+offset_right = 1944.0
+offset_bottom = -101.0
+text = "This scene is the main part of the game. When you have to bulid, place, and do the other things to win the day, it will all go here. The goal of this day is to start a day, but not to keep track of money. Changes like getting an artifact or money should be reported to a master scene.
+In other words, this scene is not the Inventory.
+I dont think this should be the shop either.
+
+Unknowns: Should the day system be programmed here?"
+
 [node name="Camera" parent="." unique_id=2140926887 instance=ExtResource("3_2wy63")]
 unique_name_in_owner = true
-z_index = 4096
 
 [node name="PlayCards" parent="Camera" unique_id=1516163044 instance=ExtResource("1_ncbvw")]
 unique_name_in_owner = true
@@ -96,17 +106,6 @@ theme_override_font_sizes/font_size = 30
 text = "I got lost and I want to go home
 "
 
-[node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("5_ynix6")]
-offset_left = 1040.0
-offset_top = -681.0
-offset_right = 1944.0
-offset_bottom = -101.0
-text = "This scene is the main part of the game. When you have to bulid, place, and do the other things to win the day, it will all go here. The goal of this day is to start a day, but not to keep track of money. Changes like getting an artifact or money should be reported to a master scene.
-In other words, this scene is not the Inventory.
-I dont think this should be the shop either.
-
-Unknowns: Should the day system be programmed here?"
-
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
 [connection signal="draw_gain" from="Utility" to="." method="_on_utility_draw_gain"]
@@ -115,8 +114,6 @@ Unknowns: Should the day system be programmed here?"
 [connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
 [connection signal="cancel_aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_cancel_aiming_card"]
 [connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]
-[connection signal="day_start" from="Camera/Clock" to="." method="_on_clock_day_start"]
+[connection signal="day_end" from="Camera/Clock" to="." method="_on_clock_day_end"]
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
-[connection signal="button_down" from="Camera/EndTurnButton" to="." method="_on_end_turn_button_button_down"]
-[connection signal="button_down" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
-[connection signal="button_down" from="Camera/GoHome" to="Camera" method="_on_go_home_button_down"]
+[connection signal="pressed" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]

@@ -1,10 +1,24 @@
 [gd_scene format=3 uid="uid://b5pqkeu4bwhib"]
 
 [ext_resource type="Script" uid="uid://cnf5udhk03rug" path="res://game/game.gd" id="1_l1rk1"]
-[ext_resource type="PackedScene" uid="uid://cragqvxbavsjj" path="res://camera/Camera.tscn" id="2_vasa2"]
+[ext_resource type="PackedScene" uid="uid://c6nce3c3m58nq" path="res://game/Arena.tscn" id="2_vasa2"]
+[ext_resource type="PackedScene" uid="uid://tj0m2jelyw13" path="res://camera/ShopCamera.tscn" id="3_4fuuu"]
+[ext_resource type="PackedScene" uid="uid://bkcrj2gp4i7ud" path="res://shop/shop.tscn" id="3_h7iqs"]
 
 [node name="Game" type="Node2D" unique_id=1516163044]
 script = ExtResource("1_l1rk1")
 
-[node name="Camera" parent="." unique_id=2140926887 instance=ExtResource("2_vasa2")]
-position = Vector2(585, 365)
+[node name="Arena" parent="." unique_id=728631546 instance=ExtResource("2_vasa2")]
+
+[node name="ShopCamera" parent="." unique_id=1849506086 instance=ExtResource("3_4fuuu")]
+process_mode = 2
+
+[node name="Shop" parent="ShopCamera" unique_id=2098500626 instance=ExtResource("3_h7iqs")]
+unique_name_in_owner = true
+position = Vector2(-960, -540)
+
+[connection signal="day_start" from="." to="Arena" method="start_day"]
+[connection signal="turn_start" from="." to="Arena" method="start_turn"]
+[connection signal="day_end" from="Arena" to="." method="on_day_end"]
+[connection signal="card_purchased" from="ShopCamera/Shop" to="." method="on_card_purchased"]
+[connection signal="shopping_done" from="ShopCamera/Shop" to="." method="shop_phase_done"]

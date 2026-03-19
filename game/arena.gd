@@ -1,30 +1,25 @@
 extends Node2D
 
-var DEFAULT_HAND = 6
+signal day_end
+
+const DEFAULT_HAND = 6
 
 var hand: Array[CardResource.Card] = []
-var deck: Array[CardResource.Card] = []
-var draw_pile: Array[CardResource.Card] = []
+var draw_pile = []
 var discard_pile: Array[CardResource.Card] = []
 
 var HomeStructure = preload("res://resources/structures/home.tres")
 
-var _energy: int
 var energy: int:
 	set(val):
-		_energy = val
-		%EnergyLabel.text = "Energy: " + str(_energy)
-	get():
-		return _energy
+		energy = val
+		%EnergyLabel.text = "Energy: " + str(energy)
 
-var _ants: int
-var ants: int:
+var ants: int = 0 :
 	set(val):
-		_ants = val
-		%AntsLabel.text = "Ants: " + str(_ants)
+		ants = val
+		%AntsLabel.text = "Ants: " + str(ants)
 		%Army.number_of_ants = val
-	get():
-		return _ants
 
 var eff: int
 
@@ -38,45 +33,14 @@ func _ready():
 	%Terrain.occupation_checks.append(%Structure.building_occupation)
 	%Structure.occupation_checker = %Terrain.get_occupied_cells
 	%Structure.has_terrain = _is_cell_filled
-	%Army.get_cell_to_walk_to = _get_ant_pathfindable_cell
-
-	var cards: Array[CardResource.Card] = [
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/breakfast.tres").new(),
-		load("res://resources/cards/beam_drill.tres").new(),
-		load("res://resources/cards/dirt_nap.tres").new(),
-		load("res://resources/cards/super_drill.tres").new(),
-		load("res://resources/cards/drill.tres").new(),
-		load("res://resources/cards/drill.tres").new(),
-		load("res://resources/cards/drill.tres").new(),
-		load("res://resources/cards/drill.tres").new(),
-		load("res://resources/cards/drill.tres").new(),
-		load("res://resources/cards/big_drill.tres").new(),
-		load("res://resources/cards/super_buff.tres").new(),
-		load("res://resources/cards/bulldozer.tres").new(),
-		load("res://resources/cards/brainstorm.tres").new(),
-		load("res://resources/cards/bridge.tres").new(),
-		load("res://resources/cards/bridge.tres").new(),
-		load("res://resources/cards/bridge.tres").new(),
-		load("res://resources/cards/bridge.tres").new(),
-		load("res://resources/cards/bridge.tres").new(),
-		]
-
-	deck.append_array(cards)
-	draw_pile.append_array(cards)
-	draw_pile.shuffle()
-	draw(DEFAULT_HAND)
+	_on_terrain_update()
 	
-	energy = 3
-	ants = 30
-	eff = 0
-
-	# The home is always visible
+	%Army.number_of_ants = 0
+	%Army.get_cell_to_walk_to = _get_ant_pathfindable_cell
+	
+	# The home is always placed
 	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new())
 	_on_terrain_update()
-
 
 func _on_terrain_update():
 	%Army.is_grid_cell_filled = _is_cell_filled
@@ -90,7 +54,6 @@ func _on_terrain_update():
 			if %Army.is_cell_on_loop(c + (Vector2i(structure.position) / 32)):
 				structure.set_connected_to_loop(true)
 				break
-
 
 func draw(n: int):
 	for i in range(n):
@@ -110,7 +73,6 @@ func discard(i: int):
 	%PlayCards.discard_card(i)
 	discard_pile.append(hand[i])
 	hand.pop_at(i)
-	
 
 func _is_cell_filled(pos: Vector2i):
 	for structure in %Structure.structures:
@@ -266,44 +228,24 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 func _on_play_cards_cancel_aiming_card() -> void:
 	%Terrain.hide_selector()
 
-func _on_end_turn_button_button_down() -> void:
-	# At the end of the turn, we want to draw cards
-
-	%EndTurnButton.disabled = true
-
-	while len(hand) > 0:
-		discard(0)
-		# Give a litte animation
-		await get_tree().create_timer(.05).timeout
-
-	draw(DEFAULT_HAND)
-
-	# Reset energy to maximum
-	energy = 3
-	ants += 10
-	eff = 0
-	
-	%Utility.turn_resources()
-
-	%EndTurnButton.disabled = false
-
 func _on_terrain_chunk_generated(Vector2i: Variant) -> void:
 	_on_terrain_update()
-	
+
 func _on_utility_energy_gain(n: int) -> void:
 	energy += n
-	
+
 func _on_utility_ants_gain(n: int) -> void:
 	ants += n
 
 func _on_utility_draw_gain(n: int) -> void:
 	draw(n)
-	
+
 func _on_utility_eff_gain(n: int) -> void:
 	eff += n
 
-
-func _on_clock_day_start(day: int) -> void:
+func _on_clock_day_end(day: int) -> void:
+	day_end.emit()
+	
 	%DayLabel.text = "Day " + str(day)
 	%TurnLabel.text = "Turn 0"
 	
@@ -323,10 +265,44 @@ func _on_clock_day_start(day: int) -> void:
 
 func _on_clock_day_tick(tick: int) -> void:
 	%TurnLabel.text = "Turn " + str(tick)
+	on_turn_end()
+
+func on_turn_end() -> void:
+	%EndTurnButton.disabled = true
+
+	while len(hand) > 0:
+		discard(0)
+		# Give a litte animation
+		await get_tree().create_timer(.05).timeout
+
+	start_turn()
+
+func start_turn():
+	%Camera.make_active()
+	draw(DEFAULT_HAND)
+
+	# Reset energy to maximum
+	energy = 3
+	ants += 10
+	eff = 0
+
+	%Utility.turn_resources()
+
+	%EndTurnButton.disabled = false
+
+func start_day(deck) -> void:
+	energy = 3
+	ants = 0
+	eff = 0
+	
+	draw_pile = deck.duplicate()
+	draw_pile.shuffle()
+	
+	start_turn()
 
 func _process(delta: float) -> void:
 	var structure_pos: Array[Vector3] = []
 	for s in %Structure.structures:
-		structure_pos.append(Vector3((s.global_position.x - $Camera.position.x) / 1080., (s.global_position.y - $Camera.position.y) / 1080., 1))
+		structure_pos.append(Vector3((s.global_position.x - %Camera.position.x) / 1080., (s.global_position.y - %Camera.position.y) / 1080., 1))
 	%Camera/Visibility.material.set_shader_parameter("discoveries", structure_pos)
 	%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(-1,-1))

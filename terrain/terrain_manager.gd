@@ -622,7 +622,6 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 		var p = $BreakParticles.duplicate()
 		add_child(p)
 		p.emitting = true
-		p.process_material.emission_shape_scale = Vector3(32,32,1)
 		p.position = $GroundMap.map_to_local(cell)
 		extra_particle_generators.append(p)
 		p.amount = 4
