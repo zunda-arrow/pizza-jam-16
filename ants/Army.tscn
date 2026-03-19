@@ -38,3 +38,12 @@ text = "In the future this scene will probably remove ants from loops that dont 
 The second reason, is that buildings will be easier to understand and program if they dont actually need to wait for an ant. This will also make the game more snappy because there will be less waiting.
 
 Right now, I think the end goal will be to have an appropriate amount of ants walking from active buildings to the center. I think this will feel more than anty enough."
+
+[node name="Comment3" parent="." unique_id=2127012098 instance=ExtResource("4_7e6m4")]
+offset_left = 94.0
+offset_top = 282.0
+offset_right = 1009.0
+offset_bottom = 872.0
+text = "Known issues:
+Ants glitch out when the dirt they are standing on is removed.
+Ants may warp from one end of the path to the other."
