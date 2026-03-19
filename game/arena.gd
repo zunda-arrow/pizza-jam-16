@@ -266,13 +266,18 @@ func _on_clock_day_start(day: int) -> void:
 	%TurnLabel.text = "Turn 0"
 	
 	ants = 0
-	
-	for s in %Structure.structures:
+
+	var i = len(%Structure.structures) - 1
+	while i > 0:
+		var s = %Structure.structures[i]
 		if s.lifetime == 0:
-			%Structure.structures.erase(s)
+			%Structure.structures.pop_at(i)
 			s.queue_free()
 		elif s.lifetime > 0:
 			s.lifetime -= 1
+		i -= 1
+
+	_on_terrain_update()
 
 func _on_clock_day_tick(tick: int) -> void:
 	%TurnLabel.text = "Turn " + str(tick)

@@ -15,7 +15,7 @@ enum TerrainType{
 @export var block_threshold: float = 0.5 # Threshold to place a block (less than)
 @export var rock_threshold: float = 1.0 # Threshold to place an unbreakable block #TODO: Implement
 
-@export var spawn_radius: float = 10.0
+@export var spawn_radius: float = 6.0
 
 @export var chunk_size: int = 16
 

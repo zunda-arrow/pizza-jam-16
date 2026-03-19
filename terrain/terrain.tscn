@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://5oqbjh767n6g" path="res://assets/cracks.png" id="3_nc45s"]
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
-[ext_resource type="Texture2D" uid="uid://5svgf2qmdvnh" path="res://assets/particle/dirt_1.png" id="6_mk5yb"]
+[ext_resource type="Texture2D" uid="uid://7tsmljtpxire" path="res://assets/arrow_circle.png" id="6_mk5yb"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
 noise_type = 3

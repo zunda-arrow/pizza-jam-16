@@ -95,7 +95,7 @@ func get_loop(pos: Vector2i, ground: Vector2i):
 	while cell_in_structure_range.call(walkable_cells[from_end][0]):
 		out.push_front(walkable_cells[from_end])
 		from_end -= 1
-		if len(walkable_cells) - from_end == from_start:
+		if from_end == from_start:
 			break
 		if from_end < 0:
 			break
