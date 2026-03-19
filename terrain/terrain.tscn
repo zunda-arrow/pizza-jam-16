@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://588pj46a768y" path="res://terrain/terrain_manager.gd" id="1_nigp7"]
 [ext_resource type="TileSet" uid="uid://c48cjwnpo03m1" path="res://terrain/dirt_tileset.tres" id="2_2ilfp"]
+[ext_resource type="Texture2D" uid="uid://hudlef003v24" path="res://assets/terrain/parallex.png" id="2_mk5yb"]
 [ext_resource type="Texture2D" uid="uid://bc1ral2t1amld" path="res://assets/building_selector.png" id="3_2ilfp"]
 [ext_resource type="Texture2D" uid="uid://5oqbjh767n6g" path="res://assets/cracks.png" id="3_nc45s"]
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
+[ext_resource type="Texture2D" uid="uid://5svgf2qmdvnh" path="res://assets/particle/dirt_1.png" id="6_mk5yb"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nigp7"]
 noise_type = 3
@@ -68,10 +70,41 @@ sources/0 = SubResource("TileSetAtlasSource_nc45s")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ilfp"]
 size = Vector2(233, 231)
 
+[sub_resource type="Curve" id="Curve_mk5yb"]
+_data = [Vector2(0.10215053, 1), 0.0, 1.10962, 0, 0, Vector2(0.65591395, 0.015660048), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nc45s"]
+curve = SubResource("Curve_mk5yb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mk5yb"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 8, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -79.48
+radial_accel_max = -24.600002
+alpha_curve = SubResource("CurveTexture_nc45s")
+
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
 initial_seed = 1
 noise = SubResource("FastNoiseLite_nigp7")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=547818870]
+scroll_scale = Vector2(0.8, 0.8)
+repeat_size = Vector2(960, 540)
+
+[node name="TextureRect" type="TextureRect" parent="Parallax2D" unique_id=216813623]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_mk5yb")
+stretch_mode = 1
 
 [node name="GroundMap" type="TileMapLayer" parent="." unique_id=999621117]
 unique_name_in_owner = true
@@ -99,3 +132,12 @@ physics_material_override = SubResource("PhysicsMaterial_l7s0s")
 visible = false
 position = Vector2(106.5, 105.5)
 shape = SubResource("RectangleShape2D_2ilfp")
+
+[node name="BreakParticles" type="GPUParticles2D" parent="." unique_id=1252589148]
+emitting = false
+amount = 2
+texture = ExtResource("6_mk5yb")
+lifetime = 0.7
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_mk5yb")
