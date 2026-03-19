@@ -25,13 +25,18 @@ func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: Stru
 
 	var occupied_cells = occupation_checker.call()
 
+	for dirt_cell in structure.resource.requires_contact:
+		var rect_center = cell_coordinate_center + dirt_cell.position
+		for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
+			for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
+				if not has_terrain.call(Vector2(x, y)):
+					can_place = false
+
 	for rect in structure.resource.size:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if y == rect_center.y + rect.size.y - 1 and not has_terrain.call(Vector2(x, y+1)): #Solid ground below
-					can_place = false
-				elif Vector2i(x, y) in occupied_cells:
+				if Vector2i(x, y) in occupied_cells:
 					can_place = false
 
 				if not can_place:

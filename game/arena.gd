@@ -45,20 +45,24 @@ func _ready():
 		load("res://resources/cards/fungus_bar.tres").new(),
 		load("res://resources/cards/fungus_bar.tres").new(),
 		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
-		load("res://resources/cards/fungus_bar.tres").new(),
 		load("res://resources/cards/breakfast.tres").new(),
 		load("res://resources/cards/beam_drill.tres").new(),
 		load("res://resources/cards/dirt_nap.tres").new(),
 		load("res://resources/cards/super_drill.tres").new(),
 		load("res://resources/cards/drill.tres").new(),
+		load("res://resources/cards/drill.tres").new(),
+		load("res://resources/cards/drill.tres").new(),
+		load("res://resources/cards/drill.tres").new(),
+		load("res://resources/cards/drill.tres").new(),
 		load("res://resources/cards/big_drill.tres").new(),
 		load("res://resources/cards/super_buff.tres").new(),
 		load("res://resources/cards/bulldozer.tres").new(),
 		load("res://resources/cards/brainstorm.tres").new(),
+		load("res://resources/cards/bridge.tres").new(),
+		load("res://resources/cards/bridge.tres").new(),
+		load("res://resources/cards/bridge.tres").new(),
+		load("res://resources/cards/bridge.tres").new(),
+		load("res://resources/cards/bridge.tres").new(),
 		]
 
 	deck.append_array(cards)
@@ -113,6 +117,11 @@ func discard(i: int):
 	
 
 func _is_cell_filled(pos: Vector2i):
+	for structure in %Structure.structures:
+		if structure.structure.resource.structure_name == "Bridge":
+			if pos in structure.get_tiles():
+				return true
+
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
 
 func _get_ant_pathfindable_cell():
@@ -120,14 +129,10 @@ func _get_ant_pathfindable_cell():
 
 	var structures: Array = %Structure.structures
 
-	var i = 0
-
-	while point == null and i < 5:
-		i+=1
-		var structure = structures.pick_random()
-		for tile in structure.get_tiles():
-			if %Army.is_cell_on_loop(tile):
-				point = tile
+	var structure = structures.pick_random()
+	var cell = Vector2i(structure.structure.resource.path_finding_point) + (Vector2i(structure.position) / 32)
+	if %Army.is_cell_on_loop(cell):
+		point = Vector2i(cell)
 	
 	return %Army.find_close_tiles(point, 4)
 
@@ -193,7 +198,7 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 	if card.get_type() == CardResource.CardType.Dig:
 		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Dig, x)
 	if card.get_type() == CardResource.CardType.Build:
-		%Terrain.show_selector(at, card.get_area(), %Terrain.PlacingMethod.Build, x)
+		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, x, card.structure.requires_contact)
 		var s_position = %Terrain/GroundMap.to_global(%Terrain/GroundMap.map_to_local(at)) - $%Camera.position
 		%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(s_position.x / 1080., s_position.y / 1080.))
 		%Camera/Visibility.material.set_shader_parameter("interactable_size", card.structure.tiles_radius * 32. / 1080.)

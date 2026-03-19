@@ -19,17 +19,12 @@ func set_connected_to_loop(is_connected_: bool):
 
 func get_tiles() -> Array[Vector2i]:
 	var rects: Array[Rect2i] = structure.resource.size
-	var pos = Vector2i(position / 32)
+	var pos = Vector2i((position - Vector2(16, 16)) / 32)
 	var out: Array[Vector2i] = []
-	
-	if position[0] < 0:
-		pos += Vector2i(-1,0)
-	if position[1] > 0:
-		pos += Vector2i(0,1)
-		
+
 	for r in rects:
 		for x in r.size.x:
 			for y in r.size.y:
-				out += [pos + Vector2i(x,y) - Vector2i(1,2)]
+				out += [pos + Vector2i(x,y) + r.position]
 	return out
 				

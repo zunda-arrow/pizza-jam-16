@@ -660,7 +660,7 @@ func get_occupied_cells() -> Array[Vector2i]:
 		occupied_cells += check.call()
 	return occupied_cells
 					
-func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, X: int):
+func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, X: int, requires_contact: Array[Rect2i] = []):
 	$Selection.clear()
 	$Selection.show()
 	
@@ -668,11 +668,19 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
 	var area = x_area(cells, X)
 
+	var has_ground = true
+	for dirt_cell in requires_contact:
+		var rect_center = cell_coordinate_center + dirt_cell.position
+		for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
+			for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
+				if %GroundMap.get_cell_tile_data(Vector2(x, y)) == null:
+					has_ground = false
+
 	for rect in area:
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if placing_method == PlacingMethod.Build and ((y == rect_center.y+rect.size.y-1 and tilemap.get_cell_source_id(Vector2(x,y+1)) == -1) or Vector2i(x,y) in occupied_cells):
+				if placing_method == PlacingMethod.Build and (Vector2i(x,y) in occupied_cells or not has_ground):
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
 				elif placing_method == PlacingMethod.Dig and Vector2i(x,y-1) in building_cells and !(Vector2i(x,y) in building_cells):
 					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
