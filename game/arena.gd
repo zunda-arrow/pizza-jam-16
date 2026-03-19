@@ -1,6 +1,7 @@
 extends Node2D
 
 signal day_end
+signal money_earned(money: int)
 
 const DEFAULT_HAND = 6
 
@@ -299,6 +300,9 @@ func start_day(deck) -> void:
 	draw_pile.shuffle()
 	
 	start_turn()
+
+func money_passthrough(value: int):
+	money_earned.emit(value)
 
 func _process(delta: float) -> void:
 	var structure_pos: Array[Vector3] = []

@@ -2,6 +2,7 @@
 extends Node2D
 
 signal chunk_generated(Vector2i)
+signal money_dug(value: int)
 
 enum TerrainType{
 	Air,
@@ -617,6 +618,7 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 					else:
 						cells_to_damage.append(Vector2i(x,y))
 	
+	var value_gained := 0
 	var cells_to_remove: Array[Vector2i] = []
 	for cell in cells_to_damage:
 		var p = $BreakParticles.duplicate()
@@ -626,10 +628,12 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 		extra_particle_generators.append(p)
 		p.amount = 4
 
-		var initial_health = tilemap.get_cell_tile_data(cell).get_custom_data("initial_health")
+		var cell_data = tilemap.get_cell_tile_data(cell)
+		var initial_health = cell_data.get_custom_data("initial_health")
 		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
 			var health = initial_health - power
 			if health <= 0:
+				value_gained += cell_data.get_custom_data("value")
 				cells_to_remove.append(cell)
 				%Cracks.set_cell(cell)
 				continue
@@ -638,6 +642,7 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 			continue
 		
 		if healthmap.get_cell_atlas_coords(cell).x == 0:
+			value_gained += cell_data.get_custom_data("value")
 			cells_to_remove.append(cell)
 			%Cracks.set_cell(cell)
 			healthmap.set_cell(cell)
@@ -648,7 +653,8 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 			
 	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
 	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
-	
+
+	money_dug.emit(value_gained)
 
 	#destroy_particles()
 		

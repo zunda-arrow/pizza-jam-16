@@ -107,6 +107,7 @@ text = "I got lost and I want to go home
 "
 
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
+[connection signal="money_dug" from="Terrain" to="." method="money_passthrough"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
 [connection signal="draw_gain" from="Utility" to="." method="_on_utility_draw_gain"]
 [connection signal="eff_gain" from="Utility" to="." method="_on_utility_eff_gain"]
