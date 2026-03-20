@@ -91,6 +91,15 @@ func spawn_ants(n):
 		a.thinking_time = 10000
 		await get_tree().create_timer(.05).timeout
 
+func remove_sleeping_ants():
+	var sleeping_ants = ants.filter(func(x): return x.sleeping)
+	var awake_ants = ants.filter(func(x): return !x.sleeping)
+
+	for ant in sleeping_ants:
+		ant.queue_free()
+
+	ants = awake_ants
+
 func get_loop(pos: Vector2i, ground: Vector2i):
 	var walkable_cells: Array = []
 
