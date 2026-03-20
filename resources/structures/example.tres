@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_pugin"]
 [ext_resource type="Texture2D" uid="uid://ksi7yqgqrefd" path="res://assets/structures/mushroom_bar.png" id="2_6a2ch"]
+[ext_resource type="Script" uid="uid://wl5o2odjdd6i" path="res://resources/utilities.gd" id="3_67ba4"]
+
+[sub_resource type="Resource" id="Resource_p7iya"]
+script = ExtResource("3_67ba4")
+efficiency = Array[int]([1])
+metadata/_custom_type_script = "uid://wl5o2odjdd6i"
 
 [resource]
 script = ExtResource("1_pugin")
@@ -10,3 +16,4 @@ size = Array[Rect2i]([Rect2i(-1, -1, 3, 3)])
 required_ground = Array[Rect2i]([Rect2i(-1, 2, 3, 1)])
 path_finding_points = Array[Vector2i]([Vector2i(0, 1), Vector2i(-1, 1), Vector2i(1, 1)])
 texture = ExtResource("2_6a2ch")
+util_buffs = SubResource("Resource_p7iya")

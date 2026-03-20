@@ -12,6 +12,7 @@ extends Resource
 @export var structure_type: Structures
 @export var lifetime: int
 @export var tiles_radius: int = 11
+@export var util_buffs: UtilityResource
 
 enum Structures {
 	Default,

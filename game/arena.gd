@@ -288,6 +288,8 @@ func start_turn():
 	eff = 0
 
 	%Utility.turn_resources()
+	for s in %Structure.structures:
+		%Utility.utilize(s.structure.resource.util_buffs, 0)
 
 	%EndTurnButton.disabled = false
 
