@@ -1,4 +1,5 @@
 extends Node2D
+class_name Game
 
 signal turn_start
 signal day_start(deck: Array[CardResource.Card])

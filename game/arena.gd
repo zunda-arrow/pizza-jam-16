@@ -3,6 +3,8 @@ extends Node2D
 signal day_end
 signal money_earned(money: int)
 
+@export var game: Game
+
 const DEFAULT_HAND = 6
 
 var hand: Array[CardResource.Card] = []
@@ -312,3 +314,5 @@ func _process(delta: float) -> void:
 		structure_pos.append(Vector3((s.global_position.x - %Camera.position.x) / 1080., (s.global_position.y - %Camera.position.y) / 1080., 1))
 	%Camera/Visibility.material.set_shader_parameter("discoveries", structure_pos)
 	%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(-1,-1))
+	
+	%Money.text = "Money: " + str(game.money)
