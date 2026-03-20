@@ -44,9 +44,12 @@ enum PlacingMethod {
 var MAP_CHUNKS = 10
 var MAP_SIZE = Rect2i(-MAP_CHUNKS / 2, -MAP_CHUNKS / 2, MAP_CHUNKS, MAP_CHUNKS)
 
+@onready var rng = RandomNumberGenerator.new()
+
 func _ready():
 	if initial_seed == 0:
 		initial_seed = randi()
+	rng.seed = initial_seed
 	reset_map(initial_seed)
 	generate()
 
@@ -595,10 +598,10 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 	if point > 0.3:
 		return TerrainType.Air
 	
-	if rock_noise.get_noise_2d(x, y) > 0.05:
+	if rock_noise.get_noise_2d(x, y) > 0.25:
 		return TerrainType.Rock
 
-	if gold_ore_noise.get_noise_2d(x, y) > 0.3:
+	if gold_ore_noise.get_noise_2d(x, y) > 0.4:
 		return TerrainType.ShroomDirt
 
 	if light_dirt_noise.get_noise_2d(x, y) > 0.05:
@@ -650,7 +653,7 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
 			var health = initial_health - power
 			if health <= 0:
-				value_gained += cell_data.get_custom_data("value")
+				value_gained += reward_cell(cell_data)
 				cells_to_remove.append(cell)
 				%Cracks.set_cell(cell)
 				continue
@@ -658,14 +661,14 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 			set_cracks_for_cell(cell, health, initial_health)
 			continue
 		
-		if healthmap.get_cell_atlas_coords(cell).x == 0:
-			value_gained += cell_data.get_custom_data("value")
+		if healthmap.get_cell_atlas_coords(cell).x - power < 0:
+			value_gained += reward_cell(cell_data)
 			cells_to_remove.append(cell)
 			%Cracks.set_cell(cell)
 			healthmap.set_cell(cell)
 		else:
 			var health = healthmap.get_cell_atlas_coords(cell).x
-			healthmap.set_cell(cell, 0, Vector2i(health - 1, 0))
+			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
 			set_cracks_for_cell(cell, health, initial_health)
 			
 	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
@@ -677,6 +680,12 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 		
 
 	return true
+
+func reward_cell(cell_data: Variant) -> int:
+	var value = cell_data.get_custom_data("value")
+	for i in cell_data.get_custom_data("random_value"):
+		value += rng.randf() <= 0.1
+	return value
 
 func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
 	var crack_number
