@@ -13,6 +13,8 @@ var efficiency: Array[int] = []
 var treasure: Array[int] = []
 
 func utilize(utility: UtilityResource, X: int) -> bool:
+	if utility == null:
+		return false
 	# TODO: Discard, Treasure
 	if !utility.energy.is_empty():
 		var array = utility.energy.duplicate()
