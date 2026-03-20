@@ -705,14 +705,17 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
 	var area = cells
 
-	var has_ground = true
+	var has_ground = false
 	if required_ground != null:
 		for dirt_cell in required_ground:
 			var rect_center = cell_coordinate_center + dirt_cell.position
+			var section_has_ground = true
 			for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
 				for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
 					if %GroundMap.get_cell_tile_data(Vector2(x, y)) == null:
-						has_ground = false
+						section_has_ground = false
+			if section_has_ground:
+				has_ground = true
 
 	for rect in area:
 		var rect_center = cell_coordinate_center + rect.position

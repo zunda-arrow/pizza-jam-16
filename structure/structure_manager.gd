@@ -32,12 +32,21 @@ func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: Stru
 
 	var occupied_cells = occupation_checker.call()
 
+	# If any of the requruired ground rects are full, we consides the structure
+	# is on ground.
+	var has_ground = false
 	for dirt_cell in structure.resource.required_ground:
 		var rect_center = cell_coordinate_center + dirt_cell.position
+		var section_has_ground = true
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
-				if not has_terrain.call(Vector2(x, y)):
-					can_place = false
+				if has_terrain.call(Vector2(x, y)) == false:
+					section_has_ground = false
+		if section_has_ground:
+			has_ground = true
+
+	if not has_ground:
+		can_place = false
 
 	for rect in structure.resource.size:
 		var rect_center = cell_coordinate_center + rect.position
