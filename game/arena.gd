@@ -2,6 +2,7 @@ extends Node2D
 
 signal day_end
 signal money_earned(money: int)
+signal card_earned(card: CardResource)
 
 const DEFAULT_HAND = 6
 
@@ -29,6 +30,8 @@ var player_position: Vector2i:
 		%Player.position = pos * 32
 	get():
 		return %Player.position / 32
+
+@onready var rng = RandomNumberGenerator.new()
 
 func _ready():
 	%Terrain.occupation_checks.append(%Structure.building_occupation)
@@ -64,7 +67,7 @@ func draw(n: int):
 			draw_pile = discard_pile
 			discard_pile = []
 		if !draw_pile.is_empty():
-			var card = draw_pile.pop_at(randi() % len(draw_pile))
+			var card = draw_pile.pop_at(rng.randi() % len(draw_pile))
 			hand.append(card)
 			%PlayCards.draw_card(card)
 		else:
@@ -305,6 +308,19 @@ func start_day(deck) -> void:
 
 func money_passthrough(value: int):
 	money_earned.emit(value)
+
+func on_card_reward(to_roll: int) -> void:
+	var cards = []
+	for card in to_roll:
+		cards.append(AllCards.cards[
+			rng.rand_weighted(
+				AllCards.resources.map(func(card): return card.rarity)
+			)
+		])
+	for card in cards:
+		card_earned.emit(card)
+	%CardReward.set_cards(cards)
+	%CardReward.show()
 
 func _process(delta: float) -> void:
 	var structure_pos: Array[Vector3] = []

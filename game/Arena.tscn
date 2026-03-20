@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
 [ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="5_ynix6"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
+[ext_resource type="PackedScene" uid="uid://cdusrihqrf515" path="res://card_reward/CardReward.tscn" id="10_n65lt"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_n65lt"]
 frequency = 0.03
@@ -63,6 +64,9 @@ unique_name_in_owner = true
 [node name="PlayCards" parent="Camera" unique_id=1516163044 instance=ExtResource("1_ncbvw")]
 unique_name_in_owner = true
 position = Vector2(-960, -540)
+
+[node name="CardReward" parent="Camera" unique_id=1912759988 instance=ExtResource("10_n65lt")]
+unique_name_in_owner = true
 
 [node name="Clock" parent="Camera" unique_id=1104602323 instance=ExtResource("7_u3mh8")]
 unique_name_in_owner = true
@@ -123,6 +127,7 @@ theme_override_font_sizes/font_size = 30
 text = "I got lost and I want to go home
 "
 
+[connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="money_dug" from="Terrain" to="." method="money_passthrough"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
