@@ -104,6 +104,162 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 
 	chunk_generated.emit(Vector2i(chunk_x, chunk_y))
 
+func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
+	if sqrt(x**2 + y**2) <= spawn_radius:
+		if y < 4:
+			return TerrainType.Air
+		else:
+			return TerrainType.Dirt
+	var point = terrain_shape_noise.get_noise_2d(x, y)
+		
+	if point > 0.3:
+		return TerrainType.Air
+	
+	if rock_noise.get_noise_2d(x, y) > 0.25:
+		return TerrainType.Rock
+
+	if gold_ore_noise.get_noise_2d(x, y) > 0.4:
+		return TerrainType.ShroomDirt
+
+	if light_dirt_noise.get_noise_2d(x, y) > 0.05:
+		return TerrainType.LightDirt
+
+	return TerrainType.Dirt
+
+
+func get_cellv(vec: Vector2) -> TerrainType:
+	return get_cell(vec.x, vec.y)
+	
+# I am really sorry
+var extra_particle_generators: Array[GPUParticles2D] = []
+#func destroy_particles():
+	#await get_tree().create_timer(1.0).timeout
+	#for p in extra_particle_generators:
+		#p.queue_free()
+
+# Radius is a square radius
+func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int) -> bool:
+	var cells_to_damage: Array[Vector2i] = []
+	var cells_to_update: Array[Vector2i] = []
+	var building_cells: Array[Vector2i] = %Structure.building_occupation()
+
+	for rect in cells:
+		var rect_center = cell_coordinate_center + rect.position
+		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
+			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
+				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0:
+					if (x < rect_center.x-rect.size.x or x > rect_center.x+rect.size.x or y < rect_center.y-rect.size.y or y > rect_center.y+rect.size.y):
+						cells_to_update.append(Vector2i(x,y))
+					elif Vector2i(x,y) in building_cells:
+						return false
+					else:
+						cells_to_damage.append(Vector2i(x,y))
+	
+	var value_gained := 0
+	var cells_to_remove: Array[Vector2i] = []
+	for cell in cells_to_damage:
+		var p = $BreakParticles.duplicate()
+		add_child(p)
+		p.emitting = true
+		p.position = $GroundMap.map_to_local(cell)
+		extra_particle_generators.append(p)
+		p.amount = 4
+
+		var cell_data = tilemap.get_cell_tile_data(cell)
+		var initial_health = cell_data.get_custom_data("initial_health")
+		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
+			var health = initial_health - power
+			if health <= 0:
+				value_gained += reward_cell(cell_data)
+				cells_to_remove.append(cell)
+				%Cracks.set_cell(cell)
+				continue
+			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
+			set_cracks_for_cell(cell, health, initial_health)
+			continue
+		
+		if healthmap.get_cell_atlas_coords(cell).x - power < 0:
+			value_gained += reward_cell(cell_data)
+			cells_to_remove.append(cell)
+			%Cracks.set_cell(cell)
+			healthmap.set_cell(cell)
+		else:
+			var health = healthmap.get_cell_atlas_coords(cell).x
+			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
+			set_cracks_for_cell(cell, health, initial_health)
+			
+	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
+	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
+
+	money_dug.emit(value_gained)
+
+	#destroy_particles()
+		
+
+	return true
+
+func reward_cell(cell_data: Variant) -> int:
+	var value = cell_data.get_custom_data("value")
+	for i in cell_data.get_custom_data("random_value"):
+		value += rng.randf() <= 0.1
+	return value
+
+func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
+	var crack_number
+	if health == initial_health:
+		crack_number = 0
+	else:
+		crack_number = floor(8 - (float(health) / float(initial_health) * 8)) + 1
+
+	%Cracks.set_cell(cell, 2, Vector2i(0, crack_number))
+
+func get_occupied_tiles() -> Array[Vector2i]:
+	tilemap.get_used_cells()
+	return tilemap.get_used_cells()
+
+func get_occupied_cells() -> Array[Vector2i]:
+	var occupied_cells: Array[Vector2i] = []
+	for check in occupation_checks:
+		occupied_cells += check.call()
+	return occupied_cells
+					
+func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, required_ground, dig_touches_path):
+	$Selection.clear()
+	$Selection.show()
+	
+	var occupied_cells: Array[Vector2i] = get_occupied_cells()
+	var building_cells: Array[Vector2i] = %Structure.building_occupation()
+	var area = cells
+
+	var has_ground = false
+	if required_ground != null:
+		for dirt_cell in required_ground:
+			var rect_center = cell_coordinate_center + dirt_cell.position
+			var section_has_ground = true
+			for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
+				for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
+					if %GroundMap.get_cell_tile_data(Vector2(x, y)) == null:
+						section_has_ground = false
+			if section_has_ground:
+				has_ground = true
+
+	for rect in area:
+		var rect_center = cell_coordinate_center + rect.position
+		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
+			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
+				if placing_method == PlacingMethod.Build and (Vector2i(x,y) in occupied_cells or not has_ground):
+					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
+				elif placing_method == PlacingMethod.Dig and (Vector2i(x,y) in building_cells or !dig_touches_path):
+					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
+				#elif Vector2i(x,y) in occupied_cells:
+				#	$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
+				else:
+					$Selection.set_cell(Vector2(x,y), 0, Vector2(0,0), 0)
+	
+func hide_selector():
+	$Selection.hide()
+
+
 func find_atlas_chord_from_neighbors(top_left, top_middle, top_right, middle_left, middle_right, bottom_left, bottom_middle, bottom_right) -> Vector2i:
 	if (
 		top_left == true
@@ -586,158 +742,3 @@ func find_atlas_chord_from_neighbors(top_left, top_middle, top_right, middle_lef
 		return Vector2i(5, 6)
 
 	return Vector2i(1, 0)
-
-func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
-	if sqrt(x**2 + y**2) <= spawn_radius:
-		if y < 4:
-			return TerrainType.Air
-		else:
-			return TerrainType.Dirt
-	var point = terrain_shape_noise.get_noise_2d(x, y)
-		
-	if point > 0.3:
-		return TerrainType.Air
-	
-	if rock_noise.get_noise_2d(x, y) > 0.25:
-		return TerrainType.Rock
-
-	if gold_ore_noise.get_noise_2d(x, y) > 0.4:
-		return TerrainType.ShroomDirt
-
-	if light_dirt_noise.get_noise_2d(x, y) > 0.05:
-		return TerrainType.LightDirt
-
-	return TerrainType.Dirt
-
-
-func get_cellv(vec: Vector2) -> TerrainType:
-	return get_cell(vec.x, vec.y)
-	
-# I am really sorry
-var extra_particle_generators: Array[GPUParticles2D] = []
-#func destroy_particles():
-	#await get_tree().create_timer(1.0).timeout
-	#for p in extra_particle_generators:
-		#p.queue_free()
-
-# Radius is a square radius
-func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int) -> bool:
-	var cells_to_damage: Array[Vector2i] = []
-	var cells_to_update: Array[Vector2i] = []
-	var building_cells: Array[Vector2i] = %Structure.building_occupation()
-
-	for rect in cells:
-		var rect_center = cell_coordinate_center + rect.position
-		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
-			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0:
-					if (x < rect_center.x-rect.size.x or x > rect_center.x+rect.size.x or y < rect_center.y-rect.size.y or y > rect_center.y+rect.size.y):
-						cells_to_update.append(Vector2i(x,y))
-					elif Vector2i(x,y) in building_cells:
-						return false
-					else:
-						cells_to_damage.append(Vector2i(x,y))
-	
-	var value_gained := 0
-	var cells_to_remove: Array[Vector2i] = []
-	for cell in cells_to_damage:
-		var p = $BreakParticles.duplicate()
-		add_child(p)
-		p.emitting = true
-		p.position = $GroundMap.map_to_local(cell)
-		extra_particle_generators.append(p)
-		p.amount = 4
-
-		var cell_data = tilemap.get_cell_tile_data(cell)
-		var initial_health = cell_data.get_custom_data("initial_health")
-		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
-			var health = initial_health - power
-			if health <= 0:
-				value_gained += reward_cell(cell_data)
-				cells_to_remove.append(cell)
-				%Cracks.set_cell(cell)
-				continue
-			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
-			set_cracks_for_cell(cell, health, initial_health)
-			continue
-		
-		if healthmap.get_cell_atlas_coords(cell).x - power < 0:
-			value_gained += reward_cell(cell_data)
-			cells_to_remove.append(cell)
-			%Cracks.set_cell(cell)
-			healthmap.set_cell(cell)
-		else:
-			var health = healthmap.get_cell_atlas_coords(cell).x
-			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
-			set_cracks_for_cell(cell, health, initial_health)
-			
-	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
-	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
-
-	money_dug.emit(value_gained)
-
-	#destroy_particles()
-		
-
-	return true
-
-func reward_cell(cell_data: Variant) -> int:
-	var value = cell_data.get_custom_data("value")
-	for i in cell_data.get_custom_data("random_value"):
-		value += rng.randf() <= 0.1
-	return value
-
-func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
-	var crack_number
-	if health == initial_health:
-		crack_number = 0
-	else:
-		crack_number = floor(8 - (float(health) / float(initial_health) * 8)) + 1
-
-	%Cracks.set_cell(cell, 2, Vector2i(0, crack_number))
-
-func get_occupied_tiles() -> Array[Vector2i]:
-	tilemap.get_used_cells()
-	return tilemap.get_used_cells()
-
-func get_occupied_cells() -> Array[Vector2i]:
-	var occupied_cells: Array[Vector2i] = []
-	for check in occupation_checks:
-		occupied_cells += check.call()
-	return occupied_cells
-					
-func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, required_ground, dig_touches_path):
-	$Selection.clear()
-	$Selection.show()
-	
-	var occupied_cells: Array[Vector2i] = get_occupied_cells()
-	var building_cells: Array[Vector2i] = %Structure.building_occupation()
-	var area = cells
-
-	var has_ground = false
-	if required_ground != null:
-		for dirt_cell in required_ground:
-			var rect_center = cell_coordinate_center + dirt_cell.position
-			var section_has_ground = true
-			for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
-				for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
-					if %GroundMap.get_cell_tile_data(Vector2(x, y)) == null:
-						section_has_ground = false
-			if section_has_ground:
-				has_ground = true
-
-	for rect in area:
-		var rect_center = cell_coordinate_center + rect.position
-		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
-			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if placing_method == PlacingMethod.Build and (Vector2i(x,y) in occupied_cells or not has_ground):
-					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
-				elif placing_method == PlacingMethod.Dig and (Vector2i(x,y) in building_cells or !dig_touches_path):
-					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
-				#elif Vector2i(x,y) in occupied_cells:
-				#	$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
-				else:
-					$Selection.set_cell(Vector2(x,y), 0, Vector2(0,0), 0)
-	
-func hide_selector():
-	$Selection.hide()
