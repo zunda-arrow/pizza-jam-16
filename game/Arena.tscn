@@ -7,9 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://cro8mxb3kbban" path="res://structure/StructureManager.tscn" id="3_5yp8v"]
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
-[ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="5_ynix6"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
 [ext_resource type="PackedScene" uid="uid://cdusrihqrf515" path="res://card_reward/CardReward.tscn" id="10_n65lt"]
+[ext_resource type="PackedScene" uid="uid://bmlhxoffb3r5l" path="res://cards/CardList.tscn" id="10_n65lt"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_n65lt"]
 frequency = 0.03
@@ -46,17 +46,6 @@ unique_name_in_owner = true
 [node name="Army" parent="." unique_id=1221516024 instance=ExtResource("3_q8ykg")]
 unique_name_in_owner = true
 home_position = Vector2i(0, 3)
-
-[node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("5_ynix6")]
-offset_left = 1040.0
-offset_top = -681.0
-offset_right = 1944.0
-offset_bottom = -101.0
-text = "This scene is the main part of the game. When you have to bulid, place, and do the other things to win the day, it will all go here. The goal of this day is to start a day, but not to keep track of money. Changes like getting an artifact or money should be reported to a master scene.
-In other words, this scene is not the Inventory.
-I dont think this should be the shop either.
-
-Unknowns: Should the day system be programmed here?"
 
 [node name="Camera" parent="." unique_id=2140926887 instance=ExtResource("3_2wy63")]
 unique_name_in_owner = true
@@ -136,6 +125,31 @@ offset_bottom = -431.0
 theme_override_font_sizes/font_size = 48
 text = "Money: 0"
 
+[node name="CardPileDisplay" parent="Camera" unique_id=1774113453 instance=ExtResource("10_n65lt")]
+unique_name_in_owner = true
+visible = false
+position = Vector2(-960, -540)
+
+[node name="DrawPile" type="PanelContainer" parent="Camera" unique_id=1965561152]
+offset_left = -783.0
+offset_top = 406.0
+offset_right = -724.0
+offset_bottom = 465.0
+
+[node name="Label" type="Label" parent="Camera/DrawPile" unique_id=1340981094]
+layout_mode = 2
+text = "Draw"
+
+[node name="DiscardPile" type="PanelContainer" parent="Camera" unique_id=703672857]
+offset_left = -679.0
+offset_top = 404.0
+offset_right = -620.0
+offset_bottom = 463.0
+
+[node name="Label" type="Label" parent="Camera/DiscardPile" unique_id=2106178975]
+layout_mode = 2
+text = "Discard"
+
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="money_dug" from="Terrain" to="." method="money_passthrough"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
@@ -149,3 +163,7 @@ text = "Money: 0"
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
 [connection signal="pressed" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
 [connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
+[connection signal="mouse_entered" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_entered"]
+[connection signal="mouse_exited" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_exited"]
+[connection signal="mouse_entered" from="Camera/DiscardPile" to="." method="_on_discard_pile_mouse_entered"]
+[connection signal="mouse_exited" from="Camera/DiscardPile" to="." method="_on_discard_pile_mouse_exited"]
