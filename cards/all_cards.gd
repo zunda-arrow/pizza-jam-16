@@ -16,6 +16,8 @@ var resources: Array[CardResource] = [
 	load("res://resources/cards/laser_drill.tres"),
 	load("res://resources/cards/heart.tres"),
 	load("res://resources/cards/shroom_drill.tres"),
+	load("res://resources/cards/spear_drill.tres"),
+	load("res://resources/cards/club_drill.tres"),
 ]
 
 var cards = resources.map(func(card): return card.new())
