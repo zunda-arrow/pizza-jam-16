@@ -684,7 +684,7 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 func reward_cell(cell_data: Variant) -> int:
 	var value = cell_data.get_custom_data("value")
 	for i in cell_data.get_custom_data("random_value"):
-		value += rng.randf() <= 0.1
+		value += int(rng.randf() <= 0.1)
 	return value
 
 func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
