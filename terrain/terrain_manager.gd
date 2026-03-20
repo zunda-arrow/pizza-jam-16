@@ -147,7 +147,7 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0:
+				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0 and Vector2i(x, y) not in cells_to_damage:
 					if (x < rect_center.x-rect.size.x or x > rect_center.x+rect.size.x or y < rect_center.y-rect.size.y or y > rect_center.y+rect.size.y):
 						cells_to_update.append(Vector2i(x,y))
 					elif Vector2i(x,y) in building_cells:
