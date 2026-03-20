@@ -595,10 +595,10 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 	if point > 0.3:
 		return TerrainType.Air
 	
-	if rock_noise.get_noise_2d(x, y) > 0.05:
+	if rock_noise.get_noise_2d(x, y) > 0.25:
 		return TerrainType.Rock
 
-	if gold_ore_noise.get_noise_2d(x, y) > 0.3:
+	if gold_ore_noise.get_noise_2d(x, y) > 0.4:
 		return TerrainType.ShroomDirt
 
 	if light_dirt_noise.get_noise_2d(x, y) > 0.05:
