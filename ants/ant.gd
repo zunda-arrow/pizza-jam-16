@@ -8,6 +8,18 @@ var facing = "right"
 var going_home = false
 var _current_rotation = 0
 
+var sleeping: bool:
+	set(val):
+		sleeping = val
+		if val:
+			if randf() < 0.01:
+				play("nap-cap")
+			play("nap")
+		else:
+			play("walk")
+	get():
+		return sleeping
+
 func _ready() -> void:
 	play("walk")
 
@@ -32,12 +44,18 @@ func _process(delta: float) -> void:
 	else:
 		flip_h = false
 
-	if len(following_path) == 0:
+	if len(following_path) == 0 and animation == "walk":
 		pause()
 		if going_home:
 			queue_free()
 	else:
 		play()
+
+	if sleeping:
+			position.x = grid_position.x * 32 + 16
+			position.y = grid_position.y * 32 + 16
+			rotation = Vector2(ground_direction).angle() - PI / 2 + 2 * PI
+			return
 
 	if len(following_path) > 0:
 		thinking_time = 0

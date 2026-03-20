@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cro8mxb3kbban" path="res://structure/StructureManager.tscn" id="3_5yp8v"]
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
-[ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="5_ynix6"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
 [ext_resource type="PackedScene" uid="uid://bmlhxoffb3r5l" path="res://cards/CardList.tscn" id="10_n65lt"]
 
@@ -46,17 +45,6 @@ unique_name_in_owner = true
 [node name="Army" parent="." unique_id=1221516024 instance=ExtResource("3_q8ykg")]
 unique_name_in_owner = true
 home_position = Vector2i(0, 3)
-
-[node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("5_ynix6")]
-offset_left = 1040.0
-offset_top = -681.0
-offset_right = 1944.0
-offset_bottom = -101.0
-text = "This scene is the main part of the game. When you have to bulid, place, and do the other things to win the day, it will all go here. The goal of this day is to start a day, but not to keep track of money. Changes like getting an artifact or money should be reported to a master scene.
-In other words, this scene is not the Inventory.
-I dont think this should be the shop either.
-
-Unknowns: Should the day system be programmed here?"
 
 [node name="Camera" parent="." unique_id=2140926887 instance=ExtResource("3_2wy63")]
 unique_name_in_owner = true

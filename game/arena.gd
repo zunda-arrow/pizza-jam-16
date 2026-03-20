@@ -106,7 +106,7 @@ func _get_ant_pathfindable_cell():
 
 	var structures: Array = %Structure.structures
 
-	var structure = structures.pick_random()
+	var structure = structures[len(structures) - 1]
 	for p in structure.structure.resource.path_finding_points:
 		var cell = Vector2i(p) + (Vector2i(structure.position) / 32)
 		if %Army.is_cell_on_loop(cell):
@@ -252,6 +252,7 @@ func _on_clock_day_end(day: int) -> void:
 	%DayLabel.text = "Day " + str(day)
 	%TurnLabel.text = "Turn 0"
 	
+	%Army.reset_ants()
 	ants = 0
 
 	var i = len(%Structure.structures) - 1
