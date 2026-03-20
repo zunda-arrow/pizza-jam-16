@@ -104,7 +104,7 @@ func _get_ant_pathfindable_cell():
 
 	var structures: Array = %Structure.structures
 
-	var structure = structures.pick_random()
+	var structure = structures[len(structures) - 1]
 	for p in structure.structure.resource.path_finding_points:
 		var cell = Vector2i(p) + (Vector2i(structure.position) / 32)
 		if %Army.is_cell_on_loop(cell):
