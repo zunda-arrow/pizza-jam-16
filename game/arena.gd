@@ -8,7 +8,7 @@ signal money_earned(money: int)
 const DEFAULT_HAND = 6
 
 var hand: Array[CardResource.Card] = []
-var draw_pile = []
+var draw_pile: Array[CardResource.Card] = []
 var discard_pile: Array[CardResource.Card] = []
 
 var HomeStructure = preload("res://resources/structures/home.tres")
@@ -295,7 +295,7 @@ func start_turn():
 
 	%EndTurnButton.disabled = false
 
-func start_day(deck) -> void:
+func start_day(deck: Array[CardResource.Card]) -> void:
 	energy = 3
 	ants = 0
 	eff = 0
@@ -316,3 +316,18 @@ func _process(delta: float) -> void:
 	%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(-1,-1))
 	
 	%Money.text = "Money: " + str(game.money)
+
+
+func _on_discard_pile_mouse_entered() -> void:
+	%CardPileDisplay.show_cards(discard_pile)
+	%CardPileDisplay.show()
+
+func _on_discard_pile_mouse_exited() -> void:
+	%CardPileDisplay.hide()
+
+func _on_draw_pile_mouse_entered() -> void:
+	%CardPileDisplay.show_cards(draw_pile)
+	%CardPileDisplay.show()
+
+func _on_draw_pile_mouse_exited() -> void:
+	%CardPileDisplay.hide()

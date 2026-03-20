@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bmlhxoffb3r5l"]
+
+[ext_resource type="Script" uid="uid://bhdwuigwjml8p" path="res://cards/card_list.gd" id="1_xku1k"]
+
+[node name="CardList" type="Node2D" unique_id=1774113453]
+script = ExtResource("1_xku1k")
+
+[node name="CardContainer" type="Node2D" parent="." unique_id=180310391]
+unique_name_in_owner = true

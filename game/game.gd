@@ -5,11 +5,12 @@ signal turn_start
 signal day_start(deck: Array[CardResource.Card])
 signal shop_start
 
-var deck = []
+var deck: Array[CardResource.Card] = []
 var money := 0
 
 func _ready() -> void:
-	deck = AllCards.cards.duplicate()
+	for c in AllCards.resources:
+		deck.push_back(c.new())
 	
 	$ShopCamera.hide()
 	%Shop.get_money = get_money
