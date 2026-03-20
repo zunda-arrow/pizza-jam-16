@@ -675,6 +675,8 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
 
 	money_dug.emit(value_gained)
+	
+	$Audio/Explosion.play(0.02)
 
 	#destroy_particles()
 		
