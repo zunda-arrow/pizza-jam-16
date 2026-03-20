@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://dftd7vyar68b7" path="res://cards/play_cards.gd" id="1_psm3s"]
 [ext_resource type="PackedScene" uid="uid://cctlo3fcf1cqd" path="res://cards/Hand.tscn" id="2_g8evs"]
 [ext_resource type="PackedScene" uid="uid://c3tbo64q8cd1l" path="res://arrow/arrow.tscn" id="3_cmaul"]
-[ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="4_g8evs"]
 
 [node name="PlayCards" type="Node2D" unique_id=1516163044]
 script = ExtResource("1_psm3s")
@@ -15,15 +14,6 @@ position = Vector2(203, 516)
 [node name="TargetArrow" parent="Hand" unique_id=8504322 instance=ExtResource("3_cmaul")]
 unique_name_in_owner = true
 visible = false
-
-[node name="Comment" parent="." unique_id=2120769087 instance=ExtResource("4_g8evs")]
-offset_left = 52.0
-offset_top = 47.0
-offset_right = 858.0
-offset_bottom = 468.0
-text = "This scene lets you pick nodes and their target.
-
-It does not handle keeping track of what cards you have. This is just the hand and the Area scene reports what cards it should render."
 
 [connection signal="card_clicked" from="Hand" to="." method="_on_hand_card_clicked"]
 [connection signal="card_discarded" from="Hand" to="." method="_on_hand_card_discarded"]

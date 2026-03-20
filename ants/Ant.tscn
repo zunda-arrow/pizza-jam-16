@@ -5,7 +5,6 @@
 
 [node name="Node2D" type="AnimatedSprite2D" unique_id=503036690]
 sprite_frames = ExtResource("1_jvk2r")
-animation = &"walk"
-frame = 2
-frame_progress = 0.6894712
+animation = &"nap-cap"
+frame_progress = 0.79175407
 script = ExtResource("2_jvk2r")
