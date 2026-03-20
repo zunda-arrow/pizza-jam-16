@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
 [ext_resource type="PackedScene" uid="uid://htglbgt13uu7" path="res://include/comment/Comment.tscn" id="5_ynix6"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
+[ext_resource type="PackedScene" uid="uid://bmlhxoffb3r5l" path="res://cards/CardList.tscn" id="10_n65lt"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_n65lt"]
 frequency = 0.03
@@ -132,6 +133,31 @@ offset_bottom = -431.0
 theme_override_font_sizes/font_size = 48
 text = "Money: 0"
 
+[node name="CardPileDisplay" parent="Camera" unique_id=1774113453 instance=ExtResource("10_n65lt")]
+unique_name_in_owner = true
+visible = false
+position = Vector2(-960, -540)
+
+[node name="DrawPile" type="PanelContainer" parent="Camera" unique_id=1965561152]
+offset_left = -783.0
+offset_top = 406.0
+offset_right = -724.0
+offset_bottom = 465.0
+
+[node name="Label" type="Label" parent="Camera/DrawPile" unique_id=1340981094]
+layout_mode = 2
+text = "Draw"
+
+[node name="DiscardPile" type="PanelContainer" parent="Camera" unique_id=703672857]
+offset_left = -679.0
+offset_top = 404.0
+offset_right = -620.0
+offset_bottom = 463.0
+
+[node name="Label" type="Label" parent="Camera/DiscardPile" unique_id=2106178975]
+layout_mode = 2
+text = "Discard"
+
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="money_dug" from="Terrain" to="." method="money_passthrough"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
@@ -144,3 +170,7 @@ text = "Money: 0"
 [connection signal="day_end" from="Camera/Clock" to="." method="_on_clock_day_end"]
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
 [connection signal="pressed" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
+[connection signal="mouse_entered" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_entered"]
+[connection signal="mouse_exited" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_exited"]
+[connection signal="mouse_entered" from="Camera/DiscardPile" to="." method="_on_discard_pile_mouse_entered"]
+[connection signal="mouse_exited" from="Camera/DiscardPile" to="." method="_on_discard_pile_mouse_exited"]
