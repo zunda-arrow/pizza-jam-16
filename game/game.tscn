@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c6nce3c3m58nq" path="res://game/Arena.tscn" id="2_vasa2"]
 [ext_resource type="PackedScene" uid="uid://tj0m2jelyw13" path="res://camera/ShopCamera.tscn" id="3_4fuuu"]
 [ext_resource type="PackedScene" uid="uid://bkcrj2gp4i7ud" path="res://shop/shop.tscn" id="3_h7iqs"]
+[ext_resource type="AudioStream" uid="uid://l3nopiv3qu1d" path="res://assets/sound/ant_music.mp3" id="5_dxrkv"]
 
 [node name="Game" type="Node2D" unique_id=1516163044]
 script = ExtResource("1_l1rk1")
@@ -16,6 +17,12 @@ process_mode = 2
 [node name="Shop" parent="ShopCamera" unique_id=2098500626 instance=ExtResource("3_h7iqs")]
 unique_name_in_owner = true
 position = Vector2(-960, -540)
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=652045608]
+process_mode = 3
+stream = ExtResource("5_dxrkv")
+volume_db = -6.0
+bus = &"Music"
 
 [connection signal="day_start" from="." to="Arena" method="start_day"]
 [connection signal="shop_start" from="." to="ShopCamera" method="make_active"]

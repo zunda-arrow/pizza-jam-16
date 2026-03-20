@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://cro8mxb3kbban"]
 
 [ext_resource type="Script" uid="uid://h5wxdbtmqati" path="res://structure/structure_manager.gd" id="1_ql0gi"]
+[ext_resource type="AudioStream" uid="uid://ds88kwy0h1ocm" path="res://assets/sound/place_down.mp3" id="2_5geu7"]
 
 [node name="StructureManager" type="Node2D" unique_id=11068490]
 script = ExtResource("1_ql0gi")
+
+[node name="PlaceDown" type="AudioStreamPlayer" parent="." unique_id=1741872031]
+stream = ExtResource("2_5geu7")
+volume_db = 3.0

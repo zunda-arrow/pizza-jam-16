@@ -7,12 +7,18 @@ signal shop_start
 var deck = []
 var money := 0
 
+func loop_music():
+	$Music.play()
+	await get_tree().create_timer(88.63).timeout
+	loop_music()
+
 func _ready() -> void:
 	deck = AllCards.cards.duplicate()
 	
 	$ShopCamera.hide()
 	%Shop.get_money = get_money
 	
+	loop_music()
 	start_game()
 
 func start_game() -> void:
