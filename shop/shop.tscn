@@ -5,6 +5,7 @@
 
 [node name="Shop" type="Node2D" unique_id=2098500626]
 script = ExtResource("1_r2p71")
+cards = Vector2i(3, 1)
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=257616050]
 custom_minimum_size = Vector2(1920, 1080)
