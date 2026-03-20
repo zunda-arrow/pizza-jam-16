@@ -18,6 +18,8 @@ var occupation_checker = func(): return building_occupation() # This can be over
 func building_occupation() -> Array[Vector2i]:
 	var occupied_cells: Array[Vector2i] = []
 	for s in structures:
+		for t in s.get_tiles():
+			occupied_cells += [t]
 		for r in s.structure.resource.required_ground:
 			var pos = s.get_tile_position() + r.position
 			for x in range(ceil(pos.x),ceil(pos.x+r.size.x)):
