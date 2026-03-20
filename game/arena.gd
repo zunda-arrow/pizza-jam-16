@@ -250,7 +250,7 @@ func _on_clock_day_end(day: int) -> void:
 	%DayLabel.text = "Day " + str(day)
 	%TurnLabel.text = "Turn 0"
 	
-	%Army.remove_sleeping_ants()
+	%Army.reset_ants()
 	ants = 0
 
 	var i = len(%Structure.structures) - 1
