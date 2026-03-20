@@ -20,5 +20,3 @@ var resources: Array[CardResource] = [
 	load("res://resources/cards/club_drill.tres"),
 	load("res://resources/cards/diamond_drill.tres"),
 ]
-
-var cards = resources.map(func(card): return card.new())

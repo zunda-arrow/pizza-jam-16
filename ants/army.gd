@@ -12,10 +12,24 @@ var ant_scene = preload("res://ants/Ant.tscn")
 
 var number_of_ants: int:
 	set(val):
+		ants.shuffle()
 		if number_of_ants > val:
-			send_ants_home(number_of_ants - val)
+			var n = number_of_ants
+			for i in ants.filter(func(x): return !x.sleeping):
+				if n < val:
+					break
+				n -= 1
+				i.sleeping = true
+			# send_ants_home(number_of_ants - val)
 		if number_of_ants < val:
-			spawn_ants(val - number_of_ants)
+			var n = number_of_ants
+			for i in ants.filter(func(x): return x.sleeping):
+				if n > val:
+					break
+				n += 1
+				i.sleeping = false
+			if val - n > 0:
+				spawn_ants(val - n)
 		number_of_ants = val
 	get():
 		return number_of_ants
@@ -25,7 +39,6 @@ var ants: Array[Ant] = []
 var _main_loop: Array = []
 
 var _markers = []
-
 
 func generate_loop() -> void:
 	if is_grid_cell_filled == null:
@@ -77,6 +90,11 @@ func spawn_ants(n):
 		ants.push_back(a)
 		a.thinking_time = 10000
 		await get_tree().create_timer(.05).timeout
+
+func reset_ants():
+	for ant in ants:
+		ant.queue_free()
+	ants = []
 
 func get_loop(pos: Vector2i, ground: Vector2i):
 	var walkable_cells: Array = []

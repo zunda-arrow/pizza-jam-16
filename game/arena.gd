@@ -3,10 +3,12 @@ extends Node2D
 signal day_end
 signal money_earned(money: int)
 
+@export var game: Game
+
 const DEFAULT_HAND = 6
 
 var hand: Array[CardResource.Card] = []
-var draw_pile = []
+var draw_pile: Array[CardResource.Card] = []
 var discard_pile: Array[CardResource.Card] = []
 
 var HomeStructure = preload("res://resources/structures/home.tres")
@@ -104,7 +106,7 @@ func _get_ant_pathfindable_cell():
 
 	var structures: Array = %Structure.structures
 
-	var structure = structures.pick_random()
+	var structure = structures[len(structures) - 1]
 	for p in structure.structure.resource.path_finding_points:
 		var cell = Vector2i(p) + (Vector2i(structure.position) / 32)
 		if %Army.is_cell_on_loop(cell):
@@ -250,6 +252,7 @@ func _on_clock_day_end(day: int) -> void:
 	%DayLabel.text = "Day " + str(day)
 	%TurnLabel.text = "Turn 0"
 	
+	%Army.reset_ants()
 	ants = 0
 
 	var i = len(%Structure.structures) - 1
@@ -293,7 +296,7 @@ func start_turn():
 
 	%EndTurnButton.disabled = false
 
-func start_day(deck) -> void:
+func start_day(deck: Array[CardResource.Card]) -> void:
 	energy = 3
 	ants = 0
 	eff = 0
@@ -312,3 +315,20 @@ func _process(delta: float) -> void:
 		structure_pos.append(Vector3((s.global_position.x - %Camera.position.x) / 1080., (s.global_position.y - %Camera.position.y) / 1080., 1))
 	%Camera/Visibility.material.set_shader_parameter("discoveries", structure_pos)
 	%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(-1,-1))
+	
+	%Money.text = "Money: " + str(game.money)
+
+
+func _on_discard_pile_mouse_entered() -> void:
+	%CardPileDisplay.show_cards(discard_pile)
+	%CardPileDisplay.show()
+
+func _on_discard_pile_mouse_exited() -> void:
+	%CardPileDisplay.hide()
+
+func _on_draw_pile_mouse_entered() -> void:
+	%CardPileDisplay.show_cards(draw_pile)
+	%CardPileDisplay.show()
+
+func _on_draw_pile_mouse_exited() -> void:
+	%CardPileDisplay.hide()
