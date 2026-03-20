@@ -21,6 +21,7 @@ enum TerrainType{
 @export var light_dirt_noise: FastNoiseLite
 @export var rock_noise: FastNoiseLite
 @export var gold_ore_noise: FastNoiseLite
+@export var mystery_ore_noise: FastNoiseLite
 
 @export var block_threshold: float = 0.5 # Threshold to place a block (less than)
 @export var rock_threshold: float = 1.0 # Threshold to place an unbreakable block #TODO: Implement
@@ -110,11 +111,16 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 	chunk_generated.emit(Vector2i(chunk_x, chunk_y))
 
 func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
+	
 	if sqrt(x**2 + y**2) <= spawn_radius:
 		if y < 4:
 			return TerrainType.Air
 		else:
 			return TerrainType.Dirt
+	
+	if mystery_ore_noise.get_noise_2d(x, y) > 0.4:
+		return TerrainType.Mystery
+
 	var point = terrain_shape_noise.get_noise_2d(x, y)
 		
 	if point > 0.3:
@@ -128,8 +134,6 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 
 	if light_dirt_noise.get_noise_2d(x, y) > 0.05:
 		return TerrainType.LightDirt
-		
-	return TerrainType.Mystery
 
 	return TerrainType.Dirt
 
