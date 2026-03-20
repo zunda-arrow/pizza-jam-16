@@ -111,16 +111,11 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 	chunk_generated.emit(Vector2i(chunk_x, chunk_y))
 
 func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
-	
 	if sqrt(x**2 + y**2) <= spawn_radius:
 		if y < 4:
 			return TerrainType.Air
 		else:
 			return TerrainType.Dirt
-	
-	if mystery_ore_noise.get_noise_2d(x, y) > 0.4:
-		return TerrainType.Mystery
-
 	var point = terrain_shape_noise.get_noise_2d(x, y)
 		
 	if point > 0.3:
@@ -158,7 +153,7 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 		var rect_center = cell_coordinate_center + rect.position
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0 and Vector2i(x, y) not in cells_to_damage:
+				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0:
 					if (x < rect_center.x-rect.size.x or x > rect_center.x+rect.size.x or y < rect_center.y-rect.size.y or y > rect_center.y+rect.size.y):
 						cells_to_update.append(Vector2i(x,y))
 					elif Vector2i(x,y) in building_cells:
@@ -205,15 +200,14 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 	money_dug.emit(value_gained)
 
 	#destroy_particles()
+		
 
 	return true
 
 func reward_cell(cell_data: Variant) -> int:
 	var value = cell_data.get_custom_data("value")
 	for i in cell_data.get_custom_data("random_value"):
-		value += 1 if rng.randf() <= 0.1 else 0
-	if cell_data.get_custom_data("card_reward") > 0:
-		card_reward.emit(cell_data.get_custom_data("card_reward"))
+		value += int(rng.randf() <= 0.1)
 	return value
 
 func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
@@ -270,6 +264,7 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 	
 func hide_selector():
 	$Selection.hide()
+
 
 func find_atlas_chord_from_neighbors(top_left, top_middle, top_right, middle_left, middle_right, bottom_left, bottom_middle, bottom_right) -> Vector2i:
 	if (

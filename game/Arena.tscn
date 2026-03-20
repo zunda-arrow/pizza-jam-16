@@ -127,7 +127,15 @@ theme_override_font_sizes/font_size = 30
 text = "I got lost and I want to go home
 "
 
-[connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
+[node name="Money" type="Label" parent="Camera" unique_id=917801156]
+unique_name_in_owner = true
+offset_left = -830.0
+offset_top = -513.0
+offset_right = -577.0
+offset_bottom = -431.0
+theme_override_font_sizes/font_size = 48
+text = "Money: 0"
+
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="money_dug" from="Terrain" to="." method="money_passthrough"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
@@ -140,3 +148,4 @@ text = "I got lost and I want to go home
 [connection signal="day_end" from="Camera/Clock" to="." method="_on_clock_day_end"]
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
 [connection signal="pressed" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
+[connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
