@@ -8,7 +8,8 @@
 [node name="Game" type="Node2D" unique_id=1516163044]
 script = ExtResource("1_l1rk1")
 
-[node name="Arena" parent="." unique_id=728631546 instance=ExtResource("2_vasa2")]
+[node name="Arena" parent="." unique_id=728631546 node_paths=PackedStringArray("game") instance=ExtResource("2_vasa2")]
+game = NodePath("..")
 
 [node name="ShopCamera" parent="." unique_id=1849506086 instance=ExtResource("3_4fuuu")]
 process_mode = 2
