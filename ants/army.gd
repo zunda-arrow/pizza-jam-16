@@ -43,6 +43,7 @@ func generate_loop() -> void:
 		var l: Sprite2D = $Loop.duplicate()
 		l.show()
 		%Markers.add_child(l)
+		l.rotation = Vector2(i[1]).angle() - PI / 2
 		l.position = i[0] * 32 + Vector2i(16, 16)
 		_markers.push_back(l)
 
