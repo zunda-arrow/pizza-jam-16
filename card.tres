@@ -1,6 +1,6 @@
-[gd_resource type="Theme" format=3 uid="uid://bi7rd61xw5wsf"]
+[gd_resource type="Theme" format=3 uid="uid://b0mlxj7keqhv0"]
 
-[ext_resource type="FontFile" uid="uid://bq5opb0qxsy2i" path="res://assets/fonts/Cocogoose-Pro-Regular-trial.ttf" id="1_uirs1"]
+[ext_resource type="FontFile" path="res://assets/fonts/Cocogoose-Pro-Regular-trial.ttf" id="1_uirs1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hy6uu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)

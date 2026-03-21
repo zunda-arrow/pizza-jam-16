@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://leb6x7ht8xsq"]
+
+[ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_lece1"]
+[ext_resource type="Texture2D" uid="uid://caa6l2u2bdh01" path="res://assets/bottlecap-tower.png" id="2_lece1"]
+[ext_resource type="Script" path="res://resources/utilities.gd" id="3_25lu5"]
+
+[sub_resource type="Resource" id="Resource_p7iya"]
+script = ExtResource("3_25lu5")
+
+[resource]
+script = ExtResource("1_lece1")
+structure_name = "Bottlecap Tower"
+size = Array[Rect2i]([Rect2i(0, -2, 2, 4)])
+required_ground = Array[Rect2i]([Rect2i(0, 2, 2, 1)])
+path_finding_points = Array[Vector2i]([Vector2i(0, 1), Vector2i(1, 1)])
+texture = ExtResource("2_lece1")
+util_buffs = SubResource("Resource_p7iya")

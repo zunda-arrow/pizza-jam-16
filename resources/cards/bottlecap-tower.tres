@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://m3bpvsf85s73"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_ye0bx"]
+[ext_resource type="Resource" uid="uid://leb6x7ht8xsq" path="res://resources/structures/bottlecap-tower.tres" id="2_ye0bx"]
+
+[resource]
+script = ExtResource("1_ye0bx")
+card_name = "Bottlecap Tower"
+card_impl = 3
+structureResource = ExtResource("2_ye0bx")
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

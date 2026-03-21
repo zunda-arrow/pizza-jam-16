@@ -6,10 +6,6 @@
 
 [node name="Toolbar" type="Node2D" unique_id=1619252754]
 script = ExtResource("1_eciji")
-turn = null
-in_game = null
-ant_count = null
-energy_count = null
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=1440512116]
 offset_left = 1.0
