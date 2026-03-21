@@ -103,19 +103,19 @@ text = "Turn 0"
 
 [node name="EndTurnButton" type="Button" parent="Camera" unique_id=1964738272]
 unique_name_in_owner = true
-offset_left = 629.0
-offset_top = 337.0
-offset_right = 924.0
-offset_bottom = 412.0
+offset_left = -904.0
+offset_top = 339.0
+offset_right = -609.0
+offset_bottom = 414.0
 theme_override_font_sizes/font_size = 30
 text = "End Turn"
 
 [node name="GoHome" type="Button" parent="Camera" unique_id=2052981044]
 unique_name_in_owner = true
-offset_left = 439.0
-offset_top = 423.0
-offset_right = 931.0
-offset_bottom = 498.0
+offset_left = 375.0
+offset_top = 305.0
+offset_right = 925.0
+offset_bottom = 380.0
 theme_override_font_sizes/font_size = 30
 text = "I got lost and I want to go home
 "
@@ -133,7 +133,7 @@ offset_bottom = 461.0
 
 [node name="Label" type="Label" parent="Camera/DrawPile" unique_id=1340981094]
 layout_mode = 2
-text = "Draw"
+text = "Draw Pile"
 
 [node name="DiscardPile" type="PanelContainer" parent="Camera" unique_id=703672857]
 offset_left = -64.0
@@ -143,7 +143,7 @@ offset_bottom = 364.0
 
 [node name="Label" type="Label" parent="Camera/DiscardPile" unique_id=2106178975]
 layout_mode = 2
-text = "Discard"
+text = "Discard Pile"
 
 [connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
