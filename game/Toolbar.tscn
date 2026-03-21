@@ -1,26 +1,79 @@
 [gd_scene format=3 uid="uid://dj3jbeehx5vb8"]
 
 [ext_resource type="Script" uid="uid://bu4g77labexk7" path="res://game/toolbar.gd" id="1_eciji"]
+[ext_resource type="Texture2D" uid="uid://di2vnhjgluduo" path="res://assets/leaf_energy.png" id="2_4jv0w"]
 
 [node name="Toolbar" type="Node2D" unique_id=1619252754]
 script = ExtResource("1_eciji")
+turn = null
+in_game = null
+ant_count = null
+energy_count = null
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=1440512116]
 offset_left = 1.0
-offset_right = 1918.0
+offset_right = 1921.0
 offset_bottom = 67.0
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Panel" unique_id=27752940]
 layout_mode = 2
+theme_override_constants/separation = 1000
+split_offsets = PackedInt32Array(289)
+split_offset = 289
 
-[node name="Money" type="Label" parent="Panel/HSplitContainer" unique_id=1947491871]
+[node name="Goal" type="HSplitContainer" parent="Panel/HSplitContainer" unique_id=162760906]
+layout_mode = 2
+
+[node name="Money" type="Label" parent="Panel/HSplitContainer/Goal" unique_id=1947491871]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "0/0"
 
-[node name="Day" type="Label" parent="Panel/HSplitContainer" unique_id=322129462]
+[node name="Day" type="Label" parent="Panel/HSplitContainer/Goal" unique_id=322129462]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "0/20"
+text = "Day 0/20"
+
+[node name="GameInfo" type="HSplitContainer" parent="Panel/HSplitContainer" unique_id=2061190196]
+unique_name_in_owner = true
+layout_mode = 2
+split_offsets = PackedInt32Array(195, 262)
+split_offset = 195
+
+[node name="Turn" type="Label" parent="Panel/HSplitContainer/GameInfo" unique_id=1869405173]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Turn 1/5"
+
+[node name="Energy" type="PanelContainer" parent="Panel/HSplitContainer/GameInfo" unique_id=35955384]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HSplitContainer/GameInfo/Energy" unique_id=1749365664]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture = ExtResource("2_4jv0w")
+
+[node name="Energy" type="Label" parent="Panel/HSplitContainer/GameInfo/Energy" unique_id=769431895]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "<null>"
+horizontal_alignment = 1
+
+[node name="Ants" type="PanelContainer" parent="Panel/HSplitContainer/GameInfo" unique_id=260384055]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Ants" type="Label" parent="Panel/HSplitContainer/GameInfo/Ants" unique_id=1735468503]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "<null>"
+horizontal_alignment = 1

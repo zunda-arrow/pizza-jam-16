@@ -23,6 +23,10 @@ position = Vector2(-960, -540)
 [node name="Toolbar" parent="." unique_id=1619252754 instance=ExtResource("5_dakft")]
 unique_name_in_owner = true
 position = Vector2(-960, -540)
+turn = 0
+in_game = false
+ant_count = 0
+energy_count = 0
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=652045608]
 process_mode = 3
@@ -34,7 +38,10 @@ bus = &"Music"
 [connection signal="shop_start" from="." to="ShopCamera" method="make_active"]
 [connection signal="shop_start" from="." to="ShopCamera/Shop" method="on_open"]
 [connection signal="turn_start" from="." to="Arena" method="start_turn"]
+[connection signal="ant_count_changed" from="Arena" to="." method="_on_arena_ant_count_changed"]
 [connection signal="day_end" from="Arena" to="." method="on_day_end"]
+[connection signal="energy_count_changed" from="Arena" to="." method="_on_arena_energy_count_changed"]
 [connection signal="money_earned" from="Arena" to="." method="on_money_earned"]
+[connection signal="on_turn_changed" from="Arena" to="." method="_on_arena_on_turn_changed"]
 [connection signal="card_purchased" from="ShopCamera/Shop" to="." method="on_card_purchased"]
 [connection signal="shopping_done" from="ShopCamera/Shop" to="." method="shop_phase_done"]
