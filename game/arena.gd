@@ -7,6 +7,8 @@ signal ant_count_changed(ant_count: int)
 signal energy_count_changed(energy: int)
 signal on_turn_changed(n: int)
 
+signal drill_used
+
 @export var game: Game
 
 const DEFAULT_HAND = 6
@@ -214,6 +216,8 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	_on_terrain_update()
 
 	if (success):
+		if "Drill" in card.card_name:
+			drill_used.emit()
 		# Use all all energy for X cost cards
 		if card.energy_cost < 0:
 			energy = 0

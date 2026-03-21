@@ -29,4 +29,5 @@ var resources: Array[CardResource] = [
 	load("res://resources/cards/spear_drill.tres"),
 	load("res://resources/cards/club_drill.tres"),
 	load("res://resources/cards/diamond_drill.tres"),
+	load("res://resources/cards/queen_statue.tres"),
 ]
