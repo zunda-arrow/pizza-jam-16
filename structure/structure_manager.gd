@@ -113,6 +113,9 @@ func structure_groups_in_range(area: Array[Vector2i]) -> Array[Array]:
 	
 	for group in structure_groups:
 		for structure in group:
+			# Not sure why this is something null, but it is
+			if structure == null:
+				continue
 			var in_range = false
 			for cell in area:
 				if structure.position.distance_to(cell * 32 + Vector2i(16, 16)) < structure.structure.resource.tiles_radius * 32:

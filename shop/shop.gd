@@ -56,10 +56,7 @@ func card_clicked(idx: int, card: CardResource) -> void:
 	charge_account.emit(card.cost)
 	card_purchased.emit(card)
 
-	$Money.text = "Money: " + str(get_money.call())
-
 func on_open() -> void:
-	$Money.text = "Money: " + str(get_money.call())
 	roll_cards()
 
 func on_done_pressed() -> void:
