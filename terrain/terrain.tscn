@@ -15,7 +15,7 @@ metadata/_preview_in_3d_space_ = true
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fpiom"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_jk8on"]
-noise_type = 3
+noise_type = 0
 frequency = 0.99
 metadata/_preview_in_3d_space_ = true
 

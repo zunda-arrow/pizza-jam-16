@@ -120,12 +120,17 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 		
 	if point > 0.3:
 		return TerrainType.Air
-	
-	if rock_noise.get_noise_2d(x, y) > 0.25:
-		return TerrainType.Rock
+		
+	var dist_to_origin = Vector2(x, y).distance_to(Vector2(0, 0))
 
-	if gold_ore_noise.get_noise_2d(x, y) > 0.4:
+	if mystery_ore_noise.get_noise_2d(x, y) > 0.8 - (dist_to_origin / 1000):
+		return TerrainType.Mystery
+
+	if gold_ore_noise.get_noise_2d(x, y) > 0.4 - (dist_to_origin / 500):
 		return TerrainType.ShroomDirt
+
+	if rock_noise.get_noise_2d(x, y) > 0.25 - (dist_to_origin / 200):
+		return TerrainType.Rock
 
 	if light_dirt_noise.get_noise_2d(x, y) > 0.05:
 		return TerrainType.LightDirt
