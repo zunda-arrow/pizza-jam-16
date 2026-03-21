@@ -32,7 +32,6 @@ func _ready() -> void:
 	for c in AllCards.resources:
 		deck.push_back(c.new())
 	
-	$ShopCamera.hide()
 	%Shop.get_money = get_money
 	
 	loop_music()
@@ -60,7 +59,8 @@ func on_day_end() -> void:
 	day += 1
 	%Toolbar.daily_goal = calculate_daily_goal(day)
 	%Toolbar.in_game = false
-	get_tree().paused = true
+	# get_tree().paused = true
+	%Shop.show()
 
 func on_money_earned(value: int) -> void:
 	money += value
@@ -72,9 +72,9 @@ func on_card_purchased(card: CardResource) -> void:
 	deck.append(card.new())
 
 func shop_phase_done() -> void:
-	$ShopCamera.hide()
 	get_tree().paused = false
 	%Toolbar.in_game = true
+	%Shop.hide()
 	turn_start.emit()
 
 
