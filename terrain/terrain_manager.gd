@@ -622,21 +622,24 @@ var extra_particle_generators: Array[GPUParticles2D] = []
 
 # Radius is a square radius
 func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int) -> bool:
+	var area = get_area(cell_coordinate_center, cells)
 	var cells_to_damage: Array[Vector2i] = []
 	var cells_to_update: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
-
-	for rect in cells:
-		var rect_center = cell_coordinate_center + rect.position
-		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
-			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if tilemap.get_cell_source_id(Vector2i(x,y)) >= 0:
-					if (x < rect_center.x-rect.size.x or x > rect_center.x+rect.size.x or y < rect_center.y-rect.size.y or y > rect_center.y+rect.size.y):
-						cells_to_update.append(Vector2i(x,y))
-					elif Vector2i(x,y) in building_cells:
-						return false
-					else:
-						cells_to_damage.append(Vector2i(x,y))
+	
+	var training_camps = 0
+	for group in %Structure.structure_groups_in_range(area):
+		for structure in group:
+			if structure.structure.resource.structure_name == "Training Camp":
+				training_camps += 1
+	grow_area(area, training_camps)
+	
+	for cell in area:
+		if tilemap.get_cell_source_id(cell) >= 0:
+			cells_to_damage.append(cell)
+	for cell in border(cells_to_damage):
+		if tilemap.get_cell_source_id(cell) >= 0:
+			cells_to_update.append(cell)
 	
 	var value_gained := 0
 	var cells_to_remove: Array[Vector2i] = []
@@ -710,34 +713,79 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 	$Selection.clear()
 	$Selection.show()
 	
-	var occupied_cells: Array[Vector2i] = get_occupied_cells()
-	var building_cells: Array[Vector2i] = %Structure.building_occupation()
-	var area = cells
+	var area: Array[Vector2i] = get_area(cell_coordinate_center, cells)
+	
+	if placing_method == PlacingMethod.Dig:
+		var groups_in_range: Array[Array] = %Structure.structure_groups_in_range(area)
+		var building_cells: Array[Vector2i] = %Structure.building_occupation()
+		
+		var training_camps = 0
+		for group in groups_in_range:
+			for structure in group:
+				if structure.structure.resource.structure_name == "Training Camp":
+					training_camps += 1
+		grow_area(area, training_camps)
+		
+		for cell in area:
+			if cell in building_cells or !dig_touches_path:
+				$Selection.set_cell(cell, 0, Vector2(1,0), 0)
+			else:
+				$Selection.set_cell(cell, 0, Vector2(0,0), 0)
+				
+	else:
+		var occupied_cells: Array[Vector2i] = get_occupied_cells()
+		var has_ground = false
+		if required_ground != null:
+			for dirt_cell in required_ground:
+				var rect_center = cell_coordinate_center + dirt_cell.position
+				var section_has_ground = true
+				for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
+					for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
+						if %GroundMap.get_cell_tile_data(Vector2(x, y)) == null:
+							section_has_ground = false
+				if section_has_ground:
+					has_ground = true
+					
+		for cell in area:
+			if placing_method == PlacingMethod.Build and (cell in occupied_cells or not has_ground):
+				$Selection.set_cell(cell, 0, Vector2(1,0), 0)
+			#elif Vector2i(x,y) in occupied_cells:
+			#	$Selection.set_cell(cell, 0, Vector2(1,0), 0)
+			else:
+				$Selection.set_cell(cell, 0, Vector2(0,0), 0)
+	
+func get_area(cell_coordinate_center: Vector2i, cells: Array[Rect2i]) -> Array[Vector2i]:
+	var area: Array[Vector2i] = []
+	for rect in cells:
+			var rect_center = cell_coordinate_center + rect.position
+			for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
+				for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
+					area.append(Vector2i(x,y))
+					
+	return area
 
-	var has_ground = false
-	if required_ground != null:
-		for dirt_cell in required_ground:
-			var rect_center = cell_coordinate_center + dirt_cell.position
-			var section_has_ground = true
-			for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
-				for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
-					if %GroundMap.get_cell_tile_data(Vector2(x, y)) == null:
-						section_has_ground = false
-			if section_has_ground:
-				has_ground = true
+func grow_area(area: Array[Vector2i], n: int) -> void:
+	for i in range(n):
+		area.append_array(border(area))
 
-	for rect in area:
-		var rect_center = cell_coordinate_center + rect.position
-		for x in range(ceil(rect_center.x),ceil(rect_center.x+rect.size.x)):
-			for y in range(ceil(rect_center.y),ceil(rect_center.y+rect.size.y)):
-				if placing_method == PlacingMethod.Build and (Vector2i(x,y) in occupied_cells or not has_ground):
-					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
-				elif placing_method == PlacingMethod.Dig and (Vector2i(x,y) in building_cells or !dig_touches_path):
-					$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
-				#elif Vector2i(x,y) in occupied_cells:
-				#	$Selection.set_cell(Vector2(x,y), 0, Vector2(1,0), 0)
-				else:
-					$Selection.set_cell(Vector2(x,y), 0, Vector2(0,0), 0)
+func border(area: Array[Vector2i]):
+	var border: Array[Vector2i] = []
+	for cell in area:
+		var neighbors: Array[Vector2i] = [
+			Vector2i(cell.x+1, cell.y),
+			Vector2i(cell.x+1, cell.y+1),
+			Vector2i(cell.x, cell.y+1),
+			Vector2i(cell.x-1, cell.y+1),
+			Vector2i(cell.x-1, cell.y),
+			Vector2i(cell.x-1, cell.y-1),
+			Vector2i(cell.x, cell.y-1),
+			Vector2i(cell.x+1, cell.y-1)
+		]
+		for neighbor in neighbors:
+			if !neighbor in area and !neighbor in border:
+				border.append(neighbor)
+	
+	return border
 	
 func hide_selector():
 	$Selection.hide()

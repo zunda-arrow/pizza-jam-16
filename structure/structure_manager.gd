@@ -7,7 +7,6 @@ var example_resource: StructureResource = preload("res://resources/structures/ex
 var structures: Array[Node2D] = []
 var links: Array[Array] = [] # Connections between buildings within range, Array[Array[int]] by implementation.
 var structure_groups: Array[Array] = [] # Array of array of connected structures.
-var structure_membership: Dictionary = {} # Maps Structures to their groups (includes itself).
 
 var placing_build = true
 
@@ -105,7 +104,19 @@ func determine_groups():
 			to_visit.append(i)
 		else:
 			unfinished = false
+
+func structure_groups_in_range(area: Array[Vector2i]) -> Array[Array]:
+	var groups_in_range: Array[Array] = []
 	
 	for group in structure_groups:
 		for structure in group:
-			structure_membership.set(structure, group)
+			var in_range = false
+			for cell in area:
+				if structure.position.distance_to(cell * 32 + Vector2i(16, 16)) < structure.structure.resource.tiles_radius * 32:
+					groups_in_range.append(group)
+					in_range = true
+					break
+			if in_range:
+				break
+	
+	return groups_in_range

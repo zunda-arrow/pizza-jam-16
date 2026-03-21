@@ -119,8 +119,16 @@ func _get_ant_pathfindable_cell():
 
 
 func dig_area_touches_path(dig_area: Array[Rect2i], center: Vector2i) -> bool:
-	for rect in dig_area:
-		rect = rect.grow(1)
+	var cells = dig_area.duplicate()
+	var grow = 1
+	
+	for group in %Structure.structure_groups_in_range(%Terrain.get_area(center, cells)):
+		for structure in group:
+			if structure.structure.resource.structure_name == "Training Camp":
+				grow += 1
+	
+	for rect in cells:
+		rect = rect.grow(grow)
 		var rect_center = center + rect.position
 		for x in range(rect_center.x,rect_center.x+rect.size.x):
 			for y in range(rect_center.y,rect_center.y+rect.size.y):
