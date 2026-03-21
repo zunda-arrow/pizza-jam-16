@@ -62,6 +62,7 @@ position = Vector2(-900, -480)
 
 [node name="EnergyLabel" type="Label" parent="Camera" unique_id=1812955512]
 unique_name_in_owner = true
+visible = false
 offset_left = -440.0
 offset_top = 316.0
 offset_right = -102.0
@@ -72,6 +73,7 @@ text = "Energy:"
 
 [node name="AntsLabel" type="Label" parent="Camera" unique_id=463997152]
 unique_name_in_owner = true
+visible = false
 offset_left = -439.0
 offset_top = 391.0
 offset_right = -101.0
@@ -91,6 +93,7 @@ text = "Day 0"
 
 [node name="TurnLabel" type="Label" parent="Camera" unique_id=2108522871]
 unique_name_in_owner = true
+visible = false
 offset_left = 740.0
 offset_top = -354.0
 offset_right = 1078.0

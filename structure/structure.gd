@@ -12,6 +12,8 @@ var structure: StructureResource.Structure:
 		return structure
 
 func set_connected_to_loop(is_connected_: bool):
+	# Why does this exist?
+	return
 	if is_connected_:
 		$Label.show()
 	else:
