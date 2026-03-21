@@ -3,7 +3,7 @@ extends Node2D
 signal day_end(day: int)
 signal day_tick(tick: int)
 
-@export var day_length := 3
+@export var day_length := 5
 
 var day := 0
 var tick := 0.0 : 
