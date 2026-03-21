@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://5oqbjh767n6g" path="res://assets/cracks.png" id="3_nc45s"]
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
 [ext_resource type="Texture2D" uid="uid://brh2jyxks7ayc" path="res://assets/particle/dirt.png" id="7_nc45s"]
+[ext_resource type="AudioStream" uid="uid://cxihj10gkrq71" path="res://assets/sound/EXPLOSION.mp3" id="8_fpiom"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nc45s"]
 frequency = 0.05
@@ -175,3 +176,10 @@ lifetime = 0.7
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_mk5yb")
+
+[node name="Audio" type="Node2D" parent="." unique_id=370819577]
+
+[node name="Explosion" type="AudioStreamPlayer" parent="Audio" unique_id=1752049654]
+stream = ExtResource("8_fpiom")
+volume_db = -3.0
+max_polyphony = 2

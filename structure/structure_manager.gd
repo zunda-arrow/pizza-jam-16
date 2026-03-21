@@ -74,6 +74,7 @@ func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: Stru
 				links[structures.size()].append(i)
 		structures.push_back(struct_scene)
 		determine_groups()
+		$PlaceDown.play(0.02)
 	
 	return can_place
 

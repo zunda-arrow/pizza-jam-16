@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dpiepggef0l5q"]
+
+[ext_resource type="Shader" uid="uid://gwdueeisaaqt" path="res://terrain/blackout.gdshader" id="1_uf6ai"]
+
+[resource]
+shader = ExtResource("1_uf6ai")
