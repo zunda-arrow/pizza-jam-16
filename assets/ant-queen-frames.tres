@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://xq1t0387llcj"]
+
+[ext_resource type="Texture2D" uid="uid://dcmbeepaxhh6d" path="res://assets/ant-queen.png" id="1_8ysjf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juveg"]
+atlas = ExtResource("1_8ysjf")
+region = Rect2(3, 7, 63, 59)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6yed"]
+atlas = ExtResource("1_8ysjf")
+region = Rect2(70, 7, 63, 59)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juveg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6yed")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
