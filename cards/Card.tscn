@@ -13,14 +13,23 @@ offset_left = -171.0
 offset_top = -116.0
 offset_right = 173.0
 offset_bottom = 118.0
+theme = ExtResource("3_yrj2n")
 metadata/_edit_use_anchors_ = true
 
-[node name="CardImage" type="TextureRect" parent="." unique_id=1312599456]
-unique_name_in_owner = true
+[node name="Control" type="Control" parent="." unique_id=1502467424]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
 offset_left = -158.0
 offset_top = -84.0
 offset_right = 103.0
 offset_bottom = 99.0
+
+[node name="CardImage" type="TextureRect" parent="Control" unique_id=1312599456]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 261.0
+offset_bottom = 183.0
 expand_mode = 3
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
