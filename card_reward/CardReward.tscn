@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cdusrihqrf515"]
+
+[ext_resource type="PackedScene" uid="uid://frlfqei1qb02" path="res://cards/Card.tscn" id="1_jdb83"]
+[ext_resource type="Script" uid="uid://dt5j2qhj3fpqn" path="res://card_reward/card_reward.gd" id="1_xtihb"]
+
+[node name="CardReward" type="Node2D" unique_id=1912759988]
+visible = false
+script = ExtResource("1_xtihb")
+
+[node name="Card" parent="." unique_id=434157083 instance=ExtResource("1_jdb83")]
+
+[node name="Button" type="Button" parent="." unique_id=2055922290]
+offset_left = -96.0
+offset_top = 138.0
+offset_right = -56.0
+offset_bottom = 169.0
+text = "Yay!"
+
+[node name="Button2" type="Button" parent="." unique_id=397954882]
+offset_left = 29.0
+offset_top = 138.0
+offset_right = 88.0
+offset_bottom = 169.0
+text = "Aww :("
+
+[connection signal="pressed" from="Button" to="." method="on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="on_button_pressed"]

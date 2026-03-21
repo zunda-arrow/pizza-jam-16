@@ -15,6 +15,11 @@ metadata/_preview_in_3d_space_ = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fpiom"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jk8on"]
+noise_type = 0
+frequency = 0.99
+metadata/_preview_in_3d_space_ = true
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jk8on"]
 texture = ExtResource("2_nc45s")
 margins = Vector2i(4, 4)
@@ -126,6 +131,7 @@ script = ExtResource("1_nigp7")
 initial_seed = 1
 terrain_shape_noise = SubResource("FastNoiseLite_nc45s")
 gold_ore_noise = SubResource("FastNoiseLite_fpiom")
+mystery_ore_noise = SubResource("FastNoiseLite_jk8on")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=547818870]
 scroll_scale = Vector2(0.8, 0.8)
