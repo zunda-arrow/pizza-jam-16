@@ -2,7 +2,16 @@ extends Node
 
 var resources: Array[CardResource] = [
 	load("res://resources/cards/fungus_bar.tres"),
+	load("res://resources/cards/pot.tres"),
+	load("res://resources/cards/tv.tres"),
+	load("res://resources/cards/moss-pit.tres"),
+	load("res://resources/cards/mines.tres"),
 	load("res://resources/cards/breakfast.tres"),
+	load("res://resources/cards/farm.tres"),
+	load("res://resources/cards/sugar_pile.tres"),
+	load("res://resources/cards/campfire.tres"),
+	load("res://resources/cards/bottlecap-tower.tres"),
+	load("res://resources/cards/mushroom-farm.tres"),
 	load("res://resources/cards/beam_drill.tres"),
 	load("res://resources/cards/dirt_nap.tres"),
 	load("res://resources/cards/super_drill.tres"),

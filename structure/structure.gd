@@ -8,6 +8,14 @@ var structure: StructureResource.Structure:
 		structure = structure_
 		$Sprite2D.texture = structure.resource.texture
 		lifetime = structure.resource.lifetime
+		
+		if structure.resource.size[0].size.x % 2 == 0:
+			$Sprite2D.position.x = 16
+		if structure.resource.size[0].size.y % 2 == 0:
+			$Sprite2D.position.y = -16
+			
+		$Sprite2D.position += Vector2(structure.resource.sprite_offset)
+			
 	get():
 		return structure
 

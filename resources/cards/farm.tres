@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://ftyyaht6djff"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_jj0hc"]
+[ext_resource type="Resource" uid="uid://bf5vmalea0aaq" path="res://resources/structures/farm.tres" id="2_jj0hc"]
+
+[resource]
+script = ExtResource("1_jj0hc")
+card_name = "Farm"
+card_impl = 3
+structureResource = ExtResource("2_jj0hc")
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

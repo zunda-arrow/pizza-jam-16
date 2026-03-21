@@ -9,6 +9,7 @@ extends Resource
 ## The point on the sitructure the ants will walk to when they decide to visit.
 @export var path_finding_points: Array[Vector2i]
 @export var texture: Texture2D
+@export var sprite_offset: Vector2i
 @export var structure_type: Structures
 @export var lifetime: int
 @export var tiles_radius: int = 11

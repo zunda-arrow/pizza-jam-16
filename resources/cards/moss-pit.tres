@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dr1b2mt3fx7hj"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_r2eo5"]
+[ext_resource type="Resource" uid="uid://bbuguo67wtju5" path="res://resources/structures/moss_pit.tres" id="2_r2eo5"]
+
+[resource]
+script = ExtResource("1_r2eo5")
+card_name = "Moss Pit"
+description = "Moss Pit"
+card_impl = 3
+structureResource = ExtResource("2_r2eo5")
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

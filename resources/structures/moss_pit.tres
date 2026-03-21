@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://bbuguo67wtju5"]
+
+[ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_c8cnn"]
+[ext_resource type="Texture2D" uid="uid://dprgko1eqti81" path="res://assets/moss-pit.png" id="2_c8cnn"]
+[ext_resource type="Script" path="res://resources/utilities.gd" id="3_opqya"]
+
+[sub_resource type="Resource" id="Resource_p7iya"]
+script = ExtResource("3_opqya")
+
+[resource]
+script = ExtResource("1_c8cnn")
+structure_name = "Moss Pit"
+size = Array[Rect2i]([Rect2i(-1, 0, 4, 1)])
+required_ground = Array[Rect2i]([Rect2i(-1, 1, 4, 1)])
+path_finding_points = Array[Vector2i]([Vector2i(0, 1), Vector2i(-1, 1), Vector2i(1, 1)])
+texture = ExtResource("2_c8cnn")
+util_buffs = SubResource("Resource_p7iya")
