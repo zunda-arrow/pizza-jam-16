@@ -13,7 +13,7 @@ var resources: Array[CardResource] = [
 	load("res://resources/cards/brainstorm.tres"),
 	load("res://resources/cards/bridge.tres"),
 	load("res://resources/cards/ladder.tres"),
-	load("res://resources/cards/training_camp.tres")
+	load("res://resources/cards/training_camp.tres"),
 	load("res://resources/cards/laser_drill.tres"),
 	load("res://resources/cards/heart.tres"),
 	load("res://resources/cards/shroom_drill.tres"),
