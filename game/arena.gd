@@ -3,6 +3,9 @@ extends Node2D
 signal day_end
 signal money_earned(money: int)
 signal card_earned(card: CardResource)
+signal ant_count_changed(ant_count: int)
+signal energy_count_changed(energy: int)
+signal on_turn_changed(n: int)
 
 @export var game: Game
 
@@ -18,12 +21,14 @@ var energy: int:
 	set(val):
 		energy = val
 		%EnergyLabel.text = "Energy: " + str(energy)
+		energy_count_changed.emit(energy)
 
 var ants: int = 0 :
 	set(val):
 		ants = val
 		%AntsLabel.text = "Ants: " + str(ants)
 		%Army.number_of_ants = val
+		ant_count_changed.emit(ants)
 
 var eff: int
 
@@ -278,6 +283,7 @@ func _on_clock_day_end(day: int) -> void:
 
 func _on_clock_day_tick(tick: int) -> void:
 	%TurnLabel.text = "Turn " + str(tick)
+	on_turn_changed.emit(tick)
 	on_turn_end()
 
 func on_turn_end() -> void:
