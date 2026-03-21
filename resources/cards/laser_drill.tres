@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://cnt38ri3jlela"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_mcf68"]
+
+[resource]
+script = ExtResource("1_mcf68")
+card_name = "Laser Drill"
+description = "Dig out a 9x1 area."
+energy_cost = 1
+card_impl = 1
+dig_area = Array[Rect2i]([Rect2i(-5, 0, 9, 1)])
+dig_power = 1
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
