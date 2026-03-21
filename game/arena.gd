@@ -3,6 +3,9 @@ extends Node2D
 signal day_end
 signal money_earned(money: int)
 signal card_earned(card: CardResource)
+signal ant_count_changed(ant_count: int)
+signal energy_count_changed(energy: int)
+signal on_turn_changed(n: int)
 
 @export var game: Game
 
@@ -18,12 +21,14 @@ var energy: int:
 	set(val):
 		energy = val
 		%EnergyLabel.text = "Energy: " + str(energy)
+		energy_count_changed.emit(energy)
 
 var ants: int = 0 :
 	set(val):
 		ants = val
 		%AntsLabel.text = "Ants: " + str(ants)
 		%Army.number_of_ants = val
+		ant_count_changed.emit(ants)
 
 var eff: int
 
@@ -250,6 +255,12 @@ func _on_utility_eff_gain(n: int) -> void:
 	eff += n
 
 func _on_clock_day_end(day: int) -> void:
+	# Copied from elsewhere in this file
+	while len(hand) > 0:
+		discard(0)
+		# Give a litte animation
+		await get_tree().create_timer(.05).timeout
+	
 	day_end.emit()
 	
 	%DayLabel.text = "Day " + str(day)
@@ -259,7 +270,7 @@ func _on_clock_day_end(day: int) -> void:
 	ants = 0
 
 	var i = len(%Structure.structures) - 1
-	while i > 0:
+	while i >= 0:
 		var s = %Structure.structures[i]
 		if s.lifetime == 0:
 			%Structure.structures.pop_at(i)
@@ -272,6 +283,7 @@ func _on_clock_day_end(day: int) -> void:
 
 func _on_clock_day_tick(tick: int) -> void:
 	%TurnLabel.text = "Turn " + str(tick)
+	on_turn_changed.emit(tick)
 	on_turn_end()
 
 func on_turn_end() -> void:
@@ -299,7 +311,7 @@ func start_turn():
 
 	%EndTurnButton.disabled = false
 
-func start_day(deck: Array[CardResource.Card]) -> void:
+func start_day(deck: Array[CardResource.Card]) -> void:	
 	energy = 3
 	ants = 0
 	eff = 0
@@ -331,9 +343,6 @@ func _process(delta: float) -> void:
 		structure_pos.append(Vector3((s.global_position.x - %Camera.position.x) / 1080., (s.global_position.y - %Camera.position.y) / 1080., 1))
 	%Camera/Visibility.material.set_shader_parameter("discoveries", structure_pos)
 	%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(-1,-1))
-	
-	%Money.text = "Money: " + str(game.money)
-
 
 func _on_discard_pile_mouse_entered() -> void:
 	%CardPileDisplay.show_cards(discard_pile)

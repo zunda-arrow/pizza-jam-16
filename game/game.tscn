@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c6nce3c3m58nq" path="res://game/Arena.tscn" id="2_vasa2"]
 [ext_resource type="PackedScene" uid="uid://tj0m2jelyw13" path="res://camera/ShopCamera.tscn" id="3_4fuuu"]
 [ext_resource type="PackedScene" uid="uid://bkcrj2gp4i7ud" path="res://shop/shop.tscn" id="3_h7iqs"]
+[ext_resource type="PackedScene" uid="uid://dj3jbeehx5vb8" path="res://game/Toolbar.tscn" id="5_dakft"]
 [ext_resource type="AudioStream" uid="uid://l3nopiv3qu1d" path="res://assets/sound/ant_music.mp3" id="5_dxrkv"]
 
 [node name="Game" type="Node2D" unique_id=1516163044]
@@ -19,6 +20,14 @@ process_mode = 2
 unique_name_in_owner = true
 position = Vector2(-960, -540)
 
+[node name="Toolbar" parent="." unique_id=1619252754 instance=ExtResource("5_dakft")]
+unique_name_in_owner = true
+position = Vector2(-960, -540)
+turn = 0
+in_game = false
+ant_count = 0
+energy_count = 0
+
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=652045608]
 process_mode = 3
 stream = ExtResource("5_dxrkv")
@@ -29,7 +38,10 @@ bus = &"Music"
 [connection signal="shop_start" from="." to="ShopCamera" method="make_active"]
 [connection signal="shop_start" from="." to="ShopCamera/Shop" method="on_open"]
 [connection signal="turn_start" from="." to="Arena" method="start_turn"]
+[connection signal="ant_count_changed" from="Arena" to="." method="_on_arena_ant_count_changed"]
 [connection signal="day_end" from="Arena" to="." method="on_day_end"]
+[connection signal="energy_count_changed" from="Arena" to="." method="_on_arena_energy_count_changed"]
 [connection signal="money_earned" from="Arena" to="." method="on_money_earned"]
+[connection signal="on_turn_changed" from="Arena" to="." method="_on_arena_on_turn_changed"]
 [connection signal="card_purchased" from="ShopCamera/Shop" to="." method="on_card_purchased"]
 [connection signal="shopping_done" from="ShopCamera/Shop" to="." method="shop_phase_done"]

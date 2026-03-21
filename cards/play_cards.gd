@@ -55,6 +55,11 @@ func _input(event: InputEvent) -> void:
 			_targetting_card_index = -1
 			target_arrow.hide()
 
+func clear():
+	for card in hand.card_scenes:
+		card.queue_free()
+	hand.card_scenes = []
+
 func try_to_play_card(i: int):
 	# This function should be expanded to properly check targets
 	var resource = hand.card_scenes[i].instantiated_card_resource
