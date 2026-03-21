@@ -5,8 +5,18 @@ signal turn_start
 signal day_start(deck: Array[CardResource.Card])
 signal shop_start
 
+signal game_won
+signal game_over
+
+@export var number_of_days = 20
+
 var deck: Array[CardResource.Card] = []
-var money := 0
+var money: int:
+	set(val):
+		money = val
+		%Toolbar.money = money
+	get():
+		return money
 
 var day = 1
 
@@ -34,16 +44,26 @@ func start_game() -> void:
 	%Toolbar.in_game = true
 
 func on_day_end() -> void:
+	if day >= number_of_days:
+		game_won.emit()
+		%GameWon.show()
+		return
+	
+	if money > calculate_daily_goal(day):
+		money -= calculate_daily_goal(day)
+	else:
+		game_over.emit()
+		%GameOver.show()
+		return
+
 	shop_start.emit()
-	get_tree().paused = true
 	day += 1
 	%Toolbar.daily_goal = calculate_daily_goal(day)
 	%Toolbar.in_game = false
-	
+	get_tree().paused = true
 
 func on_money_earned(value: int) -> void:
 	money += value
-	%Toolbar.money = money
 
 func get_money() -> int:
 	return money
@@ -71,4 +91,8 @@ func _on_arena_on_turn_changed(n: int) -> void:
 
 
 func _on_shop_charge_account(value: int) -> void:
-	on_money_earned(-value)
+	money -= value
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://menu/menu.tscn")

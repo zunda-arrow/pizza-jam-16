@@ -22,6 +22,51 @@ position = Vector2(-960, -540)
 
 [node name="Toolbar" parent="." unique_id=1619252754 instance=ExtResource("5_dakft")]
 unique_name_in_owner = true
+position = Vector2(-960, -540)
+
+[node name="GameOver" type="Panel" parent="Toolbar" unique_id=263837126]
+unique_name_in_owner = true
+visible = false
+offset_left = 360.0
+offset_top = 186.0
+offset_right = 1564.0
+offset_bottom = 951.0
+
+[node name="Label" type="Label" parent="Toolbar/GameOver" unique_id=376292118]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Game Over, you did not make enough money."
+
+[node name="Button" type="Button" parent="Toolbar/GameOver" unique_id=435443471]
+layout_mode = 0
+offset_left = 311.0
+offset_top = 553.0
+offset_right = 1002.0
+offset_bottom = 633.0
+text = "Back to Title"
+
+[node name="GameWon" type="Panel" parent="Toolbar" unique_id=1907051657]
+unique_name_in_owner = true
+visible = false
+offset_left = 360.0
+offset_top = 186.0
+offset_right = 1564.0
+offset_bottom = 951.0
+
+[node name="Label" type="Label" parent="Toolbar/GameWon" unique_id=854808591]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Congradulations, you won"
+
+[node name="Button" type="Button" parent="Toolbar/GameWon" unique_id=1978515090]
+layout_mode = 0
+offset_left = 311.0
+offset_top = 553.0
+offset_right = 1002.0
+offset_bottom = 633.0
+text = "Back to Title"
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=652045608]
 process_mode = 3
@@ -41,3 +86,5 @@ bus = &"Music"
 [connection signal="card_purchased" from="ShopCamera/Shop" to="." method="on_card_purchased"]
 [connection signal="charge_account" from="ShopCamera/Shop" to="." method="_on_shop_charge_account"]
 [connection signal="shopping_done" from="ShopCamera/Shop" to="." method="shop_phase_done"]
+[connection signal="pressed" from="Toolbar/GameOver/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Toolbar/GameWon/Button" to="." method="_on_button_pressed"]
