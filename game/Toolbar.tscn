@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bu4g77labexk7" path="res://game/toolbar.gd" id="1_eciji"]
 [ext_resource type="Texture2D" uid="uid://di2vnhjgluduo" path="res://assets/leaf_energy.png" id="2_4jv0w"]
+[ext_resource type="Texture2D" uid="uid://dda2hr8jwumym" path="res://assets/single_ant.png" id="3_oygyh"]
 
 [node name="Toolbar" type="Node2D" unique_id=1619252754]
 script = ExtResource("1_eciji")
@@ -39,7 +40,7 @@ text = "Day 0/20"
 [node name="GameInfo" type="HSplitContainer" parent="Panel/HSplitContainer" unique_id=2061190196]
 unique_name_in_owner = true
 layout_mode = 2
-split_offsets = PackedInt32Array(195, 262)
+split_offsets = PackedInt32Array(195, 552)
 split_offset = 195
 
 [node name="Turn" type="Label" parent="Panel/HSplitContainer/GameInfo" unique_id=1869405173]
@@ -63,7 +64,7 @@ texture = ExtResource("2_4jv0w")
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "<null>"
+text = "0"
 horizontal_alignment = 1
 
 [node name="Ants" type="PanelContainer" parent="Panel/HSplitContainer/GameInfo" unique_id=260384055]
@@ -71,9 +72,14 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
+[node name="TextureRect" type="TextureRect" parent="Panel/HSplitContainer/GameInfo/Ants" unique_id=1810721112]
+layout_mode = 2
+texture = ExtResource("3_oygyh")
+expand_mode = 2
+
 [node name="Ants" type="Label" parent="Panel/HSplitContainer/GameInfo/Ants" unique_id=1735468503]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "<null>"
+text = "0"
 horizontal_alignment = 1
