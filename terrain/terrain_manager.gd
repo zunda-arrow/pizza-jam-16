@@ -37,6 +37,8 @@ var occupation_checks = [get_occupied_tiles]
 @onready var tilemap: TileMapLayer = %GroundMap
 @onready var healthmap: TileMapLayer = %HealthMap
 
+var coin_bonus = 0
+
 enum PlacingMethod {
 	Dig,
 	Build
@@ -216,8 +218,8 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 
 func reward_cell(cell_data: Variant) -> int:
 	var value = cell_data.get_custom_data("value")
-	for i in cell_data.get_custom_data("random_value"):
-		value += int(rng.randf() <= 0.1)
+	for i in cell_data.get_custom_data("random_value") + coin_bonus:
+		value += int(rng.randf() <= 0.01)
 	return value
 
 func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
@@ -320,6 +322,11 @@ func border(area: Array[Vector2i]):
 func hide_selector():
 	$Selection.hide()
 
+func on_coin_bonus(n: int) -> void:
+	coin_bonus += n
+
+func clear_coin_bonus() -> void:
+	coin_bonus = 0
 
 func find_atlas_chord_from_neighbors(top_left, top_middle, top_right, middle_left, middle_right, bottom_left, bottom_middle, bottom_right) -> Vector2i:
 	if (
