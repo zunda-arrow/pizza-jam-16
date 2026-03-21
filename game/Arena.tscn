@@ -145,6 +145,16 @@ offset_bottom = 364.0
 layout_mode = 2
 text = "Discard Pile"
 
+[node name="ExhaustPile" type="PanelContainer" parent="Camera" unique_id=525427155]
+offset_left = 41.0
+offset_top = 398.0
+offset_right = 103.0
+offset_bottom = 457.0
+
+[node name="Label" type="Label" parent="Camera/ExhaustPile" unique_id=1034471880]
+layout_mode = 2
+text = "Exhaust"
+
 [connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="money_dug" from="Terrain" to="." method="money_passthrough"]
@@ -159,6 +169,8 @@ text = "Discard Pile"
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
 [connection signal="pressed" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
 [connection signal="mouse_entered" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_entered"]
-[connection signal="mouse_exited" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_exited"]
+[connection signal="mouse_exited" from="Camera/DrawPile" to="." method="_on_pile_mouse_exited"]
 [connection signal="mouse_entered" from="Camera/DiscardPile" to="." method="_on_discard_pile_mouse_entered"]
-[connection signal="mouse_exited" from="Camera/DiscardPile" to="." method="_on_discard_pile_mouse_exited"]
+[connection signal="mouse_exited" from="Camera/DiscardPile" to="." method="_on_pile_mouse_exited"]
+[connection signal="mouse_entered" from="Camera/ExhaustPile" to="." method="_on_exhaust_pile_mouse_entered"]
+[connection signal="mouse_exited" from="Camera/ExhaustPile" to="." method="_on_pile_mouse_exited"]

@@ -46,6 +46,9 @@ class Card extends Node:
 
 	func get_area() -> Array[Rect2i]:
 		return []
+	
+	func should_exhaust() -> bool:
+		return false
 
 class Dig extends Card:
 	func get_type() -> CardType:
@@ -67,6 +70,9 @@ class Build extends Card:
 		
 	func get_area() -> Array[Rect2i]:
 		return structure.size
+	
+	func should_exhaust() -> bool:
+		return true
 		
 class Utility extends Card:
 	func get_type() -> CardType:
