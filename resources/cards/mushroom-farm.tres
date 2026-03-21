@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://db1agphw7xxot"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_ky5qb"]
+[ext_resource type="Resource" uid="uid://ddijybt8k2e8g" path="res://resources/structures/mushroom_farm.tres" id="2_ky5qb"]
+
+[resource]
+script = ExtResource("1_ky5qb")
+card_name = "Mushroom Patch"
+card_impl = 3
+structureResource = ExtResource("2_ky5qb")
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

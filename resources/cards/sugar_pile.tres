@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://ymkv6jti35a"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_0h3xd"]
+[ext_resource type="Resource" uid="uid://b663b6vgba2gi" path="res://resources/structures/sugar_pile.tres" id="2_0h3xd"]
+
+[resource]
+script = ExtResource("1_0h3xd")
+card_name = "Sugar Pile"
+card_impl = 3
+structureResource = ExtResource("2_0h3xd")
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

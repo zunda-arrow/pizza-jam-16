@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://b7bfa8u8ogc5y"]
+
+[ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_sfur2"]
+[ext_resource type="Texture2D" uid="uid://0pj5vpk0wb57" path="res://assets/mines.png" id="2_sfur2"]
+
+[resource]
+script = ExtResource("1_sfur2")
+structure_name = "Mines"
+size = Array[Rect2i]([Rect2i(-1, -2, 4, 4)])
+required_ground = Array[Rect2i]([Rect2i(-1, 2, 3, 1)])
+path_finding_points = Array[Vector2i]([Vector2i(0, 1), Vector2i(-1, 1), Vector2i(1, 1)])
+texture = ExtResource("2_sfur2")
+lifetime = -1
+metadata/_custom_type_script = "uid://y2c3yqqp0hjd"

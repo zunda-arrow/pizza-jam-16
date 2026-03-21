@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dh6xt62baqxpy"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_rvafx"]
+[ext_resource type="Resource" uid="uid://regwblxsrnwj" path="res://resources/structures/tv.tres" id="2_rvafx"]
+
+[resource]
+script = ExtResource("1_rvafx")
+card_name = "TV"
+description = "TV"
+card_impl = 3
+structureResource = ExtResource("2_rvafx")
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
