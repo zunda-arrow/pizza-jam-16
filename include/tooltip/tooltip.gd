@@ -13,7 +13,18 @@ enum Direction {
 	DOWN,
 }
 
-@export var show_when_hovering: Node
+@export var show_when_hovering: Control:
+	set(node):
+		show_when_hovering = node
+		show_when_hovering.mouse_entered.connect(func():
+			show()
+		)
+		show_when_hovering.mouse_exited.connect(func():
+			hide()
+		)
+	get():
+		return show_when_hovering
+		
 @export var around: Node = null
 @export var direction_0: Direction = Direction.LEFT
 @export var direction_1: Direction = Direction.LEFT
@@ -25,6 +36,7 @@ enum Direction {
 var displayed_hints: Array[Node] = []
 
 func _ready() -> void:
+	hide()
 	tooltip.size.y = 0
 
 func _process(_delta: float):
@@ -34,18 +46,8 @@ func _process(_delta: float):
 
 	if around == null:
 		return
-	if show_when_hovering == null:
-		show()
-		return
 
 	position_main_tooltip()
-
-	if show_when_hovering != null:
-		if get_node_global_bounding_box(show_when_hovering).has_point(get_global_mouse_position()):
-			show()
-		else:
-			hide()
-
 
 func position_main_tooltip():
 	var around_rect = get_node_global_bounding_box(around)
@@ -86,10 +88,10 @@ func try_place_left(tooltip_size: Vector2, around: Rect2):
 	var top_left_x = around.position.x - tooltip_size.x
 	var top_left_y = around.position.y + around.size.y / 2 - tooltip_size.y / 2
 
-	if top_left_x < 0:
+	if top_left_x < get_viewport_size().position.x:
 		return null
-	if top_left_y < 0:
-		top_left_y = 0
+	if top_left_y < get_viewport_size().position.y:
+		top_left_y = get_viewport_size().position.y
 	if top_left_y + tooltip_size.y >= get_viewport_size().size.y:
 		top_left_y = get_viewport_size().size.y - tooltip_size.y
 
@@ -101,8 +103,8 @@ func try_place_right(tooltip_size: Vector2, around: Rect2):
 
 	if top_left_x + tooltip_size.x > get_viewport_size().size.x:
 		return null
-	if top_left_y < 0:
-		top_left_y = 0
+	if top_left_y < get_viewport_size().position.y:
+		top_left_y = get_viewport_size().position.y
 	if top_left_y + tooltip_size.y >= get_viewport_size().size.y:
 		top_left_y = get_viewport_size().size.y - tooltip_size.y
 
@@ -112,10 +114,10 @@ func try_place_up(tooltip_size: Vector2, around: Rect2):
 	var top_left_x = around.position.x + around.size.x / 2 - tooltip_size.x / 2
 	var top_left_y = around.position.y - tooltip_size.y
 
-	if top_left_y < 0:
+	if top_left_y < get_viewport_size().position.y:
 		return null
-	if top_left_x < 0:
-		top_left_x = 0
+	if top_left_x < get_viewport_size().position.x:
+		top_left_x = get_viewport_size().position.x
 	if top_left_x + tooltip_size.x >= get_viewport_size().size.x:
 		top_left_x = get_viewport_size().size.x - tooltip_size.x
 
@@ -127,8 +129,8 @@ func try_place_down(tooltip_size: Vector2, around: Rect2):
 
 	if top_left_y + tooltip_size.y > get_viewport_size().size.y:
 		return null
-	if top_left_x < 0:
-		top_left_x = 0
+	if top_left_x < get_viewport_size().position.x:
+		top_left_x = get_viewport_size().position.x
 	if top_left_x + tooltip_size.x >= get_viewport_size().size.x:
 		top_left_x = get_viewport_size().size.x - tooltip_size.x
 
@@ -137,7 +139,7 @@ func try_place_down(tooltip_size: Vector2, around: Rect2):
 func get_node_global_bounding_box(node: Node):
 	if node == null:
 		return Rect2()
-	var node_position: Vector2 = node.position
+	var node_position: Vector2 = node.global_position
 
 	var node_size: Rect2
 	var node_top_left
@@ -157,7 +159,10 @@ func get_viewport_size():
 	# I use 1920x1080 instead because we hardcode that for our project and it looks correct.
 	if Engine.is_editor_hint():
 		return Rect2(Vector2(0, 0), Vector2(1920, 1080))
-	return get_viewport().get_visible_rect()
+	var xy = get_viewport().get_visible_rect().position + get_viewport().get_camera_2d().global_position - Vector2(540, 960)
+	var wh = get_viewport().get_visible_rect().size
+	
+	return Rect2i(xy, wh)
 
 func get_tooltip_size():
 	if tooltip:
