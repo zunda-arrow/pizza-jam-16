@@ -51,7 +51,7 @@ unique_name_in_owner = true
 
 [node name="PlayCards" parent="Camera" unique_id=1516163044 instance=ExtResource("1_ncbvw")]
 unique_name_in_owner = true
-position = Vector2(-960, -540)
+position = Vector2(-956, -468)
 
 [node name="CardReward" parent="Camera" unique_id=1912759988 instance=ExtResource("10_n65lt")]
 unique_name_in_owner = true
@@ -103,10 +103,10 @@ text = "Turn 0"
 
 [node name="EndTurnButton" type="Button" parent="Camera" unique_id=1964738272]
 unique_name_in_owner = true
-offset_left = -904.0
-offset_top = 339.0
-offset_right = -609.0
-offset_bottom = 414.0
+offset_left = -662.0
+offset_top = 357.0
+offset_right = -367.0
+offset_bottom = 432.0
 theme_override_font_sizes/font_size = 30
 text = "End Turn"
 

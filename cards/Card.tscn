@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://d0qhgc8jth425" path="res://cards/card.gd" id="1_v80w6"]
 [ext_resource type="Texture2D" uid="uid://dpxlm8sxp1s6u" path="res://assets/card.png" id="2_ws7c5"]
-[ext_resource type="Theme" uid="uid://bi7rd61xw5wsf" path="res://card.tres" id="3_yrj2n"]
+[ext_resource type="Theme" uid="uid://b0mlxj7keqhv0" path="res://card.tres" id="3_yrj2n"]
 [ext_resource type="FontFile" uid="uid://dl4x5qln02xpd" path="res://assets/fonts/Renogare-Regular.otf" id="4_venjh"]
+[ext_resource type="AudioStream" uid="uid://cr17vmyqnrkgb" path="res://assets/sound/card_flip.mp3" id="5_mdmtm"]
 
 [node name="Card" type="Node2D" unique_id=434157083]
 script = ExtResource("1_v80w6")
@@ -22,9 +23,9 @@ texture = ExtResource("2_ws7c5")
 [node name="CardName" type="Label" parent="." unique_id=685846850]
 unique_name_in_owner = true
 offset_left = -163.0
-offset_top = -86.0
+offset_top = -85.0
 offset_right = 64.0
-offset_bottom = -22.0
+offset_bottom = -21.0
 theme = ExtResource("3_yrj2n")
 theme_override_font_sizes/font_size = 20
 text = "Card Name"
@@ -59,6 +60,10 @@ theme = ExtResource("3_yrj2n")
 theme_override_fonts/font = ExtResource("4_venjh")
 text = "0"
 horizontal_alignment = 2
+
+[node name="HoverSound" type="AudioStreamPlayer" parent="." unique_id=1450614337]
+stream = ExtResource("5_mdmtm")
+volume_db = -12.0
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]
 [connection signal="mouse_entered" from="Panel" to="." method="_on_panel_mouse_entered"]

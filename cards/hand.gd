@@ -14,6 +14,7 @@ signal card_discarded(i: int)
 
 @export var radius = 2000
 @export var distance_between_cards = 200
+@export var max_size = 800
 @export var animation_speed = 30
 
 var selected_card_index = -1
@@ -65,8 +66,10 @@ func position_cards(delta):
 
 func position_card(i: int):
 	var distance_from_center = len(card_scenes) / 2. - i - 0.5
+	
+	var distance = min(distance_between_cards, 800/len(card_scenes))
 
-	var y_position = distance_from_center * distance_between_cards
+	var y_position = distance_from_center * distance
 	# x^2 + y^2 = r^2
 	# x^2 = r^2 - y^2
 	# x = sqrt(r^2 - y^2)

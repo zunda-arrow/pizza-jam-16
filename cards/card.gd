@@ -33,6 +33,8 @@ func _ready() -> void:
 func _on_panel_mouse_entered() -> void:
 	hovered = true
 	on_mouse_entered.emit()
+	$HoverSound.pitch_scale = randf_range(0.9,1.1)
+	$HoverSound.play(0.02)
 
 func _on_panel_mouse_exited() -> void:
 	hovered = false
