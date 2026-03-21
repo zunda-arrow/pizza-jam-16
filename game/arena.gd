@@ -224,11 +224,10 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		if ants > 0:
 			ants -= card.ant_cost
 		
-		print(card.should_exhaust())
-		if !card.should_exhaust():
-			discard(index)
-		else:
+		if card.should_exhaust():
 			exhaust(index)
+		else:
+			discard(index)
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) -> void:
 	var x = 0
