@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://cw0artj11vjvr"]
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://qyprp6fcbr5j"]
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_kq10j"]
 [ext_resource type="Texture2D" uid="uid://dsh1ipjhqjc3g" path="res://assets/ant-farm.png" id="2_kq10j"]
-[ext_resource type="Script" path="res://resources/utilities.gd" id="3_bka2k"]
+[ext_resource type="Script" uid="uid://wl5o2odjdd6i" path="res://resources/utilities.gd" id="3_bka2k"]
 
 [sub_resource type="Resource" id="Resource_p7iya"]
 script = ExtResource("3_bka2k")

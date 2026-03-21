@@ -2,7 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://ksi7yqgqrefd" path="res://assets/structures/mushroom_bar.png" id="1_clgyk"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_ngoxn"]
-[ext_resource type="Resource" uid="uid://bted2loskmxed" path="res://resources/structures/example.tres" id="2_amev7"]
+[ext_resource type="Resource" uid="uid://bted2loskmxed" path="res://resources/structures/mushroom_bar.tres" id="2_amev7"]
+
 
 [resource]
 script = ExtResource("1_ngoxn")
