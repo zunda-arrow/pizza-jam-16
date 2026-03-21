@@ -265,7 +265,7 @@ func _on_clock_day_end(day: int) -> void:
 	ants = 0
 
 	var i = len(%Structure.structures) - 1
-	while i > 0:
+	while i >= 0:
 		var s = %Structure.structures[i]
 		if s.lifetime == 0:
 			%Structure.structures.pop_at(i)
