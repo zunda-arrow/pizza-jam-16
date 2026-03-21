@@ -5,6 +5,10 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hy6uu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uirs1"]
+bg_color = Color(0.41568628, 0.30980393, 0.24313726, 1)
+
 [resource]
 default_font = ExtResource("1_uirs1")
 Label/styles/normal = SubResource("StyleBoxFlat_hy6uu")
+Panel/styles/panel = SubResource("StyleBoxFlat_uirs1")

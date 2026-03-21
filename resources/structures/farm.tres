@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://bf5vmalea0aaq"]
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://cw0artj11vjvr"]
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_kq10j"]
 [ext_resource type="Texture2D" uid="uid://dsh1ipjhqjc3g" path="res://assets/ant-farm.png" id="2_kq10j"]

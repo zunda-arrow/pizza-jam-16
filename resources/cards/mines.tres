@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://cfqk5ivxtby4k"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://c5meef8oc0kmr"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_iv2p3"]
-[ext_resource type="Resource" uid="uid://b7bfa8u8ogc5y" path="res://resources/structures/mines.tres" id="2_iv2p3"]
+[ext_resource type="Texture2D" uid="uid://0pj5vpk0wb57" path="res://assets/mines.png" id="1_pycb5"]
+[ext_resource type="Resource" path="res://resources/structures/mines.tres" id="2_iv2p3"]
 
 [resource]
 script = ExtResource("1_iv2p3")
 card_name = "Mines"
+image = ExtResource("1_pycb5")
 card_impl = 3
 structureResource = ExtResource("2_iv2p3")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
