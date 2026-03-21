@@ -6,6 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_p7iya"]
 script = ExtResource("3_bka2k")
+treasure = Array[int]([5, 5, 5, 5, 5])
 
 [resource]
 script = ExtResource("1_kq10j")

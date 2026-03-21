@@ -7,8 +7,10 @@
 [resource]
 script = ExtResource("1_ky5qb")
 card_name = "Mushroom Patch"
-description = "At the start of your turn, +5 mushroom for the next 5 turns."
+description = "+8 money per turn."
 image = ExtResource("1_w5gur")
+energy_cost = 1
+ant_cost = 10
 card_impl = 3
 structureResource = ExtResource("2_ky5qb")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
