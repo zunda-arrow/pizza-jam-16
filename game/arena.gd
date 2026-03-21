@@ -14,6 +14,7 @@ const DEFAULT_HAND = 6
 var hand: Array[CardResource.Card] = []
 var draw_pile: Array[CardResource.Card] = []
 var discard_pile: Array[CardResource.Card] = []
+var exhaust_pile: Array[CardResource.Card] = []
 
 var HomeStructure = preload("res://resources/structures/home.tres")
 
@@ -85,6 +86,11 @@ func discard(i: int):
 	discard_pile.append(hand[i])
 	hand.pop_at(i)
 
+func exhaust(i: int):
+	%PlayCards.discard_card(i)
+	exhaust_pile.append(hand[i])
+	hand.pop_at(i)
+
 func _is_cell_filled(pos: Vector2i):
 	for structure in %Structure.structures:
 		if structure.structure.resource.structure_name in ["Bridge", "Ladder"]:
@@ -132,6 +138,7 @@ func dig_area_touches_path(dig_area: Array[Rect2i], center: Vector2i) -> bool:
 	
 	for group in %Structure.structure_groups_in_range(%Terrain.get_area(center, cells)):
 		for structure in group:
+			if structure == null: continue
 			if structure.structure.resource.structure_name == "Training Camp":
 				grow += 1
 	
@@ -217,7 +224,11 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 			energy -= card.energy_cost
 		if ants > 0:
 			ants -= card.ant_cost
-		discard(index)
+		
+		if card.should_exhaust():
+			exhaust(index)
+		else:
+			discard(index)
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) -> void:
 	var x = 0
@@ -262,12 +273,13 @@ func _on_utility_draw_gain(n: int) -> void:
 func _on_utility_eff_gain(n: int) -> void:
 	eff += n
 
-func _on_clock_day_end(day: int) -> void:
+func _on_clock_day_end(day: int) -> void:	
+	%Camera.go_home()
 	# Copied from elsewhere in this file
 	while len(hand) > 0:
 		discard(0)
 		# Give a litte animation
-		await get_tree().create_timer(.05).timeout
+		await get_tree().create_timer(.03).timeout
 	
 	day_end.emit()
 	
@@ -281,6 +293,13 @@ func _on_clock_day_end(day: int) -> void:
 	while i >= 0:
 		var s = %Structure.structures[i]
 		if s.lifetime == 0:
+			discard_pile.append(
+				exhaust_pile.pop_at(
+					exhaust_pile.find_custom(
+						func(card): return card.structure.structure_name == s.structure.structure_name
+					)
+				)
+			)
 			%Structure.structures.pop_at(i)
 			s.queue_free()
 		elif s.lifetime > 0:
@@ -300,7 +319,7 @@ func on_turn_end() -> void:
 	while len(hand) > 0:
 		discard(0)
 		# Give a litte animation
-		await get_tree().create_timer(.05).timeout
+		await get_tree().create_timer(.03).timeout
 
 	start_turn()
 
@@ -356,12 +375,13 @@ func _on_discard_pile_mouse_entered() -> void:
 	%CardPileDisplay.show_cards(discard_pile)
 	%CardPileDisplay.show()
 
-func _on_discard_pile_mouse_exited() -> void:
-	%CardPileDisplay.hide()
+func _on_exhaust_pile_mouse_entered() -> void:
+	%CardPileDisplay.show_cards(exhaust_pile)
+	%CardPileDisplay.show()
 
 func _on_draw_pile_mouse_entered() -> void:
 	%CardPileDisplay.show_cards(draw_pile)
 	%CardPileDisplay.show()
 
-func _on_draw_pile_mouse_exited() -> void:
+func _on_pile_mouse_exited() -> void:
 	%CardPileDisplay.hide()

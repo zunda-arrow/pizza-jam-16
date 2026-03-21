@@ -152,7 +152,6 @@ var extra_particle_generators: Array[GPUParticles2D] = []
 func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int) -> bool:
 	var area = get_area(cell_coordinate_center, cells)
 	var cells_to_damage: Array[Vector2i] = []
-	var cells_to_update: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
 	
 	var training_camps = 0
@@ -165,9 +164,6 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 	for cell in area:
 		if tilemap.get_cell_source_id(cell) >= 0:
 			cells_to_damage.append(cell)
-	for cell in border(cells_to_damage):
-		if tilemap.get_cell_source_id(cell) >= 0:
-			cells_to_update.append(cell)
 	
 	var value_gained := 0
 	var cells_to_remove: Array[Vector2i] = []
@@ -203,7 +199,6 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 			set_cracks_for_cell(cell, health, initial_health)
 			
 	tilemap.set_cells_terrain_connect(cells_to_remove, 0, -1)
-	tilemap.set_cells_terrain_connect(cells_to_update, 0, 0)
 
 	money_dug.emit(value_gained)
 
@@ -252,6 +247,8 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 		var training_camps = 0
 		for group in groups_in_range:
 			for structure in group:
+				if structure == null:
+					continue
 				if structure.structure.resource.structure_name == "Training Camp":
 					training_camps += 1
 		grow_area(area, training_camps)

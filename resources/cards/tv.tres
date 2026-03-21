@@ -9,4 +9,5 @@ card_name = "TV"
 description = "TV"
 card_impl = 3
 structureResource = ExtResource("2_rvafx")
+cost = 10
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

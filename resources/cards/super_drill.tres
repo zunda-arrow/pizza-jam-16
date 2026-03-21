@@ -11,4 +11,5 @@ ant_cost = -1
 card_impl = 1
 dig_area = Array[Rect2i]([Rect2i(-4, -4, 8, 8)])
 dig_power = -1
+cost = 10
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

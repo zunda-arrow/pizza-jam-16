@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://irxrm540xx0l"
-path="res://.godot/imported/ant-bridge.png-7312d3bcd6aab1bef0f5284708fa236f.ctex"
+uid="uid://dcxab8tuu7ukd"
+path="res://.godot/imported/ladder.png-064681bdb228102c93278243ce997c3a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ant-bridge.png"
-dest_files=["res://.godot/imported/ant-bridge.png-7312d3bcd6aab1bef0f5284708fa236f.ctex"]
+source_file="res://assets/ladder.png"
+dest_files=["res://.godot/imported/ladder.png-064681bdb228102c93278243ce997c3a.ctex"]
 
 [params]
 

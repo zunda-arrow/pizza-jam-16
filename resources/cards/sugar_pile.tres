@@ -8,4 +8,5 @@ script = ExtResource("1_0h3xd")
 card_name = "Sugar Pile"
 card_impl = 3
 structureResource = ExtResource("2_0h3xd")
+cost = 10
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
