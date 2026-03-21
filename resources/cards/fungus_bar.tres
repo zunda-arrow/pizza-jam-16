@@ -2,14 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://ksi7yqgqrefd" path="res://assets/structures/mushroom_bar.png" id="1_clgyk"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_ngoxn"]
-[ext_resource type="Resource" uid="uid://bted2loskmxed" path="res://resources/structures/mushroom_bar.tres" id="2_amev7"]
-
+[ext_resource type="Resource" uid="uid://bted2loskmxed" path="res://resources/structures/mushroom_bar.tres" id="3_clgyk"]
 
 [resource]
 script = ExtResource("1_ngoxn")
 card_name = "Fungus Bar"
-description = "All nearby cards cost."
+description = "All digs in range gain +1 power."
 image = ExtResource("1_clgyk")
 card_impl = 3
-structureResource = ExtResource("2_amev7")
+structureResource = ExtResource("3_clgyk")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
