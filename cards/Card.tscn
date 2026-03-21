@@ -6,6 +6,12 @@
 [node name="Card" type="Node2D" unique_id=434157083]
 script = ExtResource("1_v80w6")
 
+[node name="Panel" type="Panel" parent="." unique_id=1321835905]
+offset_left = -171.0
+offset_top = -116.0
+offset_right = 174.0
+offset_bottom = 119.0
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=914660798]
 position = Vector2(-7.6293945e-06, -1.9073486e-06)
 scale = Vector2(0.37183535, 0.3718354)
@@ -43,3 +49,7 @@ offset_left = 128.0
 offset_right = 323.0
 offset_bottom = 70.0
 text = "Ants"
+
+[connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]
+[connection signal="mouse_entered" from="Panel" to="." method="_on_panel_mouse_entered"]
+[connection signal="mouse_exited" from="Panel" to="." method="_on_panel_mouse_exited"]
