@@ -2,7 +2,7 @@ extends Node2D
 
 
 var structure_scene = preload("res://structure/structure.tscn")
-var example_resource: StructureResource = preload("res://resources/structures/example.tres")
+var example_resource: StructureResource = preload("res://resources/structures/mushroom_bar.tres")
 
 var structures: Array[Node2D] = []
 var links: Array[Array] = [] # Connections between buildings within range, Array[Array[int]] by implementation.

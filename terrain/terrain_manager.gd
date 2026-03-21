@@ -151,7 +151,7 @@ var extra_particle_generators: Array[GPUParticles2D] = []
 		#p.queue_free()
 
 # Radius is a square radius
-func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int) -> bool:
+func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, luck: int) -> bool:
 	var area = get_area(cell_coordinate_center, cells)
 	var cells_to_damage: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
@@ -163,6 +163,8 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 				grow += 1
 			if structure.structure.resource.structure_name == "Mushroom Bar":
 				power += 1
+			if structure.structure.resource.structure_name == "Campfire":
+				coin_bonus += 2
 	grow_area(area, grow)
 	
 	for cell in area:
