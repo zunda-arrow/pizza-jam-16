@@ -13,8 +13,8 @@ script = ExtResource("1_v80w6")
 [node name="Panel" type="Panel" parent="." unique_id=1321835905]
 offset_left = -171.0
 offset_top = -116.0
-offset_right = 173.0
-offset_bottom = 118.0
+offset_right = 172.0
+offset_bottom = 117.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=914660798]
 position = Vector2(-7.6293945e-06, -1.9073486e-06)
@@ -42,22 +42,26 @@ text = "Example description"
 
 [node name="Energy" type="Label" parent="." unique_id=602476245]
 unique_name_in_owner = true
-offset_left = -24.0
-offset_top = 34.0
-offset_right = 171.0
-offset_bottom = 104.0
+offset_left = -61.0
+offset_top = -44.0
+offset_right = 134.0
+offset_bottom = 26.0
 theme = ExtResource("3_yrj2n")
+theme_override_colors/font_outline_color = Color(0.2, 0.4509804, 0.23921569, 1)
+theme_override_constants/outline_size = 16
 theme_override_fonts/font = ExtResource("4_venjh")
 text = "0"
 horizontal_alignment = 2
 
 [node name="Ants" type="Label" parent="." unique_id=1979177370]
 unique_name_in_owner = true
-offset_left = -24.0
-offset_top = -49.0
-offset_right = 171.0
-offset_bottom = 21.0
+offset_left = -28.0
+offset_top = -98.0
+offset_right = 167.0
+offset_bottom = -28.0
 theme = ExtResource("3_yrj2n")
+theme_override_colors/font_outline_color = Color(0.6784314, 0.32941177, 0.21568628, 1)
+theme_override_constants/outline_size = 16
 theme_override_fonts/font = ExtResource("4_venjh")
 text = "0"
 horizontal_alignment = 2
