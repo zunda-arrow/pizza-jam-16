@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d0qhgc8jth425" path="res://cards/card.gd" id="1_v80w6"]
 [ext_resource type="Texture2D" uid="uid://dpxlm8sxp1s6u" path="res://assets/card.png" id="2_ws7c5"]
+[ext_resource type="Theme" uid="uid://bi7rd61xw5wsf" path="res://card.tres" id="3_yrj2n"]
 
 [node name="Card" type="Node2D" unique_id=434157083]
 script = ExtResource("1_v80w6")
@@ -19,11 +20,12 @@ texture = ExtResource("2_ws7c5")
 
 [node name="CardName" type="Label" parent="." unique_id=685846850]
 unique_name_in_owner = true
-offset_left = -170.0
-offset_top = -105.0
-offset_right = 57.0
-offset_bottom = -41.0
-theme_override_font_sizes/font_size = 30
+offset_left = -163.0
+offset_top = -86.0
+offset_right = 64.0
+offset_bottom = -22.0
+theme = ExtResource("3_yrj2n")
+theme_override_font_sizes/font_size = 20
 text = "Card Name"
 
 [node name="CardDescription" type="Label" parent="." unique_id=1747712364]
@@ -41,6 +43,7 @@ offset_left = 128.0
 offset_top = -74.0
 offset_right = 323.0
 offset_bottom = -4.0
+theme = ExtResource("3_yrj2n")
 text = "Energy"
 
 [node name="Ants" type="Label" parent="." unique_id=1979177370]
@@ -48,6 +51,7 @@ unique_name_in_owner = true
 offset_left = 128.0
 offset_right = 323.0
 offset_bottom = 70.0
+theme = ExtResource("3_yrj2n")
 text = "Ants"
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]

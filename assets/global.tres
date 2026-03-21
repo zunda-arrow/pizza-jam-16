@@ -1,7 +1,5 @@
 [gd_resource type="Theme" format=3 uid="uid://bp35ok3gel4nx"]
 
-[ext_resource type="FontFile" uid="uid://bq5opb0qxsy2i" path="res://assets/fonts/Cocogoose-Pro-Regular-trial.ttf" id="1_f6oay"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6oay"]
 content_margin_left = 16.0
 content_margin_top = 16.0
@@ -14,6 +12,5 @@ border_width_right = 4
 border_width_bottom = 4
 
 [resource]
-default_font = ExtResource("1_f6oay")
 default_font_size = 36
 Label/styles/normal = SubResource("StyleBoxFlat_f6oay")
