@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
-[ext_resource type="PackedScene" uid="uid://cdusrihqrf515" path="res://card_reward/CardReward.tscn" id="10_n65lt"]
 [ext_resource type="PackedScene" uid="uid://bmlhxoffb3r5l" path="res://cards/CardList.tscn" id="10_n65lt"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_n65lt"]
@@ -63,24 +62,26 @@ position = Vector2(-900, -480)
 
 [node name="EnergyLabel" type="Label" parent="Camera" unique_id=1812955512]
 unique_name_in_owner = true
-offset_left = 596.0
-offset_top = -503.0
-offset_right = 934.0
-offset_bottom = -407.0
+offset_left = -440.0
+offset_top = 316.0
+offset_right = -102.0
+offset_bottom = 412.0
+scale = Vector2(0.97535783, 1)
 theme_override_font_sizes/font_size = 40
 text = "Energy:"
 
 [node name="AntsLabel" type="Label" parent="Camera" unique_id=463997152]
 unique_name_in_owner = true
-offset_left = 597.0
-offset_top = -428.0
-offset_right = 935.0
-offset_bottom = -332.0
+offset_left = -439.0
+offset_top = 391.0
+offset_right = -101.0
+offset_bottom = 487.0
 theme_override_font_sizes/font_size = 40
 text = "Ants:"
 
 [node name="DayLabel" type="Label" parent="Camera" unique_id=604140666]
 unique_name_in_owner = true
+visible = false
 offset_left = 595.0
 offset_top = -355.0
 offset_right = 933.0
@@ -116,40 +117,32 @@ theme_override_font_sizes/font_size = 30
 text = "I got lost and I want to go home
 "
 
-[node name="Money" type="Label" parent="Camera" unique_id=917801156]
-unique_name_in_owner = true
-offset_left = -830.0
-offset_top = -513.0
-offset_right = -577.0
-offset_bottom = -431.0
-theme_override_font_sizes/font_size = 48
-text = "Money: 0"
-
 [node name="CardPileDisplay" parent="Camera" unique_id=1774113453 instance=ExtResource("10_n65lt")]
 unique_name_in_owner = true
 visible = false
 position = Vector2(-960, -540)
 
 [node name="DrawPile" type="PanelContainer" parent="Camera" unique_id=1965561152]
-offset_left = -783.0
-offset_top = 406.0
-offset_right = -724.0
-offset_bottom = 465.0
+offset_left = -61.0
+offset_top = 402.0
+offset_right = -2.0
+offset_bottom = 461.0
 
 [node name="Label" type="Label" parent="Camera/DrawPile" unique_id=1340981094]
 layout_mode = 2
 text = "Draw"
 
 [node name="DiscardPile" type="PanelContainer" parent="Camera" unique_id=703672857]
-offset_left = -679.0
-offset_top = 404.0
-offset_right = -620.0
-offset_bottom = 463.0
+offset_left = -64.0
+offset_top = 305.0
+offset_right = -5.0
+offset_bottom = 364.0
 
 [node name="Label" type="Label" parent="Camera/DiscardPile" unique_id=2106178975]
 layout_mode = 2
 text = "Discard"
 
+[connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="money_dug" from="Terrain" to="." method="money_passthrough"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
@@ -162,7 +155,6 @@ text = "Discard"
 [connection signal="day_end" from="Camera/Clock" to="." method="_on_clock_day_end"]
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
 [connection signal="pressed" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
-[connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
 [connection signal="mouse_entered" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_entered"]
 [connection signal="mouse_exited" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_exited"]
 [connection signal="mouse_entered" from="Camera/DiscardPile" to="." method="_on_discard_pile_mouse_entered"]
