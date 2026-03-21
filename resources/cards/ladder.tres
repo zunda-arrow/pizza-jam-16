@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dktpx4orlph6v"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://bfnxdw0raclot"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_nfese"]
+[ext_resource type="Texture2D" uid="uid://dcxab8tuu7ukd" path="res://assets/ladder.png" id="1_vjl0q"]
 [ext_resource type="Resource" uid="uid://c6vy58lfr3pkn" path="res://resources/structures/ladder.tres" id="2_nfese"]
 
 [resource]
 script = ExtResource("1_nfese")
 card_name = "Ladder"
+image = ExtResource("1_vjl0q")
 ant_cost = 10
 card_impl = 3
 structureResource = ExtResource("2_nfese")

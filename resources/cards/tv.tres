@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dh6xt62baqxpy"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dl3tnvqjeo8pp"]
 
+[ext_resource type="Texture2D" uid="uid://b88pnuix1okw7" path="res://assets/tv.png" id="1_r0pv2"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_rvafx"]
-[ext_resource type="Resource" uid="uid://regwblxsrnwj" path="res://resources/structures/tv.tres" id="2_rvafx"]
+[ext_resource type="Resource" uid="uid://c4i3k6w833omy" path="res://resources/structures/tv.tres" id="2_rvafx"]
 
 [resource]
 script = ExtResource("1_rvafx")
 card_name = "TV"
 description = "TV"
+image = ExtResource("1_r0pv2")
 card_impl = 3
 structureResource = ExtResource("2_rvafx")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://leb6x7ht8xsq"]
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://cwmasykv6f2rs"]
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_lece1"]
 [ext_resource type="Texture2D" uid="uid://caa6l2u2bdh01" path="res://assets/bottlecap-tower.png" id="2_lece1"]

@@ -3,6 +3,7 @@ extends Resource
 
 @export var card_name: String
 @export_multiline var description: String
+@export var image: Texture2D
 @export_range(-100, 100) var energy_cost: int
 @export_range(-100, 100) var ant_cost: int
 @export var card_impl: Cards
@@ -34,6 +35,7 @@ enum Cards {
 class Card extends Node:
 	var card_name: String
 	var description: String
+	var image: Texture2D
 	var energy_cost: int
 	var ant_cost: int
 	var structure: StructureResource
@@ -96,4 +98,5 @@ func new() -> Card:
 	card.dig_area = dig_area
 	card.dig_power = dig_power
 	card.utility = utility
+	card.image = image
 	return card

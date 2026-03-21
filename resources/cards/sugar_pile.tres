@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://ymkv6jti35a"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://d1qgam86swu8y"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_0h3xd"]
-[ext_resource type="Resource" uid="uid://b663b6vgba2gi" path="res://resources/structures/sugar_pile.tres" id="2_0h3xd"]
+[ext_resource type="Texture2D" uid="uid://drf0pv10pxhn4" path="res://assets/sugar_pile.png" id="1_clgh1"]
+[ext_resource type="Resource" uid="uid://c7eu4ne3ode7t" path="res://resources/structures/sugar_pile.tres" id="2_0h3xd"]
 
 [resource]
 script = ExtResource("1_0h3xd")
 card_name = "Sugar Pile"
+image = ExtResource("1_clgh1")
 card_impl = 3
 structureResource = ExtResource("2_0h3xd")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d0qhgc8jth425" path="res://cards/card.gd" id="1_v80w6"]
 [ext_resource type="Texture2D" uid="uid://dpxlm8sxp1s6u" path="res://assets/card.png" id="2_ws7c5"]
-[ext_resource type="Theme" uid="uid://bi7rd61xw5wsf" path="res://card.tres" id="3_yrj2n"]
+[ext_resource type="Theme" uid="uid://b0mlxj7keqhv0" path="res://card.tres" id="3_yrj2n"]
 [ext_resource type="FontFile" uid="uid://dl4x5qln02xpd" path="res://assets/fonts/Renogare-Regular.otf" id="4_venjh"]
 
 [node name="Card" type="Node2D" unique_id=434157083]
@@ -13,6 +13,17 @@ offset_left = -171.0
 offset_top = -116.0
 offset_right = 173.0
 offset_bottom = 118.0
+metadata/_edit_use_anchors_ = true
+
+[node name="CardImage" type="TextureRect" parent="." unique_id=1312599456]
+unique_name_in_owner = true
+offset_left = -158.0
+offset_top = -84.0
+offset_right = 103.0
+offset_bottom = 99.0
+expand_mode = 3
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=914660798]
 position = Vector2(-7.6293945e-06, -1.9073486e-06)
@@ -28,6 +39,7 @@ offset_bottom = -22.0
 theme = ExtResource("3_yrj2n")
 theme_override_font_sizes/font_size = 20
 text = "Card Name"
+metadata/_edit_use_anchors_ = true
 
 [node name="CardDescription" type="Label" parent="." unique_id=1747712364]
 unique_name_in_owner = true
@@ -48,6 +60,7 @@ theme = ExtResource("3_yrj2n")
 theme_override_fonts/font = ExtResource("4_venjh")
 text = "0"
 horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Ants" type="Label" parent="." unique_id=1979177370]
 unique_name_in_owner = true
@@ -59,6 +72,7 @@ theme = ExtResource("3_yrj2n")
 theme_override_fonts/font = ExtResource("4_venjh")
 text = "0"
 horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]
 [connection signal="mouse_entered" from="Panel" to="." method="_on_panel_mouse_entered"]

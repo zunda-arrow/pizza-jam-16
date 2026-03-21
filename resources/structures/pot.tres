@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://c6w4b7paes6id"]
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://baiwbcshhfpbd"]
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_mequr"]
 [ext_resource type="Texture2D" uid="uid://beqob0l2nujyn" path="res://assets/pot.png" id="2_mequr"]
