@@ -57,6 +57,11 @@ func position_cards(delta):
 		card.position.y = lerp(card.position.y, float(pos.y), lerp_amount)
 		card.rotation = lerp(card.rotation, float(rotate_card(i)), lerp_amount)
 		card.scale = lerp(card.scale, scale_card(i), lerp_amount)
+		
+		if i == selected_card_index:
+			card.z_index = 110
+		else:
+			card.z_index = 100 - i
 
 func position_card(i: int):
 	var distance_from_center = len(card_scenes) / 2. - i - 0.5
