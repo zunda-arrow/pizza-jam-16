@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://d1qgam86swu8y"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://d32himu38w5ak"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_0h3xd"]
 [ext_resource type="Texture2D" uid="uid://drf0pv10pxhn4" path="res://assets/sugar_pile.png" id="1_clgh1"]
-[ext_resource type="Resource" uid="uid://c7eu4ne3ode7t" path="res://resources/structures/sugar_pile.tres" id="2_0h3xd"]
+[ext_resource type="Resource" uid="uid://dpnxn35v0utu4" path="res://resources/structures/sugar_pile.tres" id="2_0h3xd"]
 
 [resource]
 script = ExtResource("1_0h3xd")
 card_name = "Sugar Pile"
+description = "Draw an extra card at the start of your turn."
 image = ExtResource("1_clgh1")
 card_impl = 3
 structureResource = ExtResource("2_0h3xd")
