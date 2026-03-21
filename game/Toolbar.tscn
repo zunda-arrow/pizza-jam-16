@@ -15,35 +15,20 @@ offset_bottom = 67.0
 [node name="HSplitContainer" type="HSplitContainer" parent="Panel" unique_id=27752940]
 layout_mode = 2
 theme_override_constants/separation = 1000
-split_offsets = PackedInt32Array(289)
-split_offset = 289
-
-[node name="Goal" type="HSplitContainer" parent="Panel/HSplitContainer" unique_id=162760906]
-layout_mode = 2
-
-[node name="Money" type="Label" parent="Panel/HSplitContainer/Goal" unique_id=1947491871]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "0/0"
-
-[node name="Day" type="Label" parent="Panel/HSplitContainer/Goal" unique_id=322129462]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Day 0/20"
+split_offsets = PackedInt32Array(353)
+split_offset = 353
 
 [node name="GameInfo" type="HSplitContainer" parent="Panel/HSplitContainer" unique_id=2061190196]
 unique_name_in_owner = true
 layout_mode = 2
-split_offsets = PackedInt32Array(195, 552)
-split_offset = 195
+split_offsets = PackedInt32Array(227, 303)
+split_offset = 227
 
 [node name="Turn" type="Label" parent="Panel/HSplitContainer/GameInfo" unique_id=1869405173]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Turn 1/5"
+text = "Turn 1/4"
 
 [node name="Energy" type="PanelContainer" parent="Panel/HSplitContainer/GameInfo" unique_id=35955384]
 layout_mode = 2
@@ -79,3 +64,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "0"
 horizontal_alignment = 1
+
+[node name="Goal" type="HSplitContainer" parent="Panel/HSplitContainer" unique_id=162760906]
+layout_mode = 2
+
+[node name="Money" type="Label" parent="Panel/HSplitContainer/Goal" unique_id=1947491871]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "0/0"
+
+[node name="Day" type="Label" parent="Panel/HSplitContainer/Goal" unique_id=322129462]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Day 0/20"

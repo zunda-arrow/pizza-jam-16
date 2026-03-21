@@ -17,7 +17,7 @@ extends Node2D
 func _process(delta: float) -> void:
 	%Money.text = str(money) + "/" + str(daily_goal)
 	%Day.text = "Day " + str(day) + "/" + str(total_days)
-	%Turn.text = "Turn " + str(turn + 1) + "/5"
+	%Turn.text = "Turn " + str(turn + 1) + "/4"
 
 	if not in_game:
 		%Energy.text = str(0)
