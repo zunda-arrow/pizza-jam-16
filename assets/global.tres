@@ -1,16 +1,19 @@
 [gd_resource type="Theme" format=3 uid="uid://bp35ok3gel4nx"]
 
+[ext_resource type="FontFile" uid="uid://dl4x5qln02xpd" path="res://assets/fonts/Renogare-Regular.otf" id="1_f6oay"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6oay"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
 content_margin_bottom = 16.0
-bg_color = Color(0.4294333, 0.33090335, 0.33150625, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+bg_color = Color(0.14117648, 0.10980392, 0.10980392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kmoo6"]
+bg_color = Color(0.14117648, 0.10980392, 0.10980392, 1)
 
 [resource]
+default_font = ExtResource("1_f6oay")
 default_font_size = 36
 Label/styles/normal = SubResource("StyleBoxFlat_f6oay")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_kmoo6")
