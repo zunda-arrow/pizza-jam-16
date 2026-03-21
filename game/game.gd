@@ -68,3 +68,7 @@ func _on_arena_energy_count_changed(energy: int) -> void:
 
 func _on_arena_on_turn_changed(n: int) -> void:
 	%Toolbar.turn = n
+
+
+func _on_shop_charge_account(value: int) -> void:
+	on_money_earned(-value)

@@ -39,4 +39,5 @@ bus = &"Music"
 [connection signal="money_earned" from="Arena" to="." method="on_money_earned"]
 [connection signal="on_turn_changed" from="Arena" to="." method="_on_arena_on_turn_changed"]
 [connection signal="card_purchased" from="ShopCamera/Shop" to="." method="on_card_purchased"]
+[connection signal="charge_account" from="ShopCamera/Shop" to="." method="_on_shop_charge_account"]
 [connection signal="shopping_done" from="ShopCamera/Shop" to="." method="shop_phase_done"]

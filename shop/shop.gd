@@ -55,7 +55,7 @@ func card_clicked(idx: int, card: CardResource) -> void:
 	%CardContainer.get_child(idx).hide()
 	charge_account.emit(card.cost)
 	card_purchased.emit(card)
-	
+
 	$Money.text = "Money: " + str(get_money.call())
 
 func on_open() -> void:
@@ -64,3 +64,11 @@ func on_open() -> void:
 
 func on_done_pressed() -> void:
 	shopping_done.emit()
+
+
+func _process(delta: float) -> void:
+	for card in  %CardContainer.get_children():
+		if card.hovered:
+			card.scale = lerp(card.scale, Vector2(1.3, 1.3), 30 * delta)
+		else:
+			card.scale = lerp(card.scale, Vector2(1.0, 1.0), 30 * delta)
