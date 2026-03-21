@@ -2,6 +2,7 @@
 extends Node2D
 
 signal card_purchased(card: CardResource)
+signal charge_account(value: int)
 signal shopping_done
 
 var cardScene = preload("res://cards/Card.tscn")
@@ -52,6 +53,7 @@ func card_clicked(idx: int, card: CardResource) -> void:
 	if not card or get_money.call() < card.cost: # Can't afford
 		return
 	%CardContainer.get_child(idx).hide()
+	charge_account.emit(card.cost)
 	card_purchased.emit(card)
 	
 	$Money.text = "Money: " + str(get_money.call())

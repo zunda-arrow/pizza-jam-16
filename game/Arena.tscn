@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
+[ext_resource type="PackedScene" uid="uid://cdusrihqrf515" path="res://card_reward/CardReward.tscn" id="10_n65lt"]
 [ext_resource type="PackedScene" uid="uid://bmlhxoffb3r5l" path="res://cards/CardList.tscn" id="10_n65lt"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_n65lt"]
@@ -52,6 +53,9 @@ unique_name_in_owner = true
 [node name="PlayCards" parent="Camera" unique_id=1516163044 instance=ExtResource("1_ncbvw")]
 unique_name_in_owner = true
 position = Vector2(-960, -540)
+
+[node name="CardReward" parent="Camera" unique_id=1912759988 instance=ExtResource("10_n65lt")]
+unique_name_in_owner = true
 
 [node name="Clock" parent="Camera" unique_id=1104602323 instance=ExtResource("7_u3mh8")]
 unique_name_in_owner = true
@@ -158,6 +162,7 @@ text = "Discard"
 [connection signal="day_end" from="Camera/Clock" to="." method="_on_clock_day_end"]
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
 [connection signal="pressed" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
+[connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
 [connection signal="mouse_entered" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_entered"]
 [connection signal="mouse_exited" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_exited"]
 [connection signal="mouse_entered" from="Camera/DiscardPile" to="." method="_on_discard_pile_mouse_entered"]
