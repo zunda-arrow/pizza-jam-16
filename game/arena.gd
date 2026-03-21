@@ -138,6 +138,7 @@ func dig_area_touches_path(dig_area: Array[Rect2i], center: Vector2i) -> bool:
 	
 	for group in %Structure.structure_groups_in_range(%Terrain.get_area(center, cells)):
 		for structure in group:
+			if structure == null: continue
 			if structure.structure.resource.structure_name == "Training Camp":
 				grow += 1
 	
@@ -272,12 +273,13 @@ func _on_utility_draw_gain(n: int) -> void:
 func _on_utility_eff_gain(n: int) -> void:
 	eff += n
 
-func _on_clock_day_end(day: int) -> void:
+func _on_clock_day_end(day: int) -> void:	
+	%Camera.go_home()
 	# Copied from elsewhere in this file
 	while len(hand) > 0:
 		discard(0)
 		# Give a litte animation
-		await get_tree().create_timer(.05).timeout
+		await get_tree().create_timer(.03).timeout
 	
 	day_end.emit()
 	
@@ -317,7 +319,7 @@ func on_turn_end() -> void:
 	while len(hand) > 0:
 		discard(0)
 		# Give a litte animation
-		await get_tree().create_timer(.05).timeout
+		await get_tree().create_timer(.03).timeout
 
 	start_turn()
 

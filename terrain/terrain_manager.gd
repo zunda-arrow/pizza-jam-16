@@ -247,6 +247,8 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 		var training_camps = 0
 		for group in groups_in_range:
 			for structure in group:
+				if structure == null:
+					continue
 				if structure.structure.resource.structure_name == "Training Camp":
 					training_camps += 1
 		grow_area(area, training_camps)
