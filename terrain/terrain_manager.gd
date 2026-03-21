@@ -205,6 +205,8 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 	money_dug.emit(value_gained)
 
 	#destroy_particles()
+	
+	$Audio/Explosion.play(0.02)
 		
 
 	return true
