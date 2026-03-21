@@ -22,11 +22,6 @@ position = Vector2(-960, -540)
 
 [node name="Toolbar" parent="." unique_id=1619252754 instance=ExtResource("5_dakft")]
 unique_name_in_owner = true
-position = Vector2(-960, -540)
-turn = 0
-in_game = false
-ant_count = 0
-energy_count = 0
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=652045608]
 process_mode = 3

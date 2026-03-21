@@ -25,3 +25,9 @@ func _process(delta: float) -> void:
 	else:
 		%Energy.text = str(energy_count)
 		%Ants.text = str(ant_count)
+
+	# I am sorry. This was the quickest way to fix the issue with the toolbar not following the camera.
+	if in_game:
+		%Toolbar.position = $"../Arena/Camera".position - Vector2(960, 540)
+	else:
+		position = Vector2(0, 0)
