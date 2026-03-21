@@ -16,6 +16,13 @@ var instantiated_card_resource: CardResource.Card:
 		%CardDescription.text = card.description
 		%Energy.text = string(card.energy_cost)
 		%Ants.text = string(card.ant_cost)
+		
+		if card.get_type() == CardResource.CardType.Build:
+			$Build.show()
+		if card.get_type() == CardResource.CardType.Dig:
+			$Dig.show()
+		if card.get_type() == CardResource.CardType.Utility:
+			$Utility.show()
 	get():
 		return _instantiated_card_resource
 
@@ -29,7 +36,7 @@ func string(n: int) -> String:
 func _ready() -> void:
 	if card_resource != null:
 		instantiated_card_resource = card_resource.new()
-
+			
 func _on_panel_mouse_entered() -> void:
 	hovered = true
 	on_mouse_entered.emit()
