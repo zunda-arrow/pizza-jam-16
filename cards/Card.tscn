@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d0qhgc8jth425" path="res://cards/card.gd" id="1_v80w6"]
 [ext_resource type="Texture2D" uid="uid://dpxlm8sxp1s6u" path="res://assets/card.png" id="2_ws7c5"]
-[ext_resource type="Theme" uid="uid://b0mlxj7keqhv0" path="res://card.tres" id="3_yrj2n"]
+[ext_resource type="Theme" uid="uid://dypujp3tjsjce" path="res://card.tres" id="3_yrj2n"]
 [ext_resource type="FontFile" uid="uid://dl4x5qln02xpd" path="res://assets/fonts/Renogare-Regular.otf" id="4_venjh"]
 [ext_resource type="AudioStream" uid="uid://cr17vmyqnrkgb" path="res://assets/sound/card_flip.mp3" id="5_mdmtm"]
 [ext_resource type="Texture2D" uid="uid://hucswbbog6t3" path="res://assets/build.png" id="7_mwisf"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c1crqmfdq1ien" path="res://cards/CardTooltip.tscn" id="9_mwisf"]
 
 [node name="Card" type="Node2D" unique_id=434157083]
+scale = Vector2(0.9, 0.9)
 script = ExtResource("1_v80w6")
 
 [node name="Panel" type="Panel" parent="." unique_id=1321835905]

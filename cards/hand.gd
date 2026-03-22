@@ -57,7 +57,7 @@ func position_cards(delta):
 		card.position.x = lerp(card.position.x, float(pos.x), lerp_amount)
 		card.position.y = lerp(card.position.y, float(pos.y), lerp_amount)
 		card.rotation = lerp(card.rotation, float(rotate_card(i)), lerp_amount)
-		card.scale = lerp(card.scale, scale_card(i), lerp_amount)
+		card.scale = lerp(card.scale, scale_card(i) * .8, lerp_amount)
 		
 		if i == selected_card_index:
 			card.z_index = 110
