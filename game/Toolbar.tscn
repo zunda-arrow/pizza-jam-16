@@ -19,6 +19,7 @@ Label/styles/normal = SubResource("StyleBoxFlat_f6oay")
 
 [node name="Toolbar" type="Node2D" unique_id=1619252754]
 script = ExtResource("1_eciji")
+rerolls = null
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=1440512116]
 offset_left = 1.0
@@ -28,7 +29,6 @@ theme = ExtResource("2_br6ab")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Panel" unique_id=27752940]
 layout_mode = 2
-theme_override_constants/separation = 750
 split_offsets = PackedInt32Array(353)
 split_offset = 353
 
@@ -94,8 +94,9 @@ horizontal_alignment = 1
 
 [node name="Goal" type="HSplitContainer" parent="Panel/HSplitContainer" unique_id=162760906]
 layout_mode = 2
-split_offsets = PackedInt32Array(170)
-split_offset = 170
+size_flags_horizontal = 8
+split_offsets = PackedInt32Array(235, 531)
+split_offset = 235
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Panel/HSplitContainer/Goal" unique_id=962020846]
 layout_mode = 2
@@ -118,3 +119,9 @@ layout_mode = 2
 theme = SubResource("Theme_oygyh")
 theme_override_font_sizes/font_size = 48
 text = "Day 0/20"
+
+[node name="Rerolls" type="Label" parent="Panel/HSplitContainer/Goal" unique_id=1208961756]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Rerolls: <null>"

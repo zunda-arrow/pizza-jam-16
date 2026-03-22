@@ -4,6 +4,7 @@ extends Node2D
 signal chunk_generated(Vector2i)
 signal money_dug(value: int)
 signal card_reward(cards: int)
+signal reroll_earned(money: int)
 
 # The enum value - 1 is used to grab the tileset
 enum TerrainType{
