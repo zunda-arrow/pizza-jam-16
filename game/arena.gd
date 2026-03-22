@@ -10,6 +10,8 @@ signal card_played(card: CardResource.Card)
 
 @export var game: Game
 
+var allow_end_turn = true
+
 const DEFAULT_HAND = 6
 
 var hand: Array[CardResource.Card] = []
@@ -343,7 +345,8 @@ func start_turn(initial_hand: Array[CardResource.Card] = []):
 	for s in %Structure.structures:
 		%Utility.utilize(s.structure.resource.util_buffs, s.magic_number)
 
-	%EndTurnButton.disabled = false
+	if allow_end_turn:
+		%EndTurnButton.disabled = false
 
 func start_day(deck: Array[CardResource.Card], initial_hand: Array[CardResource.Card] = []) -> void:
 	energy = 3
@@ -395,3 +398,10 @@ func _on_draw_pile_mouse_entered() -> void:
 
 func _on_pile_mouse_exited() -> void:
 	%CardPileDisplay.hide()
+
+func isolate_hand_card(i: int) -> void:
+	%PlayCards.isolate_card(i)
+
+func new_turn_enabled(enabled: bool) -> void:
+	allow_end_turn = enabled
+	%EndTurnButton.disabled = not enabled

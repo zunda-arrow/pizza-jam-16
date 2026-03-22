@@ -6,6 +6,8 @@ signal cancel_aiming_card()
 
 @export var cards_in_hand: Array[CardResource]
 
+var enabled_idx := -1
+
 @onready var hand = %Hand
 @onready var target_arrow = %TargetArrow
 
@@ -15,9 +17,14 @@ signal cancel_aiming_card()
 var _targetting_card_index = -1
 
 func _on_hand_card_clicked(i: int) -> void:
+	print(i, " ", enabled_idx)
+	if enabled_idx >= 0 and enabled_idx != i: # Disable all other slots than enabled
+		return
 	_targetting_card_index = i
 	
 func show_target_arrow(i: int):
+	if enabled_idx >= 0 and enabled_idx != i: # Disable all other slots than enabled
+		return
 	var start_pos = hand.position_card(i)
 	target_arrow.set_start_position(start_pos)
 	target_arrow.show()
@@ -79,3 +86,5 @@ func _on_hand_card_discarded(i: int) -> void:
 	return
 	_targetting_card_index = -1
 	
+func isolate_card(i: int) -> void:
+	enabled_idx = i
