@@ -33,6 +33,7 @@ enum TerrainType{
 var generated_chunks = {}
 
 var occupation_checks = [get_occupied_tiles]
+var has_terrain = func(cell): return cell in get_occupied_tiles
 
 @onready var tilemap: TileMapLayer = %GroundMap
 @onready var healthmap: TileMapLayer = %HealthMap
@@ -289,7 +290,7 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 				var section_has_ground = true
 				for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
 					for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
-						if %GroundMap.get_cell_tile_data(Vector2(x, y)) == null:
+						if not has_terrain.call(Vector2i(x, y)):
 							section_has_ground = false
 				if section_has_ground:
 					has_ground = true
