@@ -9,7 +9,7 @@ efficiency = Array[int]([-1])
 
 [resource]
 script = ExtResource("1_1cyyg")
-card_name = "Super Buff"
+card_name = "Excavation Engine"
 description = "Digs gain +X power this turn."
 energy_cost = -1
 card_impl = 4
