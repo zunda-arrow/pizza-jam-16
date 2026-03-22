@@ -11,6 +11,7 @@ extends Resource
 @export var dig_area: Array[Rect2i]
 @export_range(-1,10) var dig_power: int
 @export var utility: UtilityResource
+@export var single_use: bool
 
 @export var cost := 0
 @export var rarity := 1.0
