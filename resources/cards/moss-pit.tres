@@ -7,9 +7,9 @@
 [resource]
 script = ExtResource("1_r2eo5")
 card_name = "Moss Pit"
-description = "+2 Energy per turn."
+description = "At the start of your turn, +1 Energy per 10 X."
 image = ExtResource("1_q2ba0")
-ant_cost = 30
+ant_cost = -10
 card_impl = 3
 structureResource = ExtResource("2_r2eo5")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
