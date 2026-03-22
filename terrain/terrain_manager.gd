@@ -132,16 +132,16 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 		
 	var dist_to_origin = Vector2(x, y).distance_to(Vector2.ZERO)
 
-	if mystery_ore_noise.get_noise_2d(x, y) > 0.8 - (dist_to_origin / 1000):
+	if mystery_ore_noise.get_noise_2d(x, y) > 0.7 - (dist_to_origin / 800):
 		return TerrainType.Mystery
 	
-	if mystery_ore_noise.get_noise_2d(x, y) < -0.8 + (dist_to_origin / 1000):
+	if mystery_ore_noise.get_noise_2d(x, y) < -0.7 + (dist_to_origin / 800):
 		return TerrainType.Ore
 
-	if gold_ore_noise.get_noise_2d(x, y) > 0.4 - (dist_to_origin / 500):
+	if gold_ore_noise.get_noise_2d(x, y) > 0.4 - (dist_to_origin / 400):
 		return TerrainType.ShroomDirt
 
-	if rock_noise.get_noise_2d(x, y) > 0.25 - (dist_to_origin / 200):
+	if rock_noise.get_noise_2d(x, y) > 0.2 - (dist_to_origin / 200):
 		return TerrainType.Rock
 
 	if light_dirt_noise.get_noise_2d(x, y) > 0.05:
