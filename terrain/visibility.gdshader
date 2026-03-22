@@ -1,7 +1,6 @@
 shader_type canvas_item;
 // x,y - pos, z - active
 uniform vec3[255] discoveries;
-uniform float time: hint_range(0.0,10.0);
 uniform float discovery_size: hint_range(0.0,1.0);
 uniform float box_rounding: hint_range(0.0,1.0);
 uniform float blurriness: hint_range(0.0,1.0);
@@ -58,7 +57,7 @@ void fragment() {
 	vec4 map = construct(uv);
 	
 	COLOR.rgb = vignette_color;
-	COLOR.a = floor(texture(noise, vec3(abs(uv), TIME)).r + map.y * float(bands)) / float(bands);
+	COLOR.a = floor(texture(noise, vec3(abs(uv), mod(TIME / 20., 1.))).r + map.y * float(bands)) / float(bands);
 	
 	//if (map.x < 1.0) {
 		//COLOR.rgb = valid_placement ? interactable_color.rgb : invalid_color.rgb;
