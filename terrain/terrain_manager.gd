@@ -13,6 +13,7 @@ enum TerrainType{
 	LightDirt,
 	ShroomDirt,
 	Mystery,
+	Ore,
 }
 
 @export var initial_seed = 0 # The noise seed on ready. If set to 0, random seed.
@@ -89,6 +90,9 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void: # Generate a single chu
 			if my_value == TerrainType.Mystery:
 				tilemap.set_cell(potential_pos, TerrainType.ShroomDirt - 1, Vector2i(6, 6))
 				continue
+			elif my_value == TerrainType.Ore:
+				tilemap.set_cell(potential_pos, TerrainType.ShroomDirt - 1, Vector2i(1, 7))
+				continue
 
 			var top_left = get_cellv(potential_pos + Vector2i(-1, -1)) == my_value
 			var top_middle = get_cellv(potential_pos + Vector2i(0, -1)) == my_value
@@ -125,10 +129,13 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 	if point > 0.3:
 		return TerrainType.Air
 		
-	var dist_to_origin = Vector2(x, y).distance_to(Vector2(0, 0))
+	var dist_to_origin = Vector2(x, y).distance_to(Vector2.ZERO)
 
 	if mystery_ore_noise.get_noise_2d(x, y) > 0.8 - (dist_to_origin / 1000):
 		return TerrainType.Mystery
+	
+	if mystery_ore_noise.get_noise_2d(x, y) < -0.8 + (dist_to_origin / 1000):
+		return TerrainType.Ore
 
 	if gold_ore_noise.get_noise_2d(x, y) > 0.4 - (dist_to_origin / 500):
 		return TerrainType.ShroomDirt
@@ -191,25 +198,17 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
 			var health = initial_health - power
 			if health <= 0:
-				var reward = reward_cell(cell_data)
+				var reward = reward_cell(cell, cell_data)
 				value_gained += reward + pots
 				cells_to_remove.append(cell)
 				%Cracks.set_cell(cell)
-				
-				for i in range(0,reward):
-					var f = $FungusGuy.duplicate()
-					f.show()
-					f.reset_physics_interpolation()
-					f.position = $GroundMap.map_to_local(cell)
-					add_child(f)
-					f.on_create()
 				continue
 			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
 			set_cracks_for_cell(cell, health, initial_health)
 			continue
 		
 		if healthmap.get_cell_atlas_coords(cell).x - power < 0:
-			value_gained += reward_cell(cell_data) + pots
+			value_gained += reward_cell(cell, cell_data) + pots
 			cells_to_remove.append(cell)
 			%Cracks.set_cell(cell)
 			healthmap.set_cell(cell)
@@ -229,10 +228,17 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 
 	return true
 
-func reward_cell(cell_data: Variant) -> int:
+func reward_cell(cell: Vector2i, cell_data: Variant) -> int:
 	var value = cell_data.get_custom_data("value")
 	for i in cell_data.get_custom_data("random_value") + coin_bonus:
 		value += int(rng.randf() <= 0.01)
+	for i in range(0, value):
+		var f = $FungusGuy.duplicate()
+		f.show()
+		f.reset_physics_interpolation()
+		f.position = $GroundMap.map_to_local(cell)
+		add_child(f)
+		f.on_create()
 	if cell_data.get_custom_data("card_reward") > 0:
 		card_reward.emit(cell_data.get_custom_data("card_reward"))
 	return value
