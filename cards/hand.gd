@@ -76,7 +76,7 @@ func position_card(i: int):
 	var x_position = sqrt(radius ** 2 - y_position ** 2) - radius
 
 	if selected_card_index == i:
-		x_position = 50
+		x_position = 75
 
 	if selected_card_index != -1:
 		if selected_card_index < i:

@@ -151,17 +151,24 @@ var extra_particle_generators: Array[GPUParticles2D] = []
 		#p.queue_free()
 
 # Radius is a square radius
-func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int) -> bool:
+func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int, luck: int) -> bool:
 	var area = get_area(cell_coordinate_center, cells)
 	var cells_to_damage: Array[Vector2i] = []
 	var building_cells: Array[Vector2i] = %Structure.building_occupation()
 	
-	var training_camps = 0
+	var grow = 0
+	var pots = 0
 	for group in %Structure.structure_groups_in_range(area):
 		for structure in group:
 			if structure.structure.resource.structure_name == "Training Camp":
-				training_camps += 1
-	grow_area(area, training_camps)
+				grow += 1
+			if structure.structure.resource.structure_name == "Mushroom Bar":
+				power += 1
+			if structure.structure.resource.structure_name == "Campfire":
+				coin_bonus += 2
+			if structure.structure.resource.structure_name == "Pot":
+				pots += 1
+	grow_area(area, grow)
 	
 	for cell in area:
 		if tilemap.get_cell_source_id(cell) >= 0:
@@ -182,7 +189,7 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
 			var health = initial_health - power
 			if health <= 0:
-				value_gained += reward_cell(cell_data)
+				value_gained += reward_cell(cell_data) + pots
 				cells_to_remove.append(cell)
 				%Cracks.set_cell(cell)
 				continue
@@ -191,7 +198,7 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int)
 			continue
 		
 		if healthmap.get_cell_atlas_coords(cell).x - power < 0:
-			value_gained += reward_cell(cell_data)
+			value_gained += reward_cell(cell_data) + pots
 			cells_to_remove.append(cell)
 			%Cracks.set_cell(cell)
 			healthmap.set_cell(cell)

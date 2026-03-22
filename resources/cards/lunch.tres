@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://bieiquhl4a3hq"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://opvvlr5y416s"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_4cudf"]
 [ext_resource type="Script" uid="uid://wl5o2odjdd6i" path="res://resources/utilities.gd" id="2_j8ggo"]
@@ -10,7 +10,7 @@ bonus_coins = Array[int]([3])
 [resource]
 script = ExtResource("1_4cudf")
 card_name = "Lunch"
-description = "+3 chances to dig up a coin this turn."
+description = "+3 chances to dig up a coin from each tile this turn."
 energy_cost = 1
 card_impl = 4
 utility = SubResource("Resource_r0fl7")

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://bc78rbdtp8lhm"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dx1v1656ao7ep"]
 
 [ext_resource type="Texture2D" uid="uid://neh2fvjt2r1g" path="res://assets/cards/ant-drill.png" id="1_5v8c2"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_g7lsy"]
@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("1_g7lsy")
 card_name = "Super Drill"
-description = "Dig out a 8×8 area once per 10 ants."
+description = "Dig out a 8×8 area with 1 power per 10 ants."
 image = ExtResource("1_5v8c2")
-energy_cost = 1
+energy_cost = 4
 ant_cost = -1
 card_impl = 1
 dig_area = Array[Rect2i]([Rect2i(-4, -4, 8, 8)])

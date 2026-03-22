@@ -107,6 +107,10 @@ initial_seed = 1
 terrain_shape_noise = SubResource("FastNoiseLite_nc45s")
 gold_ore_noise = SubResource("FastNoiseLite_fpiom")
 mystery_ore_noise = SubResource("FastNoiseLite_jk8on")
+block_threshold = null
+rock_threshold = null
+spawn_radius = null
+chunk_size = null
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=547818870]
 scroll_scale = Vector2(0.8, 0.8)
