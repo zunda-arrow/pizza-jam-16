@@ -125,7 +125,7 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 		
 	var dist_to_origin = Vector2(x, y).distance_to(Vector2(0, 0))
 
-	if mystery_ore_noise.get_noise_2d(x, y) > 0.8 - (dist_to_origin / 1000):
+	if mystery_ore_noise.get_noise_2d(x, y) > 0.7:
 		return TerrainType.Mystery
 
 	if gold_ore_noise.get_noise_2d(x, y) > 0.4 - (dist_to_origin / 500):
@@ -201,6 +201,16 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 					f.position = $GroundMap.map_to_local(cell)
 					add_child(f)
 					f.on_create()
+					
+				if $GroundMap.get_cell_atlas_coords(cell) == Vector2i(6,6):
+					var f = $CardPack.duplicate()
+					f.show()
+					f.reset_physics_interpolation()
+					f.position = $GroundMap.map_to_local(cell)
+					add_child(f)
+					f.on_create()
+					card_reward.emit()			
+					
 				continue
 			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
 			set_cracks_for_cell(cell, health, initial_health)

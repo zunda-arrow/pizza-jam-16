@@ -19,6 +19,7 @@ var hand: Array[CardResource.Card] = []
 var draw_pile: Array[CardResource.Card] = []
 var discard_pile: Array[CardResource.Card] = []
 var exhaust_pile: Array[CardResource.Card] = []
+var card_stack: int = 0
 
 var HomeStructure = preload("res://resources/structures/home.tres")
 

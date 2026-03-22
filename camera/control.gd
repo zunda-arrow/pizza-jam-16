@@ -38,6 +38,9 @@ func _process(delta):
 		global_position = lerp(global_position, Vector2(0,0), _time * 0.4)
 		if global_position == Vector2(0,0) or inp.length() > 0.1:
 			going_home = false
+		
+	if _time >= 1:
+		_time = 0
 				
 	position += inp.normalized() * speed * delta
 	

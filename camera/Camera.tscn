@@ -39,6 +39,7 @@ position = Vector2(533, -48)
 texture = ExtResource("2_eus7h")
 
 [node name="Visibility" type="TextureRect" parent="." unique_id=1670102644]
+visible = false
 material = SubResource("ShaderMaterial_tfcte")
 offset_left = -960.0
 offset_top = -540.0
