@@ -2,6 +2,7 @@ extends Node2D
 
 signal day_end
 signal money_earned(money: int)
+signal reroll_earned(money: int)
 signal card_earned(card: CardResource)
 signal ant_count_changed(ant_count: int)
 signal energy_count_changed(energy: int)
@@ -398,6 +399,9 @@ func start_day(deck: Array[CardResource.Card], initial_hand: Array[CardResource.
 
 func money_passthrough(value: int):
 	money_earned.emit(value)
+
+func _on_terrain_reroll_earned(value: int) -> void:
+	reroll_earned.emit(value)
 
 func on_card_reward(to_roll: int) -> void:
 	var cards: Array[CardResource.Card] = []

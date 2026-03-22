@@ -7,6 +7,13 @@ extends Node2D
 		update_toolbar()
 	get():
 		return money
+	
+@export var rerolls: int:
+	set(val):
+		rerolls = val
+		update_toolbar()
+	get():
+		return rerolls
 
 @export var day: int:
 	set(val):
@@ -47,6 +54,7 @@ func _process(delta: float) -> void:
 func update_toolbar():
 	%Turn.text = "Turn " + str(turn + 1) + "/4"
 	%Money.text = str(money) + "/" + str(daily_goal)
+	%Rerolls.text = "Rerolls: " + str(rerolls)
 	%Day.text = "Day " + str(day) + "/" + str(total_days)
 
 	if not in_game:

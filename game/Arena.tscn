@@ -174,6 +174,7 @@ horizontal_alignment = 1
 [connection signal="card_reward" from="Terrain" to="." method="on_card_reward"]
 [connection signal="chunk_generated" from="Terrain" to="." method="_on_terrain_chunk_generated"]
 [connection signal="money_dug" from="Terrain" to="." method="money_passthrough"]
+[connection signal="reroll_earned" from="Terrain" to="." method="_on_terrain_reroll_earned"]
 [connection signal="ants_gain" from="Utility" to="." method="_on_utility_ants_gain"]
 [connection signal="bonus_coin_gain" from="Utility" to="Terrain" method="on_coin_bonus"]
 [connection signal="discard_gain" from="Utility" to="." method="_on_utility_discard_gain"]

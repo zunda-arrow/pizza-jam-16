@@ -35,4 +35,12 @@ offset_right = 718.0
 offset_bottom = 343.0
 text = "Done!"
 
+[node name="Reroll" type="Button" parent="." unique_id=429892034]
+offset_left = 607.0
+offset_top = 219.0
+offset_right = 729.0
+offset_bottom = 277.0
+text = "Reroll"
+
 [connection signal="pressed" from="Button" to="." method="on_done_pressed"]
+[connection signal="pressed" from="Reroll" to="." method="_on_reroll_pressed"]

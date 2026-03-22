@@ -21,6 +21,13 @@ var money: int:
 	get():
 		return money
 
+var rerolls: int:
+	set(val):
+		rerolls = val
+		%Toolbar.rerolls = rerolls
+	get():
+		return rerolls
+
 var day = 1
 
 func calculate_daily_goal(day_number: int):
@@ -73,6 +80,9 @@ func on_day_end() -> void:
 
 func on_money_earned(value: int) -> void:
 	money += value
+	
+func on_reroll_earned(value: int) -> void:
+	rerolls += value
 
 func get_money() -> int:
 	return money

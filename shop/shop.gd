@@ -63,3 +63,7 @@ func on_open() -> void:
 
 func on_done_pressed() -> void:
 	shopping_done.emit()
+
+
+func _on_reroll_pressed() -> void:
+	roll_cards()
