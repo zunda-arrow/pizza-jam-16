@@ -274,7 +274,7 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 		grow_area(area, training_camps)
 		
 		for cell in area:
-			if cell in building_cells or !dig_touches_path:
+			if (cell in building_cells and tilemap.get_cell_source_id(cell) >= 0) or !dig_touches_path:
 				$Selection.set_cell(cell, 0, Vector2(1,0), 0)
 			else:
 				$Selection.set_cell(cell, 0, Vector2(0,0), 0)
