@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://opvvlr5y416s"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_4cudf"]
+[ext_resource type="Texture2D" uid="uid://bwsa6g8l7ng3b" path="res://assets/cards/lunch-break.png.png" id="1_j8ggo"]
 [ext_resource type="Script" uid="uid://wl5o2odjdd6i" path="res://resources/utilities.gd" id="2_j8ggo"]
 
 [sub_resource type="Resource" id="Resource_r0fl7"]
@@ -11,6 +12,7 @@ bonus_coins = Array[int]([3])
 script = ExtResource("1_4cudf")
 card_name = "Lunch"
 description = "+5 chances to dig up a coin from each tile this turn."
+image = ExtResource("1_j8ggo")
 energy_cost = 2
 ant_cost = 10
 card_impl = 4
