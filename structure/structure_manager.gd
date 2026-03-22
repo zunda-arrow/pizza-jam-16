@@ -132,7 +132,9 @@ func determine_links():
 	for i in range(structures.size()):
 		links.append([])
 	for i in range(structures.size()):
-		for j in range(i+1, structures.size()):
-			if (structures[i].position.distance_to(structures[j].global_position) <= structures[i].structure.get_visible_radius()):
-				links[i].append(j)
-				links[j].append(i)
+		for j in range(structures.size()):
+			if i != j && structures[i].position.distance_to(structures[j].global_position) <= structures[i].structure.get_visible_radius():
+				if !j in links[i]:
+					links[i].append(j)
+				if !i in links[j]:
+					links[j].append(i)
