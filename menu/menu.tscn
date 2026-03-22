@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://bqm22m7vq1t3h" path="res://menu/menu.gd" id="1_6nwqt"]
 [ext_resource type="Texture2D" uid="uid://dsrkx6hx38ovs" path="res://assets/terrain/cave.png" id="2_pbjm4"]
 [ext_resource type="Script" uid="uid://lfjkc5ltahax" path="res://menu/volume.gd" id="3_6nwqt"]
-[ext_resource type="SpriteFrames" uid="uid://xq1t0387llcj" path="res://assets/ant-queen-frames.tres" id="3_pbjm4"]
-[ext_resource type="FontFile" uid="uid://d3slyn5r5kgk0" path="res://assets/title-font.tres" id="4_svuvw"]
+[ext_resource type="SpriteFrames" uid="uid://cyjff7oxmwfsd" path="res://assets/ant-queen-frames.tres" id="3_pbjm4"]
+[ext_resource type="FontFile" uid="uid://dph71nf0afuko" path="res://assets/title-font.tres" id="4_svuvw"]
 [ext_resource type="TileSet" uid="uid://c48cjwnpo03m1" path="res://terrain/dirt_tileset.tres" id="6_juveg"]
-[ext_resource type="Script" uid="uid://dokkkoifjve00" path="res://menu/load_map.gd" id="7_v6yed"]
+[ext_resource type="Script" path="res://menu/load_map.gd" id="7_v6yed"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_svuvw"]
 viewport_path = NodePath("TextureRect/SubViewport")
@@ -262,13 +262,13 @@ stretch_mode = 1
 
 [node name="SubViewport" type="SubViewport" parent="TextureRect" unique_id=1522927256]
 transparent_bg = true
-size = Vector2i(158, 158)
+size = Vector2i(128, 128)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TextureRect/SubViewport" unique_id=2062894205]
-position = Vector2(79, 79)
-scale = Vector2(2.45, 2.45)
+position = Vector2(64, 64)
 sprite_frames = ExtResource("3_pbjm4")
 autoplay = "default"
+frame_progress = 0.8635837
 
 [node name="MainMenu" type="VBoxContainer" parent="." unique_id=694086296]
 layout_mode = 2
@@ -280,14 +280,14 @@ layout_mode = 2
 [node name="TextureRect" type="TextureRect" parent="MainMenu/HBoxContainer" unique_id=1720741543]
 layout_mode = 2
 texture = SubResource("ViewportTexture_svuvw")
-expand_mode = 3
+expand_mode = 2
 flip_h = true
 
 [node name="Label" type="Label" parent="MainMenu/HBoxContainer" unique_id=1949245247]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_svuvw")
 theme_override_font_sizes/font_size = 120
-text = "Template Game!"
+text = "Nest Expansion"
 
 [node name="Start" type="Button" parent="MainMenu" unique_id=444583248]
 layout_mode = 2
