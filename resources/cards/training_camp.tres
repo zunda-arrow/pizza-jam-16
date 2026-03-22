@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dfehmiwomnmnf"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://bayo3utre58qk"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_kcftd"]
-[ext_resource type="Resource" uid="uid://cu52ebfd6scdn" path="res://resources/structures/training_camp.tres" id="2_kcftd"]
 [ext_resource type="Texture2D" uid="uid://t3rmu44i1gem" path="res://assets/training-camp.png" id="1_spgxj"]
+[ext_resource type="Resource" uid="uid://btsw2t41b6xqm" path="res://resources/structures/training_camp.tres" id="2_kcftd"]
 
 [resource]
 script = ExtResource("1_kcftd")
 card_name = "Training Camp"
 description = "All digs in range gain +1 radius."
 image = ExtResource("1_spgxj")
+energy_cost = 1
+ant_cost = 20
 card_impl = 3
 structureResource = ExtResource("2_kcftd")
 cost = 10
