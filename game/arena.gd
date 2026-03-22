@@ -308,6 +308,7 @@ func _on_clock_day_end(day: int) -> void:
 			s.lifetime -= 1
 		i -= 1
 
+	%Structure.determine_groups()
 	_on_terrain_update()
 
 func _on_clock_day_tick(tick: int) -> void:
