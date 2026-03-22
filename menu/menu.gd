@@ -10,6 +10,9 @@ var delay = 2
 @onready var title = $MainMenu/HBoxContainer/Label
 
 func _ready() -> void:
+	if OS.get_name() == "Web":
+		%Quit.hide()
+
 	title.text = ProjectSettings.get_setting("application/config/name")
 	menu.show()
 	options.hide()
