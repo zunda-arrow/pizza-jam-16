@@ -358,7 +358,7 @@ func start_turn(initial_hand: Array[CardResource.Card] = []):
 
 	%Utility.turn_resources()
 	for s in %Structure.structures:
-		%Utility.utilize(s.structure.resource.util_buffs, s.magic_number)
+		%Utility.utilize(s.structure.resource.util_buffs, s.magic_number, -1)
 
 	if allow_end_turn:
 		%EndTurnButton.disabled = false
