@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://rgvtctrqdqjs"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://b8kqcc8krinxh"]
 
+[ext_resource type="Texture2D" uid="uid://neh2fvjt2r1g" path="res://assets/cards/ant-drill.png" id="1_oh17u"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_wooqg"]
 
 [resource]
 script = ExtResource("1_wooqg")
 card_name = "Beam Drill"
 description = "Dig out a 3X×3 area."
+image = ExtResource("1_oh17u")
 energy_cost = -1
 ant_cost = 10
 card_impl = 1

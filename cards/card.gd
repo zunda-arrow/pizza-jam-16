@@ -23,6 +23,7 @@ var instantiated_card_resource: CardResource.Card:
 			$Dig.show()
 		if card.get_type() == CardResource.CardType.Utility:
 			$Utility.show()
+		%CardImage.texture = card.image
 	get():
 		return _instantiated_card_resource
 

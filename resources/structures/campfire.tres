@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://c56e3788gxrlx"]
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://cdmug0udspqb0"]
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_qb3jr"]
 [ext_resource type="Texture2D" uid="uid://dd0cw7lmcce43" path="res://assets/campfire.png" id="2_qb3jr"]

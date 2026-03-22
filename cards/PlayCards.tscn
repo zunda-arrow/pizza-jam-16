@@ -9,7 +9,8 @@ script = ExtResource("1_psm3s")
 
 [node name="Hand" parent="." unique_id=451922452 instance=ExtResource("2_g8evs")]
 unique_name_in_owner = true
-position = Vector2(203, 516)
+position = Vector2(188, 516)
+radius = 8000
 
 [node name="TargetArrow" parent="Hand" unique_id=8504322 instance=ExtResource("3_cmaul")]
 unique_name_in_owner = true

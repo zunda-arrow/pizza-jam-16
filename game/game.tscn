@@ -5,9 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://bkcrj2gp4i7ud" path="res://shop/shop.tscn" id="3_h7iqs"]
 [ext_resource type="PackedScene" uid="uid://dj3jbeehx5vb8" path="res://game/Toolbar.tscn" id="5_dakft"]
 [ext_resource type="AudioStream" uid="uid://l3nopiv3qu1d" path="res://assets/sound/ant_music.mp3" id="5_dxrkv"]
+[ext_resource type="PackedScene" uid="uid://doqybkdebhs4x" path="res://game/TextBox.tscn" id="5_u5opy"]
+[ext_resource type="Script" uid="uid://blt2dk4ix40hj" path="res://game/manage_tutorial.gd" id="7_u5opy"]
 
 [node name="Game" type="Node2D" unique_id=1516163044]
 script = ExtResource("1_l1rk1")
+
+[node name="ManageTutorial" type="Node" parent="." unique_id=2120524484]
+script = ExtResource("7_u5opy")
 
 [node name="Arena" parent="." unique_id=728631546 node_paths=PackedStringArray("game") instance=ExtResource("2_vasa2")]
 game = NodePath("..")
@@ -65,6 +70,13 @@ unique_name_in_owner = true
 visible = false
 position = Vector2(957, 532)
 
+[node name="Textbox" parent="Toolbar" unique_id=111541250 instance=ExtResource("5_u5opy")]
+unique_name_in_owner = true
+offset_left = 609.0
+offset_top = 120.0
+offset_right = 609.0
+offset_bottom = 120.0
+
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=652045608]
 process_mode = 3
 stream = ExtResource("5_dxrkv")
@@ -75,6 +87,7 @@ bus = &"Music"
 [connection signal="shop_start" from="." to="Toolbar/Shop" method="on_open"]
 [connection signal="turn_start" from="." to="Arena" method="start_turn"]
 [connection signal="ant_count_changed" from="Arena" to="." method="_on_arena_ant_count_changed"]
+[connection signal="card_played" from="Arena" to="ManageTutorial" method="_on_arena_card_played"]
 [connection signal="day_end" from="Arena" to="." method="on_day_end"]
 [connection signal="energy_count_changed" from="Arena" to="." method="_on_arena_energy_count_changed"]
 [connection signal="money_earned" from="Arena" to="." method="on_money_earned"]

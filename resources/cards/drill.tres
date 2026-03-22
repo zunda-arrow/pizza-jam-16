@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://cpmkqxu5gj8h4"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dg3p1derf0pgn"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_en6wu"]
+[ext_resource type="Texture2D" uid="uid://neh2fvjt2r1g" path="res://assets/cards/ant-drill.png" id="1_m3u6e"]
 
 [resource]
 script = ExtResource("1_en6wu")
 card_name = "Drill"
 description = "Mine out a 3×3 area."
+image = ExtResource("1_m3u6e")
 energy_cost = 1
 card_impl = 1
 dig_area = Array[Rect2i]([Rect2i(-2, -2, 3, 3)])
