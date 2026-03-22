@@ -340,7 +340,8 @@ func _on_clock_day_end(day: int) -> void:
 		elif s.lifetime > 0:
 			s.lifetime -= 1
 		i -= 1
-
+	
+	%Structure.determine_links()
 	%Structure.determine_groups()
 	_on_terrain_update()
 
