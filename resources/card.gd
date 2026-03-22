@@ -44,6 +44,7 @@ class Card extends Node:
 	var dig_area: Array[Rect2i]
 	var dig_power: int
 	var utility: UtilityResource
+	var single_use: bool
 	
 	func get_type() -> CardType:
 		return CardType.Unset
@@ -101,5 +102,6 @@ func new() -> Card:
 	card.dig_area = dig_area
 	card.dig_power = dig_power
 	card.utility = utility
+	card.single_use = single_use
 	card.image = image
 	return card
