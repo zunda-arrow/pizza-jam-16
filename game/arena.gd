@@ -37,12 +37,6 @@ var ants: int = 0 :
 
 var eff: int
 
-var player_position: Vector2i:
-	set(pos):
-		%Player.position = pos * 32
-	get():
-		return %Player.position / 32
-
 @onready var rng = RandomNumberGenerator.new()
 
 func _ready():
@@ -223,7 +217,6 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 			if success:
 				%Camera.shake(Vector2(3,0), 0.95)
 		if card.get_type() == CardResource.CardType.Move:
-			player_position = at
 			success = true
 		elif card.get_type() == CardResource.CardType.Build:
 			if _validate_structure_at(card, at):
