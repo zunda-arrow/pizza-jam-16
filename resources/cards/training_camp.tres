@@ -14,4 +14,5 @@ ant_cost = 20
 card_impl = 3
 structureResource = ExtResource("2_kcftd")
 cost = 10
+rarity = 1.5
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
