@@ -2,6 +2,7 @@
 extends Node2D
 
 var lifetime = 0
+var magic_number = 0
 
 var structure: StructureResource.Structure:
 	set(structure_):

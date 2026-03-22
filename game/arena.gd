@@ -205,7 +205,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		player_position = at
 		success = true
 	if card.get_type() == CardResource.CardType.Build:
-		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new())
+		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new(), x)
 		%Camera.shake(Vector2(0,1), 0.9)
 	if card.get_type() == CardResource.CardType.Utility:
 		success = %Utility.utilize(card.utility, x)
@@ -334,7 +334,7 @@ func start_turn():
 
 	%Utility.turn_resources()
 	for s in %Structure.structures:
-		%Utility.utilize(s.structure.resource.util_buffs, 0)
+		%Utility.utilize(s.structure.resource.util_buffs, s.magic_number)
 
 	%EndTurnButton.disabled = false
 
