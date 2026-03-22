@@ -31,15 +31,16 @@ func _ready() -> void:
 	if card_resource != null:
 		instantiated_card_resource = card_resource.new()
 
-func _on_panel_mouse_entered() -> void:
+func _on_texture_mouse_entered() -> void:
 	hovered = true
 	on_mouse_entered.emit()
 
-func _on_panel_mouse_exited() -> void:
+func _on_texture_mouse_exited() -> void:
 	hovered = false
 	on_mouse_exited.emit()
 
-func _on_panel_gui_input(event: InputEvent) -> void:
+
+func _on_texture_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 			on_clicked.emit()
