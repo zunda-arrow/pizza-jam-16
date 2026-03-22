@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dr1ejf82fma5u"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://cpaj43ltnbsbb"]
 
 [ext_resource type="Texture2D" uid="uid://cu72o884el1tx" path="res://assets/ant-nap.png" id="1_kuvj0"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_pox5k"]

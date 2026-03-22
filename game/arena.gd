@@ -212,8 +212,8 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		%Camera.shake(Vector2(0,1), 0.9)
 	elif card.card_name == "Perpetual Stew":
 		success = %Utility.stew(at)
-	elif card.get_type() == CardResource.CardType.Utility:
-		success = %Utility.utilize(card.utility, x, index)
+	if card.utility != null:
+		success = success or %Utility.utilize(card.utility, x, index)
 
 	%Terrain.hide_selector()
 	_on_terrain_update()

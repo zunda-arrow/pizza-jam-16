@@ -34,6 +34,7 @@ enum Cards {
 }
 
 class Card extends Node:
+	var resource: CardResource
 	var card_name: String
 	var description: String
 	var image: Texture2D
@@ -91,6 +92,7 @@ var all_cards = {
 
 func new() -> Card:
 	var card = all_cards[card_impl].new()
+	card.resource = self
 	card.card_name = card_name
 	card.description = description
 	card.energy_cost = energy_cost

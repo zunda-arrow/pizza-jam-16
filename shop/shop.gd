@@ -37,6 +37,8 @@ func generate_shop() -> void:
 
 func roll_cards() -> void:
 	for child in %CardContainer.get_children():
+		if child == null:
+			continue
 		child.show()
 		var card = roll_card()
 		child.card_resource = card
@@ -55,11 +57,8 @@ func card_clicked(idx: int, card: CardResource) -> void:
 	%CardContainer.get_child(idx).hide()
 	charge_account.emit(card.cost)
 	card_purchased.emit(card)
-	
-	$Money.text = "Money: " + str(get_money.call())
 
 func on_open() -> void:
-	$Money.text = "Money: " + str(get_money.call())
 	roll_cards()
 
 func on_done_pressed() -> void:

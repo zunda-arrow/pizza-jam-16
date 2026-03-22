@@ -35,7 +35,6 @@ gold_ore_noise = SubResource("FastNoiseLite_dakxn")
 block_threshold = 0.2
 rock_threshold = -0.4
 spawn_radius = 5.5
-chunk_size = 16
 
 [node name="Structure" parent="." unique_id=11068490 instance=ExtResource("3_5yp8v")]
 unique_name_in_owner = true
@@ -123,8 +122,10 @@ text = "I got lost and I want to go home
 
 [node name="CardPileDisplay" parent="Camera" unique_id=1774113453 instance=ExtResource("10_n65lt")]
 unique_name_in_owner = true
-visible = false
-position = Vector2(-960, -540)
+position = Vector2(-959.00006, -540)
+scale = Vector2(0.6, 0.6)
+start_pos = Vector2(1000, 300)
+gap = Vector2(335, 235)
 
 [node name="DrawPile" type="PanelContainer" parent="Camera" unique_id=1965561152]
 offset_left = -61.0
