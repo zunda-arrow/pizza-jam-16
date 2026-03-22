@@ -258,7 +258,6 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) -> void:
 	var x = 0
-	
 	if card.energy_cost > energy or card.ant_cost > ants:
 		return
 		
