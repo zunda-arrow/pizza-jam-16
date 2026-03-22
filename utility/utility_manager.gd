@@ -54,6 +54,12 @@ func x_scaling(n: int, X: int) -> int:
 		return -n * X
 	return n
 
+func stew(at: Vector2i):
+	for s in %Structure.structures:
+		if at in s.get_tiles():
+			s.lifetime == -1
+			break
+
 func turn_resources():
 	if !energy.is_empty():
 		energy_gain.emit(energy.pop_front())
