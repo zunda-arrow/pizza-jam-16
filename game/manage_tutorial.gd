@@ -25,6 +25,10 @@ var dialouge_lines = [
 ]
 
 func _ready() -> void:
+	if ConfigManager.get_value("show_tutorial") == false:
+		textbox.hide()
+		return
+
 	end_turn_enable.emit(false)
 	isolate_card.emit(200) # Effectively disables all cards
 	next_line()
@@ -33,6 +37,7 @@ func next_line():
 	current_line+=1
 	
 	if current_line >= len(dialouge_lines):
+		ConfigManager.set_value("show_tutorial", false)
 		textbox.hide()
 		end_turn_enable.emit(true)
 		return

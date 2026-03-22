@@ -7,6 +7,7 @@ signal ant_count_changed(ant_count: int)
 signal energy_count_changed(energy: int)
 signal on_turn_changed(n: int)
 signal card_played(card: CardResource.Card)
+signal destroy_card(card: CardResource.Card)
 
 @export var game: Game
 
@@ -94,6 +95,11 @@ func exhaust(i: int):
 	exhaust_pile.append(hand[i])
 	hand.pop_at(i)
 
+func destroy(i: int):
+	%PlayCards.discard_card(i)
+	var card = hand.pop_at(i)
+	destroy_card.emit(card)
+
 func _is_cell_filled(pos: Vector2i):
 	for structure in %Structure.structures:
 		if structure.structure.resource.structure_name in ["Bridge", "Ladder"]:
@@ -171,6 +177,7 @@ func x_area(cells: Array[Rect2i], X: int) -> Array[Rect2i]:
 	return area
 
 func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) -> void:
+	var playable = true
 	var success = false
 	var x = 0
 	print("Using card: ", card, at)
@@ -189,31 +196,35 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		x += energy
 	elif card.ant_cost < 0:
 		x += ants / 10
-
-	if card.get_type() == CardResource.CardType.Dig:
-		var area = card.get_area()
-		if x > 0:
-			area = x_area(area, x)
-		var power = card.power()
-		if power < 0:
-			power = x
-		power += eff
-		if dig_area_touches_path(area, at):
-			success = %Terrain.destroy(at, area, power, x)
-		else:
-			success = false
-		if success:
-			%Camera.shake(Vector2(3,0), 0.95)
-	if card.get_type() == CardResource.CardType.Move:
-		player_position = at
-		success = true
-	elif card.get_type() == CardResource.CardType.Build:
-		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new(), x)
-		%Camera.shake(Vector2(0,1), 0.9)
-	elif card.card_name == "Perpetual Stew":
-		success = %Utility.stew(at)
+	
 	if card.utility != null:
-		success = success or %Utility.utilize(card.utility, x, index)
+		if card.utility.discard.size() > 0 and card.utility.discard[0] >= hand.size():
+			playable = false
+		if playable:
+			success = success or %Utility.utilize(card.utility, x, index)
+	if playable:
+		if card.get_type() == CardResource.CardType.Dig:
+			var area = card.get_area()
+			if x > 0:
+				area = x_area(area, x)
+			var power = card.power()
+			if power < 0:
+				power = x
+			power += eff
+			if dig_area_touches_path(area, at):
+				success = %Terrain.destroy(at, area, power, x)
+			else:
+				success = false
+			if success:
+				%Camera.shake(Vector2(3,0), 0.95)
+		if card.get_type() == CardResource.CardType.Move:
+			player_position = at
+			success = true
+		elif card.get_type() == CardResource.CardType.Build:
+			success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new(), x)
+			%Camera.shake(Vector2(0,1), 0.9)
+		elif card.card_name == "Perpetual Stew":
+			success = %Utility.stew(at)
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
@@ -233,6 +244,8 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 		
 		if card.should_exhaust():
 			exhaust(index)
+		elif card.single_use:
+			destroy(index)
 		else:
 			discard(index)
 
@@ -275,8 +288,12 @@ func _on_utility_ants_gain(n: int) -> void:
 
 func _on_utility_discard_gain(n: int, source: int) -> void:
 	for i in range(n):
+		if hand.size() == 0:
+			break
 		var discard = randi_range(0, hand.size())
 		while discard == source:
+			if hand.size() == 1:
+				break
 			discard = randi_range(0, hand.size())
 		discard(discard)
 		if discard < source:
@@ -358,7 +375,7 @@ func start_turn(initial_hand: Array[CardResource.Card] = []):
 
 	%Utility.turn_resources()
 	for s in %Structure.structures:
-		%Utility.utilize(s.structure.resource.util_buffs, s.magic_number, 0)
+		%Utility.utilize(s.structure.resource.util_buffs, s.magic_number, -1)
 
 	if allow_end_turn:
 		%EndTurnButton.disabled = false

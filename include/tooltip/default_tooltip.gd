@@ -16,3 +16,4 @@ func _process(delta: float) -> void:
 
 	%MainTooltip.tooltip_name = card.card_name
 	%MainTooltip.tooltip_description = card.description
+	%MainTooltip.tooltip_cost = card.cost

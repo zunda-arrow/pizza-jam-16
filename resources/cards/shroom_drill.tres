@@ -12,7 +12,7 @@ metadata/_custom_type_script = "uid://wl5o2odjdd6i"
 [resource]
 script = ExtResource("1_bqo54")
 card_name = "Shroom Drill"
-description = "Dig out a mushroom shaped area."
+description = "Dig out a mushroom shaped area, +1 energy."
 image = ExtResource("1_k67bx")
 energy_cost = 1
 card_impl = 1

@@ -28,6 +28,7 @@ script = ExtResource("1_tb7ye")
 
 [node name="Terrain" parent="." unique_id=333081327 instance=ExtResource("2_npdor")]
 unique_name_in_owner = true
+initial_seed = 0
 terrain_shape_noise = SubResource("FastNoiseLite_n65lt")
 light_dirt_noise = SubResource("FastNoiseLite_fq16a")
 rock_noise = SubResource("FastNoiseLite_4ggwo")
