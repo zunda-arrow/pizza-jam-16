@@ -1,11 +1,12 @@
-[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://bwvw0vwv6kc8a"]
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://1m4grc8pplrk"]
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_c8cnn"]
 [ext_resource type="Texture2D" uid="uid://dprgko1eqti81" path="res://assets/moss-pit.png" id="2_c8cnn"]
-[ext_resource type="Script" path="res://resources/utilities.gd" id="3_opqya"]
+[ext_resource type="Script" uid="uid://wl5o2odjdd6i" path="res://resources/utilities.gd" id="3_opqya"]
 
 [sub_resource type="Resource" id="Resource_p7iya"]
 script = ExtResource("3_opqya")
+energy = Array[int]([2])
 
 [resource]
 script = ExtResource("1_c8cnn")
