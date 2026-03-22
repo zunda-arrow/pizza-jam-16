@@ -232,6 +232,8 @@ func reward_cell(cell_data: Variant) -> int:
 	var value = cell_data.get_custom_data("value")
 	for i in cell_data.get_custom_data("random_value") + coin_bonus:
 		value += int(rng.randf() <= 0.01)
+	if cell_data.get_custom_data("card_reward") > 0:
+		card_reward.emit(cell_data.get_custom_data("card_reward"))
 	return value
 
 func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):

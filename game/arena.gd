@@ -406,15 +406,15 @@ func money_passthrough(value: int):
 	money_earned.emit(value)
 
 func on_card_reward(to_roll: int) -> void:
-	var cards = []
+	var cards: Array[CardResource.Card] = []
 	for card in to_roll:
-		cards.append(AllCards.cards[
+		cards.append(AllCards.resources[
 			rng.rand_weighted(
 				AllCards.resources.map(func(c): return c.rarity)
 			)
-		])
+		].new())
 		card_earned.emit(card)
-	%CardReward.set_cards(cards)
+	%CardReward.show_cards(cards)
 	%CardReward.show()
 
 func _process(delta: float) -> void:
