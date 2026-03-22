@@ -165,6 +165,7 @@ text = "Exhaust"
 [connection signal="draw_gain" from="Utility" to="." method="_on_utility_draw_gain"]
 [connection signal="eff_gain" from="Utility" to="." method="_on_utility_eff_gain"]
 [connection signal="energy_gain" from="Utility" to="." method="_on_utility_energy_gain"]
+[connection signal="money_gain" from="Utility" to="." method="_on_utility_money_gain"]
 [connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
 [connection signal="cancel_aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_cancel_aiming_card"]
 [connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]
