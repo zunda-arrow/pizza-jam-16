@@ -11,6 +11,10 @@ var going_home = false
 var shake_power: Vector2 = Vector2(0,0)
 var shake_falloff = 0
 
+var click_pos: Vector2
+var click_camera_start_pos: Vector2
+var mouse_clicked = false
+
 func _ready():
 	if get_tree().root == get_parent():
 		for child in get_children():
@@ -31,6 +35,9 @@ func shake(power: Vector2, falloff: float) -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	_time += delta
+
+	if mouse_clicked == true:
+		position = click_camera_start_pos + (click_pos - get_local_mouse_position())
 	
 	var inp = Input.get_vector("left", "right", "up", "down")
 	
@@ -47,6 +54,7 @@ func _process(delta):
 	position += shake_power * sin(_time * shake_speed)
 	shake_power *= shake_falloff
 
+
 # Used for generating new terrain when it becomes visible
 func get_bounding_area() -> Rect2:
 	var size = camera_size / camera.zoom.x
@@ -62,3 +70,13 @@ func go_home():
 
 func make_active() -> void:
 	$Camera2D.make_current()
+
+
+func _on_container_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+			click_pos = get_local_mouse_position()
+			click_camera_start_pos = position
+			mouse_clicked = true
+		if event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
+			mouse_clicked = false

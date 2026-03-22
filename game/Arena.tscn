@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
-[ext_resource type="PackedScene" uid="uid://7bwnme26bsf2" path="res://cards/CardReward.tscn" id="8_n65lt"]
 [ext_resource type="PackedScene" uid="uid://bmlhxoffb3r5l" path="res://cards/CardList.tscn" id="10_n65lt"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_n65lt"]
@@ -51,11 +50,17 @@ home_position = Vector2i(0, 3)
 [node name="Camera" parent="." unique_id=2140926887 instance=ExtResource("3_2wy63")]
 unique_name_in_owner = true
 
+[node name="Container" type="Container" parent="Camera" unique_id=532565213]
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+
 [node name="PlayCards" parent="Camera" unique_id=1516163044 instance=ExtResource("1_ncbvw")]
 unique_name_in_owner = true
 position = Vector2(-956, -468)
 
-[node name="CardReward" parent="Camera" unique_id=958781746 instance=ExtResource("8_n65lt")]
+[node name="CardReward" parent="Camera" unique_id=1912759988 instance=ExtResource("10_n65lt")]
 unique_name_in_owner = true
 
 [node name="Clock" parent="Camera" unique_id=1104602323 instance=ExtResource("7_u3mh8")]
@@ -129,9 +134,9 @@ start_pos = Vector2(1000, 300)
 gap = Vector2(335, 235)
 
 [node name="DrawPile" type="PanelContainer" parent="Camera" unique_id=1965561152]
-offset_left = -588.0
+offset_left = -648.0
 offset_top = 402.0
-offset_right = -406.0
+offset_right = -466.0
 offset_bottom = 477.0
 
 [node name="Label" type="Label" parent="Camera/DrawPile" unique_id=1340981094]
@@ -141,9 +146,9 @@ text = "Draw Pile"
 horizontal_alignment = 1
 
 [node name="DiscardPile" type="PanelContainer" parent="Camera" unique_id=703672857]
-offset_left = -380.0
+offset_left = -440.0
 offset_top = 401.0
-offset_right = -154.0
+offset_right = -214.0
 offset_bottom = 476.0
 
 [node name="Label" type="Label" parent="Camera/DiscardPile" unique_id=2106178975]
@@ -175,6 +180,7 @@ horizontal_alignment = 1
 [connection signal="eff_gain" from="Utility" to="." method="_on_utility_eff_gain"]
 [connection signal="energy_gain" from="Utility" to="." method="_on_utility_energy_gain"]
 [connection signal="money_gain" from="Utility" to="." method="_on_utility_money_gain"]
+[connection signal="gui_input" from="Camera/Container" to="Camera" method="_on_container_gui_input"]
 [connection signal="aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_aiming_card"]
 [connection signal="cancel_aiming_card" from="Camera/PlayCards" to="." method="_on_play_cards_cancel_aiming_card"]
 [connection signal="card_used" from="Camera/PlayCards" to="." method="_on_play_cards_card_used"]

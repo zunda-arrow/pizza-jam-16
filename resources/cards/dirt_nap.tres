@@ -20,6 +20,4 @@ image = SubResource("AtlasTexture_a1aey")
 energy_cost = 1
 card_impl = 4
 utility = SubResource("Resource_r0fl7")
-cost = 1
-rarity = 2.0
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

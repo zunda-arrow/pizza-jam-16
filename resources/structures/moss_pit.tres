@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_p7iya"]
 script = ExtResource("3_opqya")
-energy = Array[int]([-1])
+energy = Array[int]([2])
 
 [resource]
 script = ExtResource("1_c8cnn")
