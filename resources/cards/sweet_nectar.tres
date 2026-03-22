@@ -14,4 +14,5 @@ description = "Gain 2 Energy."
 card_impl = 4
 utility = SubResource("Resource_r0fl7")
 cost = 10
+rarity = 0.8
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

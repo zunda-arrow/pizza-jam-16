@@ -10,11 +10,11 @@ bonus_coins = Array[int]([3])
 [resource]
 script = ExtResource("1_4cudf")
 card_name = "Lunch"
-description = "+3 chances to dig up a coin from each tile this turn."
+description = "+5 chances to dig up a coin from each tile this turn."
 energy_cost = 2
 ant_cost = 10
 card_impl = 4
 utility = SubResource("Resource_r0fl7")
 cost = 10
-rarity = 0.5
+rarity = 1.2
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

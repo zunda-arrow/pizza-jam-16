@@ -7,12 +7,12 @@
 [resource]
 script = ExtResource("1_b7l5i")
 card_name = "Campfire"
-description = "+2 chances to dig up a coin from each tile."
+description = "+5 chances to dig up a coin from each tile."
 image = ExtResource("1_x50hy")
 energy_cost = 2
 ant_cost = 20
 card_impl = 3
 structureResource = ExtResource("2_b7l5i")
 cost = 10
-rarity = 0.5
+rarity = 0.8
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
