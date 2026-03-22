@@ -36,7 +36,7 @@ rock_noise = SubResource("FastNoiseLite_4ggwo")
 gold_ore_noise = SubResource("FastNoiseLite_dakxn")
 block_threshold = 0.2
 rock_threshold = -0.4
-spawn_radius = 5.5
+spawn_radius = 7.0
 
 [node name="Structure" parent="." unique_id=11068490 instance=ExtResource("3_5yp8v")]
 unique_name_in_owner = true
