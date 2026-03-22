@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://r5at4ujo1i40" path="res://terrain/fungus_guy.gd" id="9_xcjn4"]
 [ext_resource type="AudioStream" uid="uid://ghgk70wfb143" path="res://assets/sound/muhnee.mp3" id="11_25lit"]
 [ext_resource type="Texture2D" uid="uid://27uehlb6v5ct" path="res://assets/card drop.png" id="11_vjpew"]
+[ext_resource type="Texture2D" uid="uid://baxeji7b0piqj" path="res://assets/reroll.png" id="12_h4r26"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nc45s"]
 frequency = 0.05
@@ -185,6 +186,7 @@ texture = ExtResource("9_jk8on")
 shape = SubResource("CircleShape2D_jk8on")
 
 [node name="CardReward" type="RigidBody2D" parent="." unique_id=895530711]
+visible = false
 z_index = 45
 physics_material_override = SubResource("PhysicsMaterial_jk8on")
 script = ExtResource("9_xcjn4")
@@ -205,7 +207,8 @@ script = ExtResource("9_xcjn4")
 
 [node name="Sprite2D" type="Sprite2D" parent="RerollReward" unique_id=2026068329]
 texture_filter = 1
-texture = ExtResource("9_jk8on")
+scale = Vector2(4, 4)
+texture = ExtResource("12_h4r26")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RerollReward" unique_id=1692564408]
 shape = SubResource("CircleShape2D_jk8on")
