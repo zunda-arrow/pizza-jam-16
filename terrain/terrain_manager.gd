@@ -132,16 +132,16 @@ func get_cell(x: int, y: int) -> TerrainType: # Check if there is a cell here
 		
 	var dist_to_origin = Vector2(x, y).distance_to(Vector2.ZERO)
 
-	if mystery_ore_noise.get_noise_2d(x, y) > 0.8 - (dist_to_origin / 1000):
+	if mystery_ore_noise.get_noise_2d(x, y) > 0.7 - (dist_to_origin / 800):
 		return TerrainType.Mystery
 	
-	if mystery_ore_noise.get_noise_2d(x, y) < -0.8 + (dist_to_origin / 1000):
+	if mystery_ore_noise.get_noise_2d(x, y) < -0.7 + (dist_to_origin / 800):
 		return TerrainType.Ore
 
-	if gold_ore_noise.get_noise_2d(x, y) > 0.4 - (dist_to_origin / 500):
+	if gold_ore_noise.get_noise_2d(x, y) > 0.4 - (dist_to_origin / 400):
 		return TerrainType.ShroomDirt
 
-	if rock_noise.get_noise_2d(x, y) > 0.25 - (dist_to_origin / 200):
+	if rock_noise.get_noise_2d(x, y) > 0.2 - (dist_to_origin / 200):
 		return TerrainType.Rock
 
 	if light_dirt_noise.get_noise_2d(x, y) > 0.05:
@@ -240,8 +240,18 @@ func reward_cell(cell: Vector2i, cell_data: Variant) -> int:
 		f.position = $GroundMap.map_to_local(cell)
 		add_child(f)
 		f.on_create()
-	if cell_data.get_custom_data("card_reward") > 0:
-		card_reward.emit(cell_data.get_custom_data("card_reward"))
+	
+	var reroll = cell_data.get_custom_data("reroll_reward")
+	var card = cell_data.get_custom_data("card_reward")
+	if reroll > 0 and card > 0:
+		if rng.randf() > 0.5:
+			card = 0
+		else:
+			reroll = 0
+	if card > 0:
+		card_reward.emit(card)
+	if reroll > 0:
+		reroll_earned.emit(reroll)
 	return value
 
 func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
