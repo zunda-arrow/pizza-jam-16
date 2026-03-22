@@ -64,7 +64,6 @@ func on_day_end() -> void:
 	day += 1
 	%Toolbar.daily_goal = calculate_daily_goal(day)
 	%Toolbar.in_game = false
-	# get_tree().paused = true
 	%Shop.show()
 
 func on_money_earned(value: int) -> void:
@@ -77,7 +76,6 @@ func on_card_purchased(card: CardResource) -> void:
 	deck.append(card.new())
 
 func shop_phase_done() -> void:
-	get_tree().paused = false
 	%Toolbar.in_game = true
 	%Shop.hide()
 	turn_start.emit()
