@@ -15,7 +15,7 @@ var instantiated_card_resource: CardResource.Card:
 		%CardName.text = card.card_name
 		%CardDescription.text = card.description
 		%Energy.text = string(card.energy_cost)
-		%Ants.text = string(card.ant_cost)
+		%Ants.text = string(card.ant_cost / 10)
 		%CardImage.texture = card.image
 	get():
 		return _instantiated_card_resource
@@ -23,7 +23,9 @@ var instantiated_card_resource: CardResource.Card:
 var hovered = false
 
 func string(n: int) -> String:
-	if n == -1:
+	if n < -1:
+		return str(n) + "X"
+	elif n < 0:
 		return "X"
 	return str(n)
 
