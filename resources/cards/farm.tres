@@ -13,4 +13,5 @@ energy_cost = 3
 ant_cost = 30
 card_impl = 3
 structureResource = ExtResource("2_jj0hc")
+cost = 15
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

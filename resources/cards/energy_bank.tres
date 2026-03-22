@@ -15,5 +15,5 @@ energy_cost = 3
 ant_cost = 10
 card_impl = 4
 utility = SubResource("Resource_r0fl7")
-cost = 10
+cost = 7
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

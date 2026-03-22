@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b88pnuix1okw7" path="res://assets/tv.png" id="1_r0pv2"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_rvafx"]
-[ext_resource type="Resource" uid="uid://dd5xkd2csnauf" path="res://resources/structures/tv.tres" id="2_rvafx"]
+[ext_resource type="Resource" uid="uid://regwblxsrnwj" path="res://resources/structures/tv.tres" id="2_rvafx"]
 
 [resource]
 script = ExtResource("1_rvafx")
@@ -13,5 +13,6 @@ energy_cost = 5
 ant_cost = 50
 card_impl = 3
 structureResource = ExtResource("2_rvafx")
-cost = 10
+cost = 20
+rarity = 0.2
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

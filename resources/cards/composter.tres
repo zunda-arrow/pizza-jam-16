@@ -14,4 +14,6 @@ card_name = "Brainstorm"
 description = "Discard 2 random cards, draw 2 cards."
 card_impl = 4
 utility = SubResource("Resource_r0fl7")
+cost = 2
+rarity = 2.0
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

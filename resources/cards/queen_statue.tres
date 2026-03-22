@@ -9,4 +9,5 @@ card_name = "Queen Statue"
 description = "No one would want to disassemble this."
 card_impl = 3
 structureResource = ExtResource("2_umf04")
+cost = 15
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

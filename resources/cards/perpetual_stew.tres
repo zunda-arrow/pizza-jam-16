@@ -9,5 +9,6 @@ description = "Make a structure permanent."
 energy_cost = 5
 ant_cost = 30
 card_impl = 4
-cost = 10
+cost = 20
+rarity = 0.1
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
