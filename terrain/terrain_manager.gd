@@ -189,9 +189,18 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 		if healthmap.get_cell_source_id(cell) == -1: # Not been damaged before
 			var health = initial_health - power
 			if health <= 0:
-				value_gained += reward_cell(cell_data) + pots
+				var reward = reward_cell(cell_data)
+				value_gained += reward + pots
 				cells_to_remove.append(cell)
 				%Cracks.set_cell(cell)
+				
+				for i in range(0,reward):
+					var f = $FungusGuy.duplicate()
+					f.show()
+					f.reset_physics_interpolation()
+					f.position = $GroundMap.map_to_local(cell)
+					add_child(f)
+					f.on_create()
 				continue
 			healthmap.set_cell(cell, 0, Vector2i(health - power, 0))
 			set_cracks_for_cell(cell, health, initial_health)
