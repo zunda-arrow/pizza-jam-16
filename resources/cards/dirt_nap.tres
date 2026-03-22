@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cu72o884el1tx" path="res://assets/ant-nap.png" id="1_kuvj0"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_pox5k"]
-[ext_resource type="Script" path="res://resources/utilities.gd" id="2_kuvj0"]
+[ext_resource type="Script" uid="uid://wl5o2odjdd6i" path="res://resources/utilities.gd" id="2_kuvj0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a1aey"]
 atlas = ExtResource("1_kuvj0")
