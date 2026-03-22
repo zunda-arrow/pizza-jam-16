@@ -13,7 +13,7 @@ func show_cards(cards: Array[CardResource.Card]) -> void:
 	for child in %CardContainer.get_children():
 		child.queue_free()
 	var current_pos = start_pos
-	for card in cards:
+	for card in cards.filter(func(c): return c != null):
 		var new_card = cardScene.instantiate()
 		new_card.position = current_pos
 		new_card.instantiated_card_resource = card
