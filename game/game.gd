@@ -2,13 +2,15 @@ extends Node2D
 class_name Game
 
 signal turn_start
-signal day_start(deck: Array[CardResource.Card])
+signal day_start(deck: Array[CardResource.Card], initial_deck: Array[CardResource.Card])
 signal shop_start
 
 signal game_won
 signal game_over
 
 @export var number_of_days = 20
+@export var starter_deck: Array[CardResource] = []
+@export var day_1_hand: Array[CardResource] = []
 
 var deck: Array[CardResource.Card] = []
 var money: int:
@@ -29,7 +31,7 @@ func loop_music():
 	loop_music()
 
 func _ready() -> void:
-	for c in AllCards.resources:
+	for c in starter_deck:
 		deck.push_back(c.new())
 	
 	%Shop.get_money = get_money
@@ -38,7 +40,10 @@ func _ready() -> void:
 	start_game()
 
 func start_game() -> void:
-	day_start.emit(deck) # Day start also starts a turn.
+	var initial_hand: Array[CardResource.Card] = []
+	for c in day_1_hand:
+		initial_hand.append(c.new())
+	day_start.emit(deck, initial_hand) # Day start also starts a turn.
 	%Toolbar.daily_goal = calculate_daily_goal(day)
 	%Toolbar.in_game = true
 

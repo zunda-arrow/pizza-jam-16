@@ -1,6 +1,8 @@
 extends Control
 
 
+signal skip
+
 var target_text: String = ""
 var idx = 0
 var current_text = ""
@@ -36,6 +38,12 @@ func is_line_complete():
 func complete_now():
 	current_text = target_text
 	idx = len(target_text)
+
+func box_gui_input(ev: InputEvent) -> void:
+	if ev is InputEventMouseButton:
+		if ev.button_index == MOUSE_BUTTON_LEFT and ev.is_pressed():
+			skip.emit()
+
 
 func _process(delta: float) -> void:
 	timer += delta
