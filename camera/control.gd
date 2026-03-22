@@ -78,5 +78,6 @@ func _on_container_gui_input(event: InputEvent) -> void:
 			click_pos = get_local_mouse_position()
 			click_camera_start_pos = position
 			mouse_clicked = true
+			going_home = false
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
 			mouse_clicked = false
