@@ -108,15 +108,20 @@ func _is_cell_filled(pos: Vector2i):
 
 	return %Terrain.tilemap.get_cell_tile_data(pos) != null
 	
-func _validate_structure_at(card: CardResource.Card, at: Vector2):
-		var structures_nodes: Array[Node2D] = %Structure.structures
-		var in_range = false
-		for node in structures_nodes:
-			if (node.global_position / 32 - at).length() < card.structure.tiles_radius + 1.5:
-				in_range = true
-				break
-		return in_range
-
+func _validate_structure_at(card: CardResource.Card, at: Vector2i):
+	var nodes = card.structure.path_finding_points.duplicate()
+	if nodes.is_empty:
+		nodes = %Terrain.get_area(at, card.structure.size)
+	for node in nodes:
+		node += at
+	%Terrain.grow_area(nodes, 1)
+	
+	for node in nodes:
+		if %Army.is_cell_on_loop(node):
+			return true
+	
+	return false
+	
 func _cell_in_structure_range(cell: Vector2i):
 	for structure in %Structure.structures:
 		if structure.position.distance_to(cell * 32 + Vector2i(16, 16)) < structure.structure.resource.tiles_radius * 32:
@@ -221,8 +226,10 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 			player_position = at
 			success = true
 		elif card.get_type() == CardResource.CardType.Build:
-			success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new(), x)
-			%Camera.shake(Vector2(0,1), 0.9)
+			if _validate_structure_at(card, at):
+				success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new(), x)
+				if success:
+					%Camera.shake(Vector2(0,1), 0.9)
 		elif card.card_name == "Perpetual Stew":
 			success = %Utility.stew(at)
 
@@ -251,6 +258,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 
 func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) -> void:
 	var x = 0
+	
 	if card.energy_cost > energy or card.ant_cost > ants:
 		return
 		
@@ -267,9 +275,9 @@ func _on_play_cards_aiming_card(card: CardResource.Card, at: Vector2, i: int) ->
 		var dig_touches_path = dig_area_touches_path(area, at)
 		%Terrain.show_selector(at, area, %Terrain.PlacingMethod.Dig, null, dig_touches_path)
 	if card.get_type() == CardResource.CardType.Build:
-		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, card.structure.required_ground, null)
 		var s_position = %Terrain/GroundMap.to_global(%Terrain/GroundMap.map_to_local(at)) - $%Camera.position
 		var valid = _validate_structure_at(card, at)
+		%Terrain.show_selector(at, card.structure.size, %Terrain.PlacingMethod.Build, card.structure.required_ground, valid)
 		%Camera/Visibility.material.set_shader_parameter("valid_placement", valid)
 		%Camera/Visibility.material.set_shader_parameter("interactable_pos", Vector2(s_position.x / 1080., s_position.y / 1080.))
 		%Camera/Visibility.material.set_shader_parameter("interactable_size", card.structure.tiles_radius * 32. / 1080.)

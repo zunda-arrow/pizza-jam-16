@@ -252,7 +252,7 @@ func get_occupied_cells() -> Array[Vector2i]:
 		occupied_cells += check.call()
 	return occupied_cells
 					
-func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, required_ground, dig_touches_path):
+func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placing_method: int, required_ground, touches_path):
 	$Selection.clear()
 	$Selection.show()
 	
@@ -272,7 +272,7 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 		grow_area(area, training_camps)
 		
 		for cell in area:
-			if cell in building_cells or !dig_touches_path:
+			if cell in building_cells or !touches_path:
 				$Selection.set_cell(cell, 0, Vector2(1,0), 0)
 			else:
 				$Selection.set_cell(cell, 0, Vector2(0,0), 0)
@@ -290,9 +290,10 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 							section_has_ground = false
 				if section_has_ground:
 					has_ground = true
+		
 					
 		for cell in area:
-			if placing_method == PlacingMethod.Build and (cell in occupied_cells or not has_ground):
+			if placing_method == PlacingMethod.Build and (cell in occupied_cells or not has_ground or not touches_path):
 				$Selection.set_cell(cell, 0, Vector2(1,0), 0)
 			#elif cell in occupied_cells:
 			#	$Selection.set_cell(cell, 0, Vector2(1,0), 0)
