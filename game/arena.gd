@@ -438,3 +438,7 @@ func isolate_hand_card(i: int) -> void:
 func new_turn_enabled(enabled: bool) -> void:
 	allow_end_turn = enabled
 	%EndTurnButton.disabled = not enabled
+
+func _on_game_card_purchased(card: CardResource.Card) -> void:
+	print("Purchased: ", card)
+	discard_pile.append(card)

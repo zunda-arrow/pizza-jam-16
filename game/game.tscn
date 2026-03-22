@@ -98,6 +98,7 @@ stream = ExtResource("5_dxrkv")
 volume_db = -6.0
 bus = &"Music"
 
+[connection signal="card_purchased" from="." to="Arena" method="_on_game_card_purchased"]
 [connection signal="day_start" from="." to="Arena" method="start_day"]
 [connection signal="shop_start" from="." to="Toolbar/Shop" method="on_open"]
 [connection signal="turn_start" from="." to="Arena" method="start_turn"]

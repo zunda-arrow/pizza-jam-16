@@ -4,6 +4,7 @@ class_name Game
 signal turn_start
 signal day_start(deck: Array[CardResource.Card], initial_deck: Array[CardResource.Card])
 signal shop_start
+signal card_purchased(card: CardResource.Card)
 
 signal game_won
 signal game_over
@@ -75,7 +76,9 @@ func get_money() -> int:
 	return money
 
 func on_card_purchased(card: CardResource) -> void:
+	print("Purchased: ", card)
 	deck.append(card.new())
+	card_purchased.emit(card.new())
 
 func shop_phase_done() -> void:
 	%Toolbar.in_game = true
