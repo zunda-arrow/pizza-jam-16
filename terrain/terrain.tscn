@@ -9,8 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://brh2jyxks7ayc" path="res://assets/particle/dirt.png" id="7_nc45s"]
 [ext_resource type="AudioStream" uid="uid://cxihj10gkrq71" path="res://assets/sound/EXPLOSION.mp3" id="8_fpiom"]
 [ext_resource type="Texture2D" uid="uid://r5v4ggyyl112" path="res://assets/single_shroom.png" id="9_jk8on"]
-[ext_resource type="Script" path="res://terrain/fungus_guy.gd" id="9_xcjn4"]
+[ext_resource type="Script" uid="uid://r5at4ujo1i40" path="res://terrain/fungus_guy.gd" id="9_xcjn4"]
 [ext_resource type="AudioStream" uid="uid://ghgk70wfb143" path="res://assets/sound/muhnee.mp3" id="11_25lit"]
+[ext_resource type="Texture2D" uid="uid://27uehlb6v5ct" path="res://assets/card drop.png" id="11_vjpew"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nc45s"]
 frequency = 0.05
@@ -108,7 +109,7 @@ hue_variation_max = -2.2351742e-08
 bounce = 0.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jk8on"]
-radius = 7.071068
+radius = 18.110771
 
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
@@ -181,6 +182,32 @@ texture_filter = 1
 texture = ExtResource("9_jk8on")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FungusGuy" unique_id=573358784]
+shape = SubResource("CircleShape2D_jk8on")
+
+[node name="CardReward" type="RigidBody2D" parent="." unique_id=895530711]
+z_index = 45
+physics_material_override = SubResource("PhysicsMaterial_jk8on")
+script = ExtResource("9_xcjn4")
+
+[node name="Sprite2D" type="Sprite2D" parent="CardReward" unique_id=438989383]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("11_vjpew")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardReward" unique_id=1419315652]
+shape = SubResource("CircleShape2D_jk8on")
+
+[node name="RerollReward" type="RigidBody2D" parent="." unique_id=2085175865]
+visible = false
+z_index = 45
+physics_material_override = SubResource("PhysicsMaterial_jk8on")
+script = ExtResource("9_xcjn4")
+
+[node name="Sprite2D" type="Sprite2D" parent="RerollReward" unique_id=2026068329]
+texture_filter = 1
+texture = ExtResource("9_jk8on")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RerollReward" unique_id=1692564408]
 shape = SubResource("CircleShape2D_jk8on")
 
 [node name="Muhnee" type="AudioStreamPlayer" parent="." unique_id=190079961]
