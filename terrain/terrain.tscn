@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
 [ext_resource type="Texture2D" uid="uid://brh2jyxks7ayc" path="res://assets/particle/dirt.png" id="7_nc45s"]
 [ext_resource type="AudioStream" uid="uid://cxihj10gkrq71" path="res://assets/sound/EXPLOSION.mp3" id="8_fpiom"]
+[ext_resource type="Texture2D" uid="uid://r5v4ggyyl112" path="res://assets/single_shroom.png" id="9_jk8on"]
+[ext_resource type="Script" uid="uid://r5at4ujo1i40" path="res://terrain/fungus_guy.gd" id="9_xcjn4"]
+[ext_resource type="AudioStream" uid="uid://ghgk70wfb143" path="res://assets/sound/muhnee.mp3" id="11_25lit"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nc45s"]
 frequency = 0.05
@@ -101,16 +104,18 @@ alpha_curve = SubResource("CurveTexture_nc45s")
 hue_variation_min = -2.2351742e-08
 hue_variation_max = -2.2351742e-08
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jk8on"]
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jk8on"]
+radius = 7.071068
+
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
 initial_seed = 1
 terrain_shape_noise = SubResource("FastNoiseLite_nc45s")
 gold_ore_noise = SubResource("FastNoiseLite_fpiom")
 mystery_ore_noise = SubResource("FastNoiseLite_jk8on")
-block_threshold = null
-rock_threshold = null
-spawn_radius = null
-chunk_size = null
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=547818870]
 scroll_scale = Vector2(0.8, 0.8)
@@ -164,3 +169,21 @@ process_material = SubResource("ParticleProcessMaterial_mk5yb")
 stream = ExtResource("8_fpiom")
 volume_db = -3.0
 max_polyphony = 2
+
+[node name="FungusGuy" type="RigidBody2D" parent="." unique_id=168832303]
+visible = false
+z_index = 45
+physics_material_override = SubResource("PhysicsMaterial_jk8on")
+script = ExtResource("9_xcjn4")
+
+[node name="Sprite2D" type="Sprite2D" parent="FungusGuy" unique_id=1918609501]
+texture_filter = 1
+texture = ExtResource("9_jk8on")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FungusGuy" unique_id=573358784]
+shape = SubResource("CircleShape2D_jk8on")
+
+[node name="Muhnee" type="AudioStreamPlayer" parent="." unique_id=190079961]
+stream = ExtResource("11_25lit")
+volume_db = -12.0
+max_polyphony = 5
