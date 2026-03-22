@@ -14,6 +14,8 @@ func _ready() -> void:
 	menu.show()
 	options.hide()
 
+	loop_music()
+
 func start_pressed() -> void:
 	print("Starting the game")
 	ResourceLoader.load_threaded_request("res://game/game.tscn")
@@ -43,3 +45,8 @@ func _process(_delta: float) -> void:
 		if delay <= 0:
 			var scn = ResourceLoader.load_threaded_get("res://game/game.tscn")
 			get_tree().change_scene_to_packed(scn)
+
+func loop_music() -> void:
+	$Music.play()
+	await get_tree().create_timer(88.63).timeout
+	loop_music()

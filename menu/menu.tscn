@@ -3,10 +3,12 @@
 [ext_resource type="Script" uid="uid://bqm22m7vq1t3h" path="res://menu/menu.gd" id="1_6nwqt"]
 [ext_resource type="Texture2D" uid="uid://dsrkx6hx38ovs" path="res://assets/terrain/cave.png" id="2_pbjm4"]
 [ext_resource type="Script" uid="uid://lfjkc5ltahax" path="res://menu/volume.gd" id="3_6nwqt"]
-[ext_resource type="SpriteFrames" uid="uid://by31g3hoah84q" path="res://assets/ant-queen-frames.tres" id="3_pbjm4"]
+[ext_resource type="SpriteFrames" uid="uid://dkbpj8caqrj7s" path="res://assets/ant-queen-frames.tres" id="3_pbjm4"]
 [ext_resource type="FontFile" uid="uid://cbrm50nub7adx" path="res://assets/title-font.tres" id="4_svuvw"]
 [ext_resource type="TileSet" uid="uid://c48cjwnpo03m1" path="res://terrain/dirt_tileset.tres" id="6_juveg"]
 [ext_resource type="Script" path="res://menu/load_map.gd" id="7_v6yed"]
+[ext_resource type="AudioStream" uid="uid://l3nopiv3qu1d" path="res://assets/sound/ant_music.mp3" id="8_6fswf"]
+[ext_resource type="AudioStream" uid="uid://cxihj10gkrq71" path="res://assets/sound/EXPLOSION.mp3" id="9_bc54p"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_svuvw"]
 viewport_path = NodePath("TextureRect/SubViewport")
@@ -319,8 +321,21 @@ layout_mode = 2
 columns = 2
 script = ExtResource("3_6nwqt")
 
+[node name="SFX_Sample" type="Label" parent="Options/Volume" unique_id=1931401853]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Sound test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Options/Volume" unique_id=1029722163]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Sound effect"
+
 [node name="Label" type="Label" parent="Options/Volume" unique_id=1855535925]
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
 text = "Show tutorial"
 
 [node name="CenterContainer" type="CenterContainer" parent="Options/Volume" unique_id=1867961415]
@@ -332,6 +347,7 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="Back" type="Button" parent="Options" unique_id=723106391]
+custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontVariation_043lm")
 theme_override_font_sizes/font_size = 36
@@ -341,9 +357,22 @@ text = "Go Back"
 tile_set = ExtResource("6_juveg")
 script = ExtResource("7_v6yed")
 
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=346261719]
+process_mode = 3
+stream = ExtResource("8_6fswf")
+volume_db = -6.0
+bus = &"Music"
+
+[node name="SFX" type="AudioStreamPlayer" parent="." unique_id=234941140]
+stream = ExtResource("9_bc54p")
+volume_db = -3.0
+max_polyphony = 2
+bus = &"SFX"
+
 [connection signal="pressed" from="MainMenu/Start" to="." method="start_pressed"]
 [connection signal="pressed" from="MainMenu/Options" to="." method="options_pressed"]
 [connection signal="pressed" from="MainMenu/Quit" to="." method="quit_pressed"]
 [connection signal="set_show_tutorial" from="Options/Volume" to="Options/Volume/CenterContainer/CheckBox" method="set_pressed_no_signal"]
+[connection signal="pressed" from="Options/Volume/Button" to="SFX" method="play"]
 [connection signal="toggled" from="Options/Volume/CenterContainer/CheckBox" to="Options/Volume" method="show_tutorial_changed"]
 [connection signal="pressed" from="Options/Back" to="." method="options_back_pressed"]
