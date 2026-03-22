@@ -127,9 +127,9 @@ start_pos = Vector2(1000, 300)
 gap = Vector2(335, 235)
 
 [node name="DrawPile" type="PanelContainer" parent="Camera" unique_id=1965561152]
-offset_left = -397.0
+offset_left = -648.0
 offset_top = 402.0
-offset_right = -215.0
+offset_right = -466.0
 offset_bottom = 477.0
 
 [node name="Label" type="Label" parent="Camera/DrawPile" unique_id=1340981094]
@@ -139,9 +139,9 @@ text = "Draw Pile"
 horizontal_alignment = 1
 
 [node name="DiscardPile" type="PanelContainer" parent="Camera" unique_id=703672857]
-offset_left = -649.0
+offset_left = -440.0
 offset_top = 401.0
-offset_right = -423.0
+offset_right = -214.0
 offset_bottom = 476.0
 
 [node name="Label" type="Label" parent="Camera/DiscardPile" unique_id=2106178975]
