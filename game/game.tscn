@@ -9,7 +9,7 @@
 [ext_resource type="Resource" uid="uid://xjch1mi2lbll" path="res://resources/cards/queen_statue.tres" id="4_qf6n1"]
 [ext_resource type="PackedScene" uid="uid://dj3jbeehx5vb8" path="res://game/Toolbar.tscn" id="5_dakft"]
 [ext_resource type="AudioStream" uid="uid://l3nopiv3qu1d" path="res://assets/sound/ant_music.mp3" id="5_dxrkv"]
-[ext_resource type="PackedScene" path="res://game/TextBox.tscn" id="5_u5opy"]
+[ext_resource type="PackedScene" uid="uid://cddggncvpnv55" path="res://game/TextBox.tscn" id="5_u5opy"]
 [ext_resource type="Resource" uid="uid://dktpx4orlph6v" path="res://resources/cards/ladder.tres" id="5_u8s88"]
 [ext_resource type="Resource" uid="uid://bo4107f2gytre" path="res://resources/cards/mushroom-farm.tres" id="6_dxwpq"]
 [ext_resource type="Script" uid="uid://blt2dk4ix40hj" path="res://game/manage_tutorial.gd" id="7_u5opy"]
@@ -42,10 +42,13 @@ offset_bottom = 951.0
 
 [node name="Label" type="Label" parent="Toolbar/GameOver" unique_id=376292118]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 140.0
+offset_top = 154.0
+offset_right = 1058.0
+offset_bottom = 275.0
 text = "Game Over, you did not make enough money.
 The queen decapitated you."
+horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="Toolbar/GameOver" unique_id=435443471]
 layout_mode = 0
@@ -65,9 +68,11 @@ offset_bottom = 951.0
 
 [node name="Label" type="Label" parent="Toolbar/GameWon" unique_id=854808591]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Congradulations, you won"
+offset_left = 328.0
+offset_top = 277.0
+offset_right = 873.0
+offset_bottom = 352.0
+text = "Congradulations, you won!"
 
 [node name="Button" type="Button" parent="Toolbar/GameWon" unique_id=1978515090]
 layout_mode = 0

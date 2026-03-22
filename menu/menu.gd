@@ -10,9 +10,14 @@ var delay = 2
 @onready var title = $MainMenu/HBoxContainer/Label
 
 func _ready() -> void:
+	if OS.get_name() == "Web":
+		%Quit.hide()
+
 	title.text = ProjectSettings.get_setting("application/config/name")
 	menu.show()
 	options.hide()
+
+	loop_music()
 
 func start_pressed() -> void:
 	print("Starting the game")
@@ -43,3 +48,8 @@ func _process(_delta: float) -> void:
 		if delay <= 0:
 			var scn = ResourceLoader.load_threaded_get("res://game/game.tscn")
 			get_tree().change_scene_to_packed(scn)
+
+func loop_music() -> void:
+	$Music.play()
+	await get_tree().create_timer(88.63).timeout
+	loop_music()

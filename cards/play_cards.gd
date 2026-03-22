@@ -17,7 +17,6 @@ var enabled_idx := -1
 var _targetting_card_index = -1
 
 func _on_hand_card_clicked(i: int) -> void:
-	print(i, " ", enabled_idx)
 	if enabled_idx >= 0 and enabled_idx != i: # Disable all other slots than enabled
 		return
 	_targetting_card_index = i
