@@ -18,7 +18,7 @@ var dialouge_lines = [
 	["queen", "What are you waiting for? Get to work! <space to continue>"],
 	["queen", "First thing to know, is how to drill. Use your drill to expand this cavern.", 0],
 	["queen", "Acceptable, I guess. <space to continue>", 200],
-	["queen", "I need everyone to know of my greatness, so build me a statue. It’ll also serve as a point for your workers to expand around. <space to continue>", 0],
+	["queen", "I need everyone to know of my greatness, so build me a statue. It’ll also serve as a point for your workers to expand around.", 0],
 	["queen", "Don’t I look beautiful? Obviously this statue is eternal, but most buildings only last the day. <space to continue>", -1],
 	["queen", "Now, your daily quota is in the top left, your energy and workers in the top right and you can see what buildings and drills you have available on the left. <space to continue>"],
 	["queen", "Good luck, and remember the consequences of you failing. <space to exit>"]
