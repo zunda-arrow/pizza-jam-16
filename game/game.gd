@@ -99,3 +99,7 @@ func _on_shop_charge_account(value: int) -> void:
 
 func _on_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://menu/menu.tscn")
+
+
+func _on_arena_destroy_card(card: Node) -> void:
+	deck.erase(card)
