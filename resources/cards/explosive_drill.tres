@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://d148lxvipod8g"]
 
-[ext_resource type="Texture2D" uid="uid://neh2fvjt2r1g" path="res://assets/cards/ant-drill.png" id="1_1aogk"]
+[ext_resource type="Texture2D" uid="uid://ccx5h6rce4cb1" path="res://assets/cards/big-ass-dril.png" id="1_1aogk"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_vi1n0"]
 
 [resource]

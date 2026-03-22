@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://cbqklgsls05ul"]
 
+[ext_resource type="Texture2D" uid="uid://bv2da1hdlo6tw" path="res://assets/cards/bulldozer.png" id="1_m3yg4"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_wm1p5"]
 
 [resource]
 script = ExtResource("1_wm1p5")
 card_name = "Bulldozer"
 description = "Mine out a 7×3 area."
+image = ExtResource("1_m3yg4")
 energy_cost = 2
 card_impl = 1
 dig_area = Array[Rect2i]([Rect2i(-4, -1, 7, 3)])
