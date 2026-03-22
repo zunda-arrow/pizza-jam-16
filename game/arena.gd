@@ -327,12 +327,6 @@ func _on_clock_day_end(day: int) -> void:
 	var temp = []
 	var i = len(%Structure.structures) - 1
 	while i >= 0:
-		print("S " + str(i))
-		for s in %Structure.structures:
-			print("S " + s.structure.resource.structure_name)
-		print(exhaust_pile.size())
-		for card in exhaust_pile:
-			print(card.structure.structure_name)
 		var s = %Structure.structures[i]
 		if s.lifetime == 0:
 			discard_pile.append(exhaust_pile.pop_back())
