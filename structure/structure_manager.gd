@@ -2,7 +2,7 @@ extends Node2D
 
 
 var structure_scene = preload("res://structure/structure.tscn")
-var example_resource: StructureResource = preload("res://resources/structures/mushroom_bar.tres")
+var example_resource: StructureResource = preload("res://resources/structures/campfire.tres")
 
 var structures: Array[Node2D] = []
 var links: Array[Array] = [] # Connections between buildings within range, Array[Array[int]] by implementation.
@@ -26,7 +26,7 @@ func building_occupation() -> Array[Vector2i]:
 					occupied_cells += [Vector2i(x, y)]
 	return occupied_cells
 
-func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: StructureResource.Structure, X: int) -> bool:
+func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: StructureResource.Structure) -> bool:
 	var can_place = true
 
 	var occupied_cells = occupation_checker.call()
@@ -71,7 +71,6 @@ func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: Stru
 			if (dist <= structure.get_visible_radius()):
 				links[i].append(structures.size())
 				links[structures.size()].append(i)
-		struct_scene.magic_number = X
 		structures.push_back(struct_scene)
 		determine_groups()
 	
@@ -114,9 +113,6 @@ func structure_groups_in_range(area: Array[Vector2i]) -> Array[Array]:
 	
 	for group in structure_groups:
 		for structure in group:
-			# Not sure why this is something null, but it is
-			if structure == null:
-				continue
 			var in_range = false
 			for cell in area:
 				if structure.position.distance_to(cell * 32 + Vector2i(16, 16)) < structure.structure.resource.tiles_radius * 32:

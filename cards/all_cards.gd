@@ -1,7 +1,7 @@
 extends Node
 
 var resources: Array[CardResource] = [
-	load("res://resources/cards/fungus_bar.tres"),
+	#load("res://resources/cards/fungus_bar.tres"),
 	load("res://resources/cards/pot.tres"),
 	load("res://resources/cards/tv.tres"),
 	load("res://resources/cards/moss-pit.tres"),

@@ -200,6 +200,9 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 		if healthmap.get_cell_atlas_coords(cell).x - power < 0:
 			value_gained += reward_cell(cell_data) + pots
 			cells_to_remove.append(cell)
+			var f = $FungusGuy.duplicate()
+			f.reset_physics_interpolation()
+			f.position = $GroundMap.map_to_local(cell)
 			%Cracks.set_cell(cell)
 			healthmap.set_cell(cell)
 		else:

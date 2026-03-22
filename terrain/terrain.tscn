@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
 [ext_resource type="Texture2D" uid="uid://brh2jyxks7ayc" path="res://assets/particle/dirt.png" id="7_nc45s"]
 [ext_resource type="AudioStream" uid="uid://cxihj10gkrq71" path="res://assets/sound/EXPLOSION.mp3" id="8_fpiom"]
-[ext_resource type="Texture2D" uid="uid://cvyt304ak5y6v" path="res://assets/single_shroom.png" id="9_jk8on"]
+[ext_resource type="Texture2D" uid="uid://bxa2lbin88m1g" path="res://assets/single_shroom.png" id="9_jk8on"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nc45s"]
 frequency = 0.05
@@ -111,10 +111,6 @@ initial_seed = 1
 terrain_shape_noise = SubResource("FastNoiseLite_nc45s")
 gold_ore_noise = SubResource("FastNoiseLite_fpiom")
 mystery_ore_noise = SubResource("FastNoiseLite_jk8on")
-block_threshold = null
-rock_threshold = null
-spawn_radius = null
-chunk_size = null
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=547818870]
 scroll_scale = Vector2(0.8, 0.8)
