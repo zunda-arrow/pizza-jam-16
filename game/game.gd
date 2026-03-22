@@ -45,7 +45,8 @@ func _ready() -> void:
 		deck.push_back(c.new())
 	
 	%Shop.get_money = get_money
-	
+	%Shop.get_rerolls = get_money
+
 	loop_music()
 	start_game()
 
@@ -86,6 +87,9 @@ func on_reroll_earned(value: int) -> void:
 
 func get_money() -> int:
 	return money
+
+func get_rerolls() -> int:
+	return rerolls
 
 func on_card_purchased(card: CardResource) -> void:
 	print("Purchased: ", card)

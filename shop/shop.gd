@@ -3,6 +3,7 @@ extends Node2D
 
 signal card_purchased(card: CardResource)
 signal charge_account(value: int)
+signal charge_rerolls(value: int)
 signal shopping_done
 
 var cardScene = preload("res://cards/Card.tscn")
@@ -12,6 +13,7 @@ var cardScene = preload("res://cards/Card.tscn")
 @export var cards := Vector2i(5, 2)
 
 var get_money := func(): return 1
+var get_rerolls := func(): return 1
 
 @onready var rng = RandomNumberGenerator.new()
 
@@ -66,4 +68,7 @@ func on_done_pressed() -> void:
 
 
 func _on_reroll_pressed() -> void:
+	if get_rerolls.call() < 1:
+		return
+	charge_account.emit(1)
 	roll_cards()
