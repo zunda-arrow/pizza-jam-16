@@ -324,22 +324,28 @@ func _on_clock_day_end(day: int) -> void:
 	%Army.reset_ants()
 	ants = 0
 
+	var temp = []
 	var i = len(%Structure.structures) - 1
 	while i >= 0:
+		print("S " + str(i))
+		for s in %Structure.structures:
+			print("S " + s.structure.resource.structure_name)
+		print(exhaust_pile.size())
+		for card in exhaust_pile:
+			print(card.structure.structure_name)
 		var s = %Structure.structures[i]
 		if s.lifetime == 0:
-			discard_pile.append(
-				exhaust_pile.pop_at(
-					exhaust_pile.find_custom(
-						func(card): return card.structure.structure_name == s.structure.structure_name
-					)
-				)
-			)
+			discard_pile.append(exhaust_pile.pop_back())
 			%Structure.structures.pop_at(i)
 			s.queue_free()
 		elif s.lifetime > 0:
 			s.lifetime -= 1
+			temp.append(exhaust_pile.pop_back())
+		else:
+			exhaust_pile.push_front(exhaust_pile.pop_back())
 		i -= 1
+	for n in range(len(temp)):
+		exhaust_pile.append(temp.pop_back())
 	
 	%Structure.determine_links()
 	%Structure.determine_groups()

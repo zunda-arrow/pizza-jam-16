@@ -77,7 +77,7 @@ func get_money() -> int:
 
 func on_card_purchased(card: CardResource) -> void:
 	print("Purchased: ", card)
-	deck.append(card.new())
+	deck.append(card.new()) # This one doesn't actually add your card.
 	card_purchased.emit(card.new())
 
 func shop_phase_done() -> void:
