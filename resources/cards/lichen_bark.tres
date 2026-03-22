@@ -15,4 +15,5 @@ card_impl = 4
 utility = SubResource("Resource_r0fl7")
 single_use = true
 cost = 10
+rarity = 0.2
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

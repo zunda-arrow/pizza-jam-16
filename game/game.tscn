@@ -12,17 +12,14 @@
 [ext_resource type="PackedScene" path="res://game/TextBox.tscn" id="5_u5opy"]
 [ext_resource type="Resource" uid="uid://dktpx4orlph6v" path="res://resources/cards/ladder.tres" id="5_u8s88"]
 [ext_resource type="Resource" uid="uid://bo4107f2gytre" path="res://resources/cards/mushroom-farm.tres" id="6_dxwpq"]
-[ext_resource type="Resource" uid="uid://dys7jvmw5uejm" path="res://resources/cards/farm.tres" id="7_mhvfb"]
 [ext_resource type="Script" uid="uid://blt2dk4ix40hj" path="res://game/manage_tutorial.gd" id="7_u5opy"]
 [ext_resource type="Resource" uid="uid://cpaj43ltnbsbb" path="res://resources/cards/dirt_nap.tres" id="8_5e03w"]
 [ext_resource type="Resource" uid="uid://b5c85pdmkaxni" path="res://resources/cards/moss-pit.tres" id="9_leid8"]
-[ext_resource type="Resource" uid="uid://dfbqbitlh072e" path="res://resources/cards/shroom_drill.tres" id="10_8bboj"]
 [ext_resource type="Resource" uid="uid://bu838a5mc5ydg" path="res://resources/cards/big_drill.tres" id="11_q52ks"]
-[ext_resource type="Resource" uid="uid://d148lxvipod8g" path="res://resources/cards/explosive_drill.tres" id="12_jucfl"]
 
 [node name="Game" type="Node2D" unique_id=1516163044]
 script = ExtResource("1_l1rk1")
-starter_deck = Array[ExtResource("2_j8tme")]([ExtResource("3_3vho3"), ExtResource("3_3vho3"), ExtResource("4_pxxsx"), ExtResource("5_u8s88"), ExtResource("6_dxwpq"), ExtResource("7_mhvfb"), ExtResource("8_5e03w"), ExtResource("9_leid8"), ExtResource("9_leid8"), ExtResource("10_8bboj"), ExtResource("11_q52ks"), ExtResource("12_jucfl")])
+starter_deck = Array[ExtResource("2_j8tme")]([ExtResource("3_3vho3"), ExtResource("3_3vho3"), ExtResource("3_3vho3"), ExtResource("11_q52ks"), ExtResource("4_pxxsx"), ExtResource("4_pxxsx"), ExtResource("5_u8s88"), ExtResource("5_u8s88"), ExtResource("8_5e03w"), ExtResource("8_5e03w"), ExtResource("8_5e03w"), ExtResource("9_leid8"), ExtResource("6_dxwpq")])
 day_1_hand = Array[ExtResource("2_j8tme")]([ExtResource("3_3vho3"), ExtResource("4_qf6n1")])
 
 [node name="ManageTutorial" type="Node" parent="." unique_id=2120524484]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://0g1wsirh24lo"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://bslqktadao1nj"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_04hcy"]
 [ext_resource type="Texture2D" uid="uid://gdw0o5mwkl0q" path="res://assets/bridge.png" id="1_5cy1l"]
@@ -11,4 +11,6 @@ image = ExtResource("1_5cy1l")
 ant_cost = 10
 card_impl = 3
 structureResource = ExtResource("2_04hcy")
+cost = 1
+rarity = 3.0
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

@@ -11,5 +11,6 @@ image = ExtResource("1_vjl0q")
 ant_cost = 10
 card_impl = 3
 structureResource = ExtResource("2_nfese")
-cost = 5
+cost = 1
+rarity = 3.0
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
