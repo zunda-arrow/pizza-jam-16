@@ -13,7 +13,7 @@ uniform vec4 interactable_color: source_color;
 uniform vec4 invalid_color: source_color;
 uniform bool valid_placement;
 uniform int bands;
-uniform sampler3D noise;
+uniform float contrast;
 
 // https://iquilezles.org/articles/distfunctions2d/
 float sdCircle( vec2 p, float r )
@@ -57,10 +57,10 @@ void fragment() {
 	vec4 map = construct(uv);
 	
 	COLOR.rgb = vignette_color;
-	COLOR.a = floor(texture(noise, vec3(abs(uv), mod(TIME / 20., 1.))).r + map.y * float(bands)) / float(bands);
+	COLOR.a = min((floor(map.y * float(bands)) / float(bands)) * 1.25,1.0);
 	
-	//if (map.x < 1.0) {
-		//COLOR.rgb = valid_placement ? interactable_color.rgb : invalid_color.rgb;
-		//COLOR.a = valid_placement ? interactable_color.a : invalid_color.a;
-	//}
+	if (map.x < 1.0) {
+		COLOR.rgb = valid_placement ? interactable_color.rgb : invalid_color.rgb;
+		COLOR.a = valid_placement ? interactable_color.a : invalid_color.a;
+	}
 }

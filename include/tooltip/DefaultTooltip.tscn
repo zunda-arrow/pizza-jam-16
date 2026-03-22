@@ -17,10 +17,10 @@ direction_1 = 1
 direction_2 = 2
 direction_3 = 3
 tooltip = NodePath("MainTooltip")
-avoid_overlap = [null, null, null, null, null, null, null, null, null]
+avoid_overlap = [null, null, null, null, null, null, null, null, null, null]
 
 [node name="MainTooltip" parent="Tooltip" unique_id=1640107277 instance=ExtResource("2_vufjc")]
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 400.0
-offset_bottom = 197.0
+offset_bottom = 169.0
