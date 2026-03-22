@@ -338,7 +338,7 @@ func hide_selector():
 func on_coin_bonus(n: int) -> void:
 	coin_bonus += n
 
-func clear_coin_bonus() -> void:
+func clear_coin_bonus(tick: int) -> void:
 	coin_bonus = 0
 
 func find_atlas_chord_from_neighbors(top_left, top_middle, top_right, middle_left, middle_right, bottom_left, bottom_middle, bottom_right) -> Vector2i:
