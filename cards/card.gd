@@ -15,6 +15,13 @@ var instantiated_card_resource: CardResource.Card:
 		%CardName.text = card.card_name
 		%CardDescription.text = card.description
 		%Energy.text = string(card.energy_cost)
+		
+		if card.get_type() == CardResource.CardType.Build:
+			$Build.show()
+		if card.get_type() == CardResource.CardType.Dig:
+			$Dig.show()
+		if card.get_type() == CardResource.CardType.Utility:
+			$Utility.show()
 		%Ants.text = string(card.ant_cost / 10)
 		%CardImage.texture = card.image
 	get():
@@ -36,6 +43,8 @@ func _ready() -> void:
 func _on_texture_mouse_entered() -> void:
 	hovered = true
 	on_mouse_entered.emit()
+	$HoverSound.pitch_scale = randf_range(0.9,1.1)
+	$HoverSound.play(0.02)
 
 func _on_texture_mouse_exited() -> void:
 	hovered = false
