@@ -50,7 +50,7 @@ func position_cards(delta):
 		var card = card_scenes[i]
 
 		var pos = position_card(i)
-		var lerp_amount = animation_speed * delta
+		var lerp_amount = 1
 		if delta == -1:
 			lerp_amount = 1
 
