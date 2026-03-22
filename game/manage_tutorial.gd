@@ -51,11 +51,14 @@ func next_line():
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_SPACE:
-			if !textbox.is_line_complete():
-				textbox.complete_now()
-				return
-			if current_line != 7 and current_line != 9:
-				next_line()
+			skip()
+
+func skip() -> void:
+	if !textbox.is_line_complete():
+		textbox.complete_now()
+		return
+	if current_line != 7 and current_line != 9:
+		next_line()
 
 func _on_arena_card_played(card: CardResource.Card) -> void:
 	print("hello world")
