@@ -6,6 +6,7 @@ signal card_earned(card: CardResource)
 signal ant_count_changed(ant_count: int)
 signal energy_count_changed(energy: int)
 signal on_turn_changed(n: int)
+signal card_played(card: CardResource.Card)
 
 @export var game: Game
 
@@ -214,6 +215,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	_on_terrain_update()
 
 	if (success):
+		card_played.emit(card)
 		# Use all all energy for X cost cards
 		if card.energy_cost < 0:
 			energy = 0

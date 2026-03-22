@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuvq4hv6bruv4"
-path="res://.godot/imported/ant-queen.png-6e582b36206a310e0ab0fa06ead38168.ctex"
+uid="uid://d4irl56iev6vd"
+path="res://.godot/imported/queen-statue.png-db23c4164776e0360609e58379ba8373.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ant-queen.png"
-dest_files=["res://.godot/imported/ant-queen.png-6e582b36206a310e0ab0fa06ead38168.ctex"]
+source_file="res://assets/queen-statue.png"
+dest_files=["res://.godot/imported/queen-statue.png-db23c4164776e0360609e58379ba8373.ctex"]
 
 [params]
 
