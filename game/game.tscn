@@ -9,7 +9,7 @@
 [ext_resource type="Resource" uid="uid://xjch1mi2lbll" path="res://resources/cards/queen_statue.tres" id="4_qf6n1"]
 [ext_resource type="PackedScene" uid="uid://dj3jbeehx5vb8" path="res://game/Toolbar.tscn" id="5_dakft"]
 [ext_resource type="AudioStream" uid="uid://l3nopiv3qu1d" path="res://assets/sound/ant_music.mp3" id="5_dxrkv"]
-[ext_resource type="PackedScene" uid="uid://cddggncvpnv55" path="res://game/TextBox.tscn" id="5_u5opy"]
+[ext_resource type="PackedScene" path="res://game/TextBox.tscn" id="5_u5opy"]
 [ext_resource type="Resource" uid="uid://dktpx4orlph6v" path="res://resources/cards/ladder.tres" id="5_u8s88"]
 [ext_resource type="Resource" uid="uid://bo4107f2gytre" path="res://resources/cards/mushroom-farm.tres" id="6_dxwpq"]
 [ext_resource type="Script" uid="uid://blt2dk4ix40hj" path="res://game/manage_tutorial.gd" id="7_u5opy"]
@@ -19,7 +19,7 @@
 
 [node name="Game" type="Node2D" unique_id=1516163044]
 script = ExtResource("1_l1rk1")
-starter_deck = Array[ExtResource("2_j8tme")]([ExtResource("3_3vho3"), ExtResource("3_3vho3"), ExtResource("3_3vho3"), ExtResource("11_q52ks"), ExtResource("4_pxxsx"), ExtResource("4_pxxsx"), ExtResource("5_u8s88"), ExtResource("5_u8s88"), ExtResource("8_5e03w"), ExtResource("8_5e03w"), ExtResource("8_5e03w"), ExtResource("9_leid8"), ExtResource("6_dxwpq")])
+starter_deck = Array[ExtResource("2_j8tme")]([ExtResource("3_3vho3"), ExtResource("3_3vho3"), ExtResource("3_3vho3"), ExtResource("11_q52ks"), ExtResource("4_pxxsx"), ExtResource("5_u8s88"), ExtResource("8_5e03w"), ExtResource("8_5e03w"), ExtResource("9_leid8"), ExtResource("6_dxwpq")])
 day_1_hand = Array[ExtResource("2_j8tme")]([ExtResource("3_3vho3"), ExtResource("4_qf6n1")])
 
 [node name="ManageTutorial" type="Node" parent="." unique_id=2120524484]
