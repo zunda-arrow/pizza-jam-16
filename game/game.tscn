@@ -47,7 +47,8 @@ offset_bottom = 951.0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-text = "Game Over, you did not make enough money."
+text = "Game Over, you did not make enough money.
+The queen decapitated you."
 
 [node name="Button" type="Button" parent="Toolbar/GameOver" unique_id=435443471]
 layout_mode = 0
@@ -113,3 +114,4 @@ bus = &"Music"
 [connection signal="card_purchased" from="Toolbar/Shop" to="." method="on_card_purchased"]
 [connection signal="charge_account" from="Toolbar/Shop" to="." method="_on_shop_charge_account"]
 [connection signal="shopping_done" from="Toolbar/Shop" to="." method="shop_phase_done"]
+[connection signal="skip" from="Toolbar/Textbox" to="ManageTutorial" method="skip"]
