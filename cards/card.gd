@@ -14,7 +14,7 @@ var instantiated_card_resource: CardResource.Card:
 		_instantiated_card_resource = card
 		%CardName.text = card.card_name
 		%CardDescription.text = card.description
-		%Energy.text = string(card.energy_cost)
+		%Energy.text = energy_string(card.energy_cost)
 		
 		if card.get_type() == CardResource.CardType.Build:
 			$Build.show()
@@ -22,7 +22,7 @@ var instantiated_card_resource: CardResource.Card:
 			$Dig.show()
 		if card.get_type() == CardResource.CardType.Utility:
 			$Utility.show()
-		%Ants.text = string(card.ant_cost / 10)
+		%Ants.text = ant_string(card.ant_cost)
 		%CardImage.texture = card.image
 		
 		%CardTooltip.card = card.resource
@@ -32,12 +32,20 @@ var instantiated_card_resource: CardResource.Card:
 
 var hovered = false
 
-func string(n: int) -> String:
+func energy_string(n: int) -> String:
 	if n < -1:
 		return str(n) + "X"
 	elif n < 0:
 		return "X"
 	return str(n)
+
+func ant_string(n: int) -> String:
+	n /= 10
+	if n < -1:
+		return str(n) + "X"
+	elif n < 0:
+		return "X"
+	return str(n * 10)
 
 func _ready() -> void:
 	if card_resource != null:
