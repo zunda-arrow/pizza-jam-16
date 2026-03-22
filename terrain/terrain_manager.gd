@@ -172,7 +172,7 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 	grow_area(area, grow)
 	
 	for cell in area:
-		if tilemap.get_cell_source_id(cell) >= 0:
+		if tilemap.get_cell_source_id(cell) >= 0 and !cell in building_cells:
 			cells_to_damage.append(cell)
 	
 	var value_gained := 0
@@ -273,7 +273,7 @@ func show_selector(cell_coordinate_center: Vector2i, cells: Array[Rect2i], placi
 		grow_area(area, training_camps)
 		
 		for cell in area:
-			if cell in building_cells or !touches_path:
+			if (cell in building_cells and tilemap.get_cell_source_id(cell) >= 0) or !touches_path:
 				$Selection.set_cell(cell, 0, Vector2(1,0), 0)
 			else:
 				$Selection.set_cell(cell, 0, Vector2(0,0), 0)
