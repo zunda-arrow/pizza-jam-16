@@ -10,7 +10,7 @@ discard = Array[int]([2])
 
 [resource]
 script = ExtResource("1_8h1kh")
-card_name = "Brainstorm"
+card_name = "Composter"
 description = "Discard 2 random cards, draw 2 cards."
 card_impl = 4
 utility = SubResource("Resource_r0fl7")

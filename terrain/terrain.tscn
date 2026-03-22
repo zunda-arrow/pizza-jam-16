@@ -9,10 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://brh2jyxks7ayc" path="res://assets/particle/dirt.png" id="7_nc45s"]
 [ext_resource type="AudioStream" uid="uid://cxihj10gkrq71" path="res://assets/sound/EXPLOSION.mp3" id="8_fpiom"]
 [ext_resource type="Texture2D" uid="uid://r5v4ggyyl112" path="res://assets/single_shroom.png" id="9_jk8on"]
-[ext_resource type="Script" uid="uid://r5at4ujo1i40" path="res://terrain/fungus_guy.gd" id="9_xcjn4"]
+[ext_resource type="Script" path="res://terrain/fungus_guy.gd" id="9_xcjn4"]
 [ext_resource type="AudioStream" uid="uid://ghgk70wfb143" path="res://assets/sound/muhnee.mp3" id="11_25lit"]
 [ext_resource type="Texture2D" uid="uid://27uehlb6v5ct" path="res://assets/card drop.png" id="11_vjpew"]
-[ext_resource type="Texture2D" uid="uid://baxeji7b0piqj" path="res://assets/reroll.png" id="12_h4r26"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nc45s"]
 frequency = 0.05
@@ -208,7 +207,6 @@ script = ExtResource("9_xcjn4")
 [node name="Sprite2D" type="Sprite2D" parent="RerollReward" unique_id=2026068329]
 texture_filter = 1
 scale = Vector2(4, 4)
-texture = ExtResource("12_h4r26")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RerollReward" unique_id=1692564408]
 shape = SubResource("CircleShape2D_jk8on")
