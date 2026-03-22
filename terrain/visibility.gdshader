@@ -1,7 +1,6 @@
 shader_type canvas_item;
 // x,y - pos, z - active
 uniform vec3[255] discoveries;
-uniform float time: hint_range(0.0,10.0);
 uniform float discovery_size: hint_range(0.0,1.0);
 uniform float box_rounding: hint_range(0.0,1.0);
 uniform float blurriness: hint_range(0.0,1.0);
@@ -13,6 +12,8 @@ uniform float interactable_size;
 uniform vec4 interactable_color: source_color;
 uniform vec4 invalid_color: source_color;
 uniform bool valid_placement;
+uniform int bands;
+uniform float contrast;
 
 // https://iquilezles.org/articles/distfunctions2d/
 float sdCircle( vec2 p, float r )
@@ -52,10 +53,11 @@ vec4 construct( in vec2 uv) {
 
 void fragment() {	
 	vec2 uv = vec2((UV.x - 0.5) * (1920. / 1080.), UV.y - 0.5);
+	uv = floor(uv * 270.) / 270.;
 	vec4 map = construct(uv);
 	
 	COLOR.rgb = vignette_color;
-	COLOR.a = map.y;
+	COLOR.a = min((floor(map.y * float(bands)) / float(bands)) * 1.25,1.0);
 	
 	if (map.x < 1.0) {
 		COLOR.rgb = valid_placement ? interactable_color.rgb : invalid_color.rgb;

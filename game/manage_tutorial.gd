@@ -9,19 +9,19 @@ signal isolate_card(i: int)
 var current_line = -1
 
 var dialouge_lines = [
-	["queen", "Hey! You there! <space to continue>"],
-	["ant", "... <space to continue>"],
-	["queen", "You’re promoted, you’re now the new NEO - that’s nest expansion officer to the newbies. <space to continue>"],
-	["ant", "... <space to continue>"],
-	["queen", "The nest is expanding and I need enough fungus to feed my larvae, you better get digging or you’re DECAPITATED. <space to continue>"],
-	["ant", "... (panicks) ... <space to continue>"],
-	["queen", "What are you waiting for? Get to work! <space to continue>"],
+	["queen", "Hey! You there! \n<space to continue>"],
+	["ant", "... \n<space to continue>"],
+	["queen", "You’re promoted, you’re now the new NEO - that’s nest expansion officer to the newbies. \n<space to continue>"],
+	["ant", "... \n<space to continue>"],
+	["queen", "The nest is expanding and I need enough fungus to feed my larvae, you better get digging or you’re DECAPITATED. \n<space to continue>"],
+	["ant", "... (panicks) ... \n<space to continue>"],
+	["queen", "What are you waiting for? Get to work! \n<space to continue>"],
 	["queen", "First thing to know, is how to drill. Use your drill to expand this cavern.", 0],
-	["queen", "Acceptable, I guess. <space to continue>", 200],
-	["queen", "I need everyone to know of my greatness, so build me a statue. It’ll also serve as a point for your workers to expand around.", 0],
-	["queen", "Don’t I look beautiful? Obviously this statue is eternal, but most buildings only last the day. <space to continue>", -1],
-	["queen", "Now, your daily quota is in the top left, your energy and workers in the top right and you can see what buildings and drills you have available on the left. <space to continue>"],
-	["queen", "Good luck, and remember the consequences of you failing. <space to exit>"]
+	["queen", "Acceptable, I guess. \n<space to continue>", 200],
+	["queen", "I need everyone to know of my greatness, so build me a statue. It’ll also serve as a point for your workers to work around.", 0],
+	["queen", "Don’t I look beautiful? Obviously this statue is eternal, but most buildings only last one day. \n<space to continue>", -1],
+	["queen", "Now, your daily goal is in the top left, and your energy and workers are in the top right. You see what buildings and drills you have available on the left. \n<space to continue>"],
+	["queen", "Good luck, and remember the consequences of you failing. \n<space to exit>"]
 ]
 
 func _ready() -> void:
