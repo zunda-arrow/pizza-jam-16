@@ -325,9 +325,14 @@ func on_turn_end() -> void:
 
 	start_turn()
 
-func start_turn():
+func start_turn(initial_hand: Array[CardResource.Card] = []):
 	%Camera.make_active()
-	draw(DEFAULT_HAND)
+	if len(initial_hand) == 0:
+		draw(DEFAULT_HAND)
+	else:
+		hand = initial_hand
+		for card in initial_hand:
+			%PlayCards.draw_card(card)
 
 	# Reset energy to maximum
 	energy = 3
@@ -340,7 +345,7 @@ func start_turn():
 
 	%EndTurnButton.disabled = false
 
-func start_day(deck: Array[CardResource.Card]) -> void:	
+func start_day(deck: Array[CardResource.Card], initial_hand: Array[CardResource.Card] = []) -> void:
 	energy = 3
 	ants = 0
 	eff = 0
@@ -351,8 +356,8 @@ func start_day(deck: Array[CardResource.Card]) -> void:
 	for s in %Structure.structures:
 		if s.structure.resource.structure_name == "TV":
 			s.magic_number += 1
-	
-	start_turn()
+
+	start_turn(initial_hand)
 
 func money_passthrough(value: int):
 	money_earned.emit(value)
@@ -362,10 +367,9 @@ func on_card_reward(to_roll: int) -> void:
 	for card in to_roll:
 		cards.append(AllCards.cards[
 			rng.rand_weighted(
-				AllCards.resources.map(func(card): return card.rarity)
+				AllCards.resources.map(func(c): return c.rarity)
 			)
 		])
-	for card in cards:
 		card_earned.emit(card)
 	%CardReward.set_cards(cards)
 	%CardReward.show()
