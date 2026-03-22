@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://7bwnme26bsf2"]
+
+[ext_resource type="Script" uid="uid://c4m8er7bagr84" path="res://cards/card_reward.gd" id="1_vu16x"]
+[ext_resource type="PackedScene" uid="uid://bmlhxoffb3r5l" path="res://cards/CardList.tscn" id="2_15xt4"]
+
+[node name="CardReward" type="Node2D" unique_id=958781746]
+script = ExtResource("1_vu16x")
+
+[node name="Panel" type="Panel" parent="." unique_id=740833206]
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 200.0
+
+[node name="Button" type="Button" parent="Panel" unique_id=1798742533]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 280.0
+offset_right = 331.0
+offset_bottom = 331.0
+text = "Yay"
+
+[node name="Button2" type="Button" parent="Panel" unique_id=453267876]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 280.0
+offset_right = 150.00027
+offset_bottom = 331.0
+text = "Aww"
+
+[node name="CardList" parent="." unique_id=1774113453 instance=ExtResource("2_15xt4")]
+start_pos = Vector2(0, 0)
+
+[connection signal="pressed" from="Panel/Button" to="." method="on_respond"]
+[connection signal="pressed" from="Panel/Button2" to="." method="on_respond"]

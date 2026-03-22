@@ -32,6 +32,8 @@ func loop_music():
 	loop_music()
 
 func _ready() -> void:
+	tree_exited.connect(ConfigManager.on_quit)
+	
 	for c in starter_deck:
 		deck.push_back(c.new())
 	
