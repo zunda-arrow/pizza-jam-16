@@ -52,7 +52,7 @@ func _ready():
 	%Army.get_cell_to_walk_to = _get_ant_pathfindable_cell
 	
 	# The home is always placed
-	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new())
+	%Structure.place_build(%Terrain.tilemap.map_to_local(Vector2i(0, 2)), Vector2i(0, 2), HomeStructure.new(), 0)
 	_on_terrain_update()
 
 func _on_terrain_update():
@@ -197,7 +197,7 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 			power = x
 		power += eff
 		if dig_area_touches_path(area, at):
-			success = %Terrain.destroy(at, area, power)
+			success = %Terrain.destroy(at, area, power, x)
 		else:
 			success = false
 		if success:
