@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dmsjlc7evebjj"]
+
+[ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_emrln"]
+
+[resource]
+script = ExtResource("1_emrln")
+card_name = "Perpetual Stew"
+description = "Make a structure permanent."
+energy_cost = 5
+ant_cost = 30
+card_impl = 4
+cost = 10
+metadata/_custom_type_script = "uid://cc7jv6lf85ucq"
