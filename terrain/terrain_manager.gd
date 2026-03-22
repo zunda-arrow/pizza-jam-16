@@ -63,6 +63,7 @@ func reset_map(new_seed) -> void:
 	rock_noise.seed = new_seed
 	gold_ore_noise.seed = new_seed
 	light_dirt_noise.seed = new_seed
+	mystery_ore_noise.seed = new_seed
 
 func generate() -> void:
 	var rect = MAP_SIZE
