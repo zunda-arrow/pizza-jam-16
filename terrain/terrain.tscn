@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dledoon1oylqv" path="res://assets/numbers.png" id="4_mk5yb"]
 [ext_resource type="Texture2D" uid="uid://brh2jyxks7ayc" path="res://assets/particle/dirt.png" id="7_nc45s"]
 [ext_resource type="AudioStream" uid="uid://cxihj10gkrq71" path="res://assets/sound/EXPLOSION.mp3" id="8_fpiom"]
+[ext_resource type="Texture2D" uid="uid://cvyt304ak5y6v" path="res://assets/single_shroom.png" id="9_jk8on"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nc45s"]
 frequency = 0.05
@@ -101,6 +102,9 @@ alpha_curve = SubResource("CurveTexture_nc45s")
 hue_variation_min = -2.2351742e-08
 hue_variation_max = -2.2351742e-08
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_fpiom"]
+radius = 10.440307
+
 [node name="Terrain" type="Node2D" unique_id=333081327]
 script = ExtResource("1_nigp7")
 initial_seed = 1
@@ -164,3 +168,12 @@ process_material = SubResource("ParticleProcessMaterial_mk5yb")
 stream = ExtResource("8_fpiom")
 volume_db = -3.0
 max_polyphony = 2
+
+[node name="FungusGuy" type="RigidBody2D" parent="." unique_id=1471937343]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FungusGuy" unique_id=728141184]
+shape = SubResource("CircleShape2D_fpiom")
+
+[node name="Sprite2D" type="Sprite2D" parent="FungusGuy" unique_id=597723462]
+texture_filter = 1
+texture = ExtResource("9_jk8on")
