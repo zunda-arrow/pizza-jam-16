@@ -43,7 +43,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	update_toolbar()
-	
+
 func update_toolbar():
 	%Turn.text = "Turn " + str(turn + 1) + "/4"
 	%Money.text = str(money) + "/" + str(daily_goal)

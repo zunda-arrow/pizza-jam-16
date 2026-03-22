@@ -41,8 +41,10 @@ func _ready() -> void:
 
 func start_game() -> void:
 	var initial_hand: Array[CardResource.Card] = []
-	for c in day_1_hand:
-		initial_hand.append(c.new())
+	
+	if ConfigManager.get_value("show_tutorial") != false:
+		for c in day_1_hand:
+			initial_hand.append(c.new())
 	day_start.emit(deck, initial_hand) # Day start also starts a turn.
 	%Toolbar.daily_goal = calculate_daily_goal(day)
 	%Toolbar.in_game = true
