@@ -53,7 +53,7 @@ func on_day_end() -> void:
 		%GameWon.show()
 		return
 	
-	if money > calculate_daily_goal(day):
+	if money >= calculate_daily_goal(day):
 		money -= calculate_daily_goal(day)
 	else:
 		game_over.emit()
