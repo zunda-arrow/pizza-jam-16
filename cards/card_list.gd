@@ -18,7 +18,7 @@ func show_cards(cards: Array[CardResource.Card]) -> void:
 		new_card.position = current_pos
 		new_card.instantiated_card_resource = card
 		%CardContainer.add_child(new_card)
-		if current_pos.x > 1500:
+		if current_pos.x > 2500:
 			current_pos.x = start_pos.x
 			current_pos.y += gap.y
 		else:

@@ -24,6 +24,9 @@ var instantiated_card_resource: CardResource.Card:
 			$Utility.show()
 		%Ants.text = string(card.ant_cost / 10)
 		%CardImage.texture = card.image
+		
+		%CardTooltip.card = card.resource
+
 	get():
 		return _instantiated_card_resource
 

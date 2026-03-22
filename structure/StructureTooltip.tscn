@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://qb5jarobicth"]
+
+[ext_resource type="Script" uid="uid://csds50qb4yrch" path="res://include/tooltip/default_tooltip.gd" id="1_iyhml"]
+[ext_resource type="PackedScene" uid="uid://cbc8mrd055rnk" path="res://include/tooltip/TooltipController.tscn" id="2_xy2lu"]
+[ext_resource type="PackedScene" uid="uid://ba44874brqvqc" path="res://include/tooltip/TooltipPanel.tscn" id="3_f80k3"]
+
+[node name="CardTooltip" type="Control" unique_id=1094151248]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_iyhml")
+
+[node name="Tooltip" parent="." unique_id=604278011 node_paths=PackedStringArray("tooltip", "avoid_overlap") instance=ExtResource("2_xy2lu")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+direction_1 = 1
+direction_2 = 2
+direction_3 = 3
+tooltip = NodePath("MainTooltip")
+avoid_overlap = [null, null, null, null, null, null, null, null, null, null, null]
+
+[node name="MainTooltip" parent="Tooltip" unique_id=1640107277 instance=ExtResource("3_f80k3")]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 197.0
+tooltip_name = "Hello"
