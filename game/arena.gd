@@ -407,7 +407,10 @@ func on_card_reward(to_roll: int) -> void:
 				AllCards.resources.map(func(c): return c.rarity)
 			)
 		].new())
-		card_earned.emit(card)
+		card_earned.emit(cards[card])
+		%PlayCards.draw_card(cards[card])
+		hand.append(cards[card])
+
 	%CardReward.show_cards(cards)
 	%CardReward.show()
 
