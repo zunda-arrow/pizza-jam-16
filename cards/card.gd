@@ -15,7 +15,6 @@ var instantiated_card_resource: CardResource.Card:
 		%CardName.text = card.card_name
 		%CardDescription.text = card.description
 		%Energy.text = string(card.energy_cost)
-		%Ants.text = string(card.ant_cost)
 		
 		if card.get_type() == CardResource.CardType.Build:
 			$Build.show()
@@ -23,31 +22,36 @@ var instantiated_card_resource: CardResource.Card:
 			$Dig.show()
 		if card.get_type() == CardResource.CardType.Utility:
 			$Utility.show()
+		%Ants.text = string(card.ant_cost / 10)
+		%CardImage.texture = card.image
 	get():
 		return _instantiated_card_resource
 
 var hovered = false
 
 func string(n: int) -> String:
-	if n == -1:
+	if n < -1:
+		return str(n) + "X"
+	elif n < 0:
 		return "X"
 	return str(n)
 
 func _ready() -> void:
 	if card_resource != null:
 		instantiated_card_resource = card_resource.new()
-			
-func _on_panel_mouse_entered() -> void:
+
+func _on_texture_mouse_entered() -> void:
 	hovered = true
 	on_mouse_entered.emit()
 	$HoverSound.pitch_scale = randf_range(0.9,1.1)
 	$HoverSound.play(0.02)
 
-func _on_panel_mouse_exited() -> void:
+func _on_texture_mouse_exited() -> void:
 	hovered = false
 	on_mouse_exited.emit()
 
-func _on_panel_gui_input(event: InputEvent) -> void:
+
+func _on_texture_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 			on_clicked.emit()

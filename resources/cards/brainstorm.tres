@@ -6,7 +6,6 @@
 [sub_resource type="Resource" id="Resource_r0fl7"]
 script = ExtResource("2_hnxva")
 draw = Array[int]([5])
-metadata/_custom_type_script = "uid://wl5o2odjdd6i"
 
 [resource]
 script = ExtResource("1_d8xw2")

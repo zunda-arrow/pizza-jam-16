@@ -50,8 +50,12 @@ func get_bounding_area() -> Rect2:
 	return Rect2(camera.global_position - size/2, size)
 
 func _on_go_home_button_down() -> void:
+	go_home()
+
+func go_home():
 	going_home = true
 	_time = 0
+	
 
 func make_active() -> void:
 	$Camera2D.make_current()

@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://doqybkdebhs4x"]
+
+[ext_resource type="Script" uid="uid://c0voo1w3prulr" path="res://game/text_box.gd" id="1_1fkbj"]
+[ext_resource type="Texture2D" uid="uid://cuvq4hv6bruv4" path="res://assets/ant-queen.png" id="1_e8ux0"]
+[ext_resource type="Texture2D" uid="uid://bglll71rmfrvv" path="res://assets/ant-portrait.png" id="2_yyux2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yyux2"]
+atlas = ExtResource("1_e8ux0")
+region = Rect2(138, 4, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fkbj"]
+atlas = ExtResource("1_e8ux0")
+region = Rect2(4, 4, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qywq6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yyux2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fkbj")
+}],
+"loop": true,
+"name": &"talk",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qywq6"]
+atlas = ExtResource("2_yyux2")
+region = Rect2(4, 4, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8btlc"]
+atlas = ExtResource("2_yyux2")
+region = Rect2(138, 4, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_62kkc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qywq6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8btlc")
+}],
+"loop": true,
+"name": &"talk",
+"speed": 5.0
+}]
+
+[node name="TextBox" type="Control" unique_id=111541250]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_1fkbj")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=134327102]
+layout_mode = 0
+offset_right = 1292.0
+offset_bottom = 130.0
+
+[node name="QueenPortrait" type="AnimatedSprite2D" parent="PanelContainer" unique_id=852883266]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(1226, 65)
+sprite_frames = SubResource("SpriteFrames_qywq6")
+animation = &"talk"
+frame_progress = 0.47003976
+
+[node name="AntPortrait" type="AnimatedSprite2D" parent="PanelContainer" unique_id=897699619]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(65, 65)
+sprite_frames = SubResource("SpriteFrames_62kkc")
+animation = &"talk"
+
+[node name="AntTextbox" type="Label" parent="." unique_id=1667478831]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 109.0
+offset_top = 2.0
+offset_right = 1293.0
+offset_bottom = 129.0
+theme_override_font_sizes/font_size = 32
+text = "This is the ant textbox"
+autowrap_mode = 2
+
+[node name="QueenTextbox" type="Label" parent="." unique_id=1634351401]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1160.0
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 32
+text = "This is the Queen textbox"
+autowrap_mode = 2

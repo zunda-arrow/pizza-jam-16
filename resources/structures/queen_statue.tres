@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://x3cx2no5goyo"]
+
+[ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_tytru"]
+[ext_resource type="Texture2D" uid="uid://d4irl56iev6vd" path="res://assets/queen-statue.png" id="2_tytru"]
+
+[resource]
+script = ExtResource("1_tytru")
+structure_name = "Queen Statue"
+size = Array[Rect2i]([Rect2i(-1, -2, 3, 4)])
+required_ground = Array[Rect2i]([Rect2i(-1, 2, 3, 1)])
+path_finding_points = Array[Vector2i]([Vector2i(0, 2)])
+texture = ExtResource("2_tytru")
+lifetime = -1
+tiles_radius = 15
+metadata/_custom_type_script = "uid://y2c3yqqp0hjd"

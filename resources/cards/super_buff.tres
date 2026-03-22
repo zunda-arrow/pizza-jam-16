@@ -6,13 +6,13 @@
 [sub_resource type="Resource" id="Resource_r0fl7"]
 script = ExtResource("2_wm6p2")
 efficiency = Array[int]([-1])
-metadata/_custom_type_script = "uid://wl5o2odjdd6i"
 
 [resource]
 script = ExtResource("1_1cyyg")
 card_name = "Super Buff"
-description = "Gain X efficiency this turn."
+description = "Digs gain +X power this turn."
 energy_cost = -1
 card_impl = 4
 utility = SubResource("Resource_r0fl7")
+cost = 10
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

@@ -1,11 +1,14 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://wygowhgww5gi"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://hcnyhfyglve6"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_b7l5i"]
-[ext_resource type="Resource" uid="uid://c56e3788gxrlx" path="res://resources/structures/campfire.tres" id="2_b7l5i"]
+[ext_resource type="Texture2D" uid="uid://dd0cw7lmcce43" path="res://assets/campfire.png" id="1_x50hy"]
+[ext_resource type="Resource" uid="uid://bd6r6ervjnbtx" path="res://resources/structures/campfire.tres" id="2_b7l5i"]
 
 [resource]
 script = ExtResource("1_b7l5i")
 card_name = "Campfire"
+description = "+2 chances to dig up a coin from each tile."
+image = ExtResource("1_x50hy")
 card_impl = 3
 structureResource = ExtResource("2_b7l5i")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

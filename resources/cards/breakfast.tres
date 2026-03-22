@@ -1,12 +1,11 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://c2iwvfelgtkyh"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://c16td86pll2iw"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_e1pd7"]
-[ext_resource type="Script" uid="uid://wl5o2odjdd6i" path="res://resources/utilities.gd" id="2_g463w"]
+[ext_resource type="Script" path="res://resources/utilities.gd" id="2_g463w"]
 
 [sub_resource type="Resource" id="Resource_r0fl7"]
 script = ExtResource("2_g463w")
 efficiency = Array[int]([1])
-metadata/_custom_type_script = "uid://wl5o2odjdd6i"
 
 [resource]
 script = ExtResource("1_e1pd7")

@@ -4,6 +4,7 @@ signal energy_gain(n: int)
 signal ants_gain(n: int)
 signal draw_gain(n: int)
 signal eff_gain(n: int)
+signal bonus_coin_gain(n: int)
 
 var energy: Array[int] = []
 var ants: Array[int] = []
@@ -11,6 +12,7 @@ var draws: Array[int] = []
 var discard: Array[int] = []
 var efficiency: Array[int] = []
 var treasure: Array[int] = []
+var bonus_coins: Array[int] = []
 
 func utilize(utility: UtilityResource, X: int) -> bool:
 	if utility == null:
@@ -61,3 +63,5 @@ func turn_resources():
 		draw_gain.emit(draws.pop_front())
 	if !efficiency.is_empty():
 		eff_gain.emit(efficiency.pop_front())
+	if !bonus_coins.is_empty():
+		bonus_coin_gain.emit(bonus_coins.pop_front())

@@ -1,11 +1,16 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://db1agphw7xxot"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://bo4107f2gytre"]
 
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_ky5qb"]
-[ext_resource type="Resource" uid="uid://ddijybt8k2e8g" path="res://resources/structures/mushroom_farm.tres" id="2_ky5qb"]
+[ext_resource type="Texture2D" uid="uid://ckltkole3artb" path="res://assets/mushroom-farm.png" id="1_w5gur"]
+[ext_resource type="Resource" uid="uid://nic3kk3uapb6" path="res://resources/structures/mushroom_farm.tres" id="2_ky5qb"]
 
 [resource]
 script = ExtResource("1_ky5qb")
 card_name = "Mushroom Patch"
+description = "+8 money per turn."
+image = ExtResource("1_w5gur")
+energy_cost = 1
+ant_cost = 10
 card_impl = 3
 structureResource = ExtResource("2_ky5qb")
 metadata/_custom_type_script = "uid://cc7jv6lf85ucq"

@@ -16,12 +16,36 @@ script = ExtResource("1_v80w6")
 [node name="Panel" type="Panel" parent="." unique_id=1321835905]
 offset_left = -171.0
 offset_top = -116.0
-offset_right = 172.0
-offset_bottom = 117.0
+offset_right = 173.0
+offset_bottom = 118.0
+theme = ExtResource("3_yrj2n")
+metadata/_edit_use_anchors_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=914660798]
+[node name="Control" type="Control" parent="." unique_id=1502467424]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -158.0
+offset_top = -84.0
+offset_right = 103.0
+offset_bottom = 99.0
+
+[node name="CardImage" type="TextureRect" parent="Control" unique_id=1312599456]
+unique_name_in_owner = true
 texture_filter = 1
-position = Vector2(-7.6293945e-06, -1.9073486e-06)
+layout_mode = 0
+offset_right = 261.0
+offset_bottom = 183.0
+expand_mode = 3
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Texture" type="TextureRect" parent="." unique_id=855770673]
+texture_filter = 1
+offset_left = -174.0
+offset_top = -117.999985
+offset_right = 759.0
+offset_bottom = 514.0
 scale = Vector2(0.37183535, 0.3718354)
 texture = ExtResource("2_ws7c5")
 
@@ -34,6 +58,7 @@ offset_bottom = -21.0
 theme = ExtResource("3_yrj2n")
 theme_override_font_sizes/font_size = 20
 text = "Card Name"
+metadata/_edit_use_anchors_ = true
 
 [node name="CardDescription" type="Label" parent="." unique_id=1747712364]
 unique_name_in_owner = true
@@ -56,6 +81,7 @@ theme_override_constants/outline_size = 16
 theme_override_fonts/font = ExtResource("4_venjh")
 text = "0"
 horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Ants" type="Label" parent="." unique_id=1979177370]
 unique_name_in_owner = true
@@ -69,6 +95,7 @@ theme_override_constants/outline_size = 16
 theme_override_fonts/font = ExtResource("4_venjh")
 text = "0"
 horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="HoverSound" type="AudioStreamPlayer" parent="." unique_id=1450614337]
 stream = ExtResource("5_mdmtm")
@@ -110,3 +137,6 @@ texture = ExtResource("7_mwisf")
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]
 [connection signal="mouse_entered" from="Panel" to="." method="_on_panel_mouse_entered"]
 [connection signal="mouse_exited" from="Panel" to="." method="_on_panel_mouse_exited"]
+[connection signal="gui_input" from="Texture" to="." method="_on_texture_gui_input"]
+[connection signal="mouse_entered" from="Texture" to="." method="_on_texture_mouse_entered"]
+[connection signal="mouse_exited" from="Texture" to="." method="_on_texture_mouse_exited"]
