@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://dl3tnvqjeo8pp"]
+[gd_resource type="Resource" script_class="CardResource" format=3 uid="uid://d356u5bhdxorx"]
 
 [ext_resource type="Texture2D" uid="uid://b88pnuix1okw7" path="res://assets/tv.png" id="1_r0pv2"]
 [ext_resource type="Script" uid="uid://cc7jv6lf85ucq" path="res://resources/card.gd" id="1_rvafx"]
-[ext_resource type="Resource" uid="uid://c4i3k6w833omy" path="res://resources/structures/tv.tres" id="2_rvafx"]
+[ext_resource type="Resource" uid="uid://dd5xkd2csnauf" path="res://resources/structures/tv.tres" id="2_rvafx"]
 
 [resource]
 script = ExtResource("1_rvafx")
 card_name = "TV"
-description = "TV"
+description = "+1 Energy, +10 Ants per day passed."
 image = ExtResource("1_r0pv2")
 card_impl = 3
 structureResource = ExtResource("2_rvafx")

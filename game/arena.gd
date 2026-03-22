@@ -346,6 +346,10 @@ func start_day(deck: Array[CardResource.Card]) -> void:
 	draw_pile = deck.duplicate()
 	draw_pile.shuffle()
 	
+	for s in %Structure.structures:
+		if s.structure.resource.structure_name == "TV":
+			s.magic_number += 1
+	
 	start_turn()
 
 func money_passthrough(value: int):
