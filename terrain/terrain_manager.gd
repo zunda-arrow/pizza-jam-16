@@ -240,8 +240,18 @@ func reward_cell(cell: Vector2i, cell_data: Variant) -> int:
 		f.position = $GroundMap.map_to_local(cell)
 		add_child(f)
 		f.on_create()
-	if cell_data.get_custom_data("card_reward") > 0:
-		card_reward.emit(cell_data.get_custom_data("card_reward"))
+	
+	var reroll = cell_data.get_custom_data("reroll_reward")
+	var card = cell_data.get_custom_data("card_reward")
+	if reroll > 0 and card > 0:
+		if rng.randf() > 0.5:
+			card = 0
+		else:
+			reroll = 0
+	if card > 0:
+		card_reward.emit(card)
+	if reroll > 0:
+		reroll_earned.emit(reroll)
 	return value
 
 func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
