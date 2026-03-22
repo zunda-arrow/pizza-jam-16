@@ -240,7 +240,7 @@ func reward_cell(cell: Vector2i, cell_data: Variant) -> int:
 		f.position = $GroundMap.map_to_local(cell)
 		add_child(f)
 		f.on_create()
-	
+			
 	var reroll = cell_data.get_custom_data("reroll_reward")
 	var card = cell_data.get_custom_data("card_reward")
 	if reroll > 0 and card > 0:
@@ -250,8 +250,20 @@ func reward_cell(cell: Vector2i, cell_data: Variant) -> int:
 			reroll = 0
 	if card > 0:
 		card_reward.emit(card)
+		var f = $CardReward.duplicate()
+		f.show()
+		f.reset_physics_interpolation()
+		f.position = $GroundMap.map_to_local(cell)
+		add_child(f)
+		f.on_create()
 	if reroll > 0:
 		reroll_earned.emit(reroll)
+		var f = $RerollReward.duplicate()
+		f.show()
+		f.reset_physics_interpolation()
+		f.position = $GroundMap.map_to_local(cell)
+		add_child(f)
+		f.on_create()
 	return value
 
 func set_cracks_for_cell(cell: Vector2i, health: int, initial_health: int):
