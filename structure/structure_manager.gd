@@ -67,8 +67,7 @@ func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: Stru
 		add_child(struct_scene)
 		links.append([])
 		for i in range(structures.size()):
-			var dist = pos.distance_to(structures[i].global_position)
-			if (dist <= structure.get_visible_radius()):
+			if (pos.distance_to(structures[i].global_position) <= structure.get_visible_radius()):
 				links[i].append(structures.size())
 				links[structures.size()].append(i)
 		struct_scene.magic_number = X
@@ -127,3 +126,13 @@ func structure_groups_in_range(area: Array[Vector2i]) -> Array[Array]:
 				break
 	
 	return groups_in_range
+
+func determine_links():
+	links = []
+	for i in range(structures.size()):
+		links.append([])
+	for i in range(structures.size()):
+		for j in range(i+1, structures.size()):
+			if (structures[i].position.distance_to(structures[j].global_position) <= structures[i].get_visible_radius()):
+				links[i].append(j)
+				links[j].append(i)
