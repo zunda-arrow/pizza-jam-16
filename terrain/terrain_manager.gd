@@ -172,6 +172,8 @@ func destroy(cell_coordinate_center: Vector2i, cells: Array[Rect2i], power: int,
 	
 	for cell in area:
 		if tilemap.get_cell_source_id(cell) >= 0:
+			if cell in building_cells:
+				return false
 			cells_to_damage.append(cell)
 	
 	var value_gained := 0
