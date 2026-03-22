@@ -170,6 +170,7 @@ text = "Exhaust"
 [connection signal="day_end" from="Camera/Clock" to="." method="_on_clock_day_end"]
 [connection signal="day_tick" from="Camera/Clock" to="." method="_on_clock_day_tick"]
 [connection signal="pressed" from="Camera/EndTurnButton" to="Camera/Clock" method="advance_time"]
+[connection signal="pressed" from="Camera/GoHome" to="Camera" method="go_home"]
 [connection signal="mouse_entered" from="Camera/DrawPile" to="." method="_on_draw_pile_mouse_entered"]
 [connection signal="mouse_exited" from="Camera/DrawPile" to="." method="_on_pile_mouse_exited"]
 [connection signal="mouse_entered" from="Camera/DiscardPile" to="." method="_on_discard_pile_mouse_entered"]
