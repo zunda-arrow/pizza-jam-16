@@ -70,5 +70,5 @@ func on_done_pressed() -> void:
 func _on_reroll_pressed() -> void:
 	if get_rerolls.call() < 1:
 		return
-	charge_account.emit(1)
+	charge_rerolls.emit(1)
 	roll_cards()

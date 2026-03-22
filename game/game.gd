@@ -45,7 +45,7 @@ func _ready() -> void:
 		deck.push_back(c.new())
 	
 	%Shop.get_money = get_money
-	%Shop.get_rerolls = get_money
+	%Shop.get_rerolls = get_rerolls
 
 	loop_music()
 	start_game()
