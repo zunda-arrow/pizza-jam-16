@@ -277,6 +277,9 @@ func _on_utility_draw_gain(n: int) -> void:
 func _on_utility_eff_gain(n: int) -> void:
 	eff += n
 
+func _on_utility_money_gain(n: int) -> void:
+	money_earned.emit(n)
+
 func _on_clock_day_end(day: int) -> void:	
 	%Camera.go_home()
 	# Copied from elsewhere in this file
