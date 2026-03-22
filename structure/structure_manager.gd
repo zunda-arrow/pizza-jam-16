@@ -23,7 +23,8 @@ func building_occupation() -> Array[Vector2i]:
 			var pos = s.get_tile_position() + r.position
 			for x in range(ceil(pos.x),ceil(pos.x+r.size.x)):
 				for y in range(ceil(pos.y),ceil(pos.y+r.size.y)):
-					occupied_cells += [Vector2i(x, y)]
+					if has_terrain.call(Vector2i(x, y)):
+						occupied_cells += [Vector2i(x, y)]
 	return occupied_cells
 
 func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: StructureResource.Structure, X: int) -> bool:
@@ -39,7 +40,7 @@ func place_build(pos: Vector2, cell_coordinate_center: Vector2i, structure: Stru
 		var section_has_ground = true
 		for x in range(ceil(rect_center.x),ceil(rect_center.x+dirt_cell.size.x)):
 			for y in range(ceil(rect_center.y),ceil(rect_center.y+dirt_cell.size.y)):
-				if has_terrain.call(Vector2(x, y)) == false:
+				if not has_terrain.call(Vector2(x, y)):
 					section_has_ground = false
 		if section_has_ground:
 			has_ground = true

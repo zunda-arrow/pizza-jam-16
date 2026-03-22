@@ -47,6 +47,7 @@ var player_position: Vector2i:
 
 func _ready():
 	%Terrain.occupation_checks.append(%Structure.building_occupation)
+	%Terrain.has_terrain = _is_cell_filled
 	%Structure.occupation_checker = %Terrain.get_occupied_cells
 	%Structure.has_terrain = _is_cell_filled
 	_on_terrain_update()
