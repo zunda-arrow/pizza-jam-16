@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://1m4grc8pplrk"]
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://bbuguo67wtju5"]
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_c8cnn"]
 [ext_resource type="Texture2D" uid="uid://dprgko1eqti81" path="res://assets/moss-pit.png" id="2_c8cnn"]

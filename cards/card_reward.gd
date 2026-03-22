@@ -6,6 +6,7 @@ func _ready():
 
 func show_cards(cards: Array[CardResource.Card]) -> void:
 	$Panel.hide()
+	hide()
 	await get_tree().create_timer(2.0).timeout
 	show()
 	$Panel.show()

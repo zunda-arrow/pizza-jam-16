@@ -82,7 +82,7 @@ func on_day_end() -> void:
 func on_money_earned(value: int) -> void:
 	money += value
 	
-func on_reroll_earned(value: int) -> void:
+func _on_arena_reroll_earned(value: int) -> void:
 	rerolls += value
 
 func get_money() -> int:

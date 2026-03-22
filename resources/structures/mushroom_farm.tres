@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://nic3kk3uapb6"]
+[gd_resource type="Resource" script_class="StructureResource" format=3 uid="uid://ddijybt8k2e8g"]
 
 [ext_resource type="Script" uid="uid://y2c3yqqp0hjd" path="res://resources/structures.gd" id="1_12tx1"]
 [ext_resource type="Texture2D" uid="uid://ckltkole3artb" path="res://assets/mushroom-farm.png" id="2_12tx1"]

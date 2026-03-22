@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dg8j4w3ofdo56" path="res://ants/Army.tscn" id="3_q8ykg"]
 [ext_resource type="PackedScene" uid="uid://55qahaohtkfd" path="res://utility/utility.tscn" id="4_4ggwo"]
 [ext_resource type="PackedScene" uid="uid://1g0vb5628bj1" path="res://time/clock.tscn" id="7_u3mh8"]
-[ext_resource type="PackedScene" path="res://cards/CardReward.tscn" id="8_n65lt"]
+[ext_resource type="PackedScene" uid="uid://cqslriyjy5wbh" path="res://cards/CardReward.tscn" id="8_n65lt"]
 [ext_resource type="PackedScene" uid="uid://bmlhxoffb3r5l" path="res://cards/CardList.tscn" id="10_n65lt"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_n65lt"]
