@@ -207,11 +207,13 @@ func _on_play_cards_card_used(card: CardResource.Card, at: Vector2, index: int) 
 	if card.get_type() == CardResource.CardType.Move:
 		player_position = at
 		success = true
-	if card.get_type() == CardResource.CardType.Build:
+	elif card.get_type() == CardResource.CardType.Build:
 		success = %Structure.place_build(%Terrain.tilemap.map_to_local(at), at, card.structure.new(), x)
 		%Camera.shake(Vector2(0,1), 0.9)
-	if card.get_type() == CardResource.CardType.Utility:
-		success = %Utility.utilize(card.utility, x)
+	elif card.card_name == "Perpetual Stew":
+		success = %Utility.stew(at)
+	elif card.get_type() == CardResource.CardType.Utility:
+		success = %Utility.utilize(card.utility, x, index)
 
 	%Terrain.hide_selector()
 	_on_terrain_update()
@@ -270,6 +272,15 @@ func _on_utility_energy_gain(n: int) -> void:
 
 func _on_utility_ants_gain(n: int) -> void:
 	ants += n
+
+func _on_utility_discard_gain(n: int, source: int) -> void:
+	for i in range(n):
+		var discard = randi_range(0, hand.size())
+		while discard == source:
+			discard = randi_range(0, hand.size())
+		discard(discard)
+		if discard < source:
+			source -= 1
 
 func _on_utility_draw_gain(n: int) -> void:
 	draw(n)
